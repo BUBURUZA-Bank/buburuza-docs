@@ -1,0 +1,82 @@
+{
+  "theme": "luma",
+  "name": "BUBURUZA",
+  "colors": {
+    "primary": "#0c0c0c"
+  },
+  "favicon": "https://media.brand.dev/e7260896-3e49-4c2d-94a5-6a9d5a766506.png",
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/buburuza-platform"
+    }
+  },
+  "$schema": "https://mintlify.com/docs.json",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "introduction",
+              "whitepaper/ecosystem-lightpaper",
+              "whitepaper/products-and-services"
+            ]
+          },
+          {
+            "group": "Getting Started",
+            "pages": [
+              "onboarding-and-security",
+              "whitepaper/quickstart"
+            ]
+          },
+          {
+            "group": "Core Platform",
+            "pages": [
+              "whitepaper/ai-engine-b1",
+              "buburuza-chain",
+              "blockchain/tokenomics",
+              "blockchain/core-mechanics"
+            ]
+          },
+          {
+            "group": "Roadmap",
+            "pages": [
+              "roadmap/foundation",
+              "roadmap/ai-features",
+              "roadmap/expansion"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Developer",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "api/overview",
+              "api/getting-started"
+            ]
+          },
+          {
+            "group": "API Reference",
+            "pages": [
+              "api/authentication",
+              "api/core-banking",
+              "api/ai-services"
+            ]
+          },
+          {
+            "group": "SDKs",
+            "pages": [
+              "api/sdks-and-libraries"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

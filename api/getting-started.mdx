@@ -1,0 +1,434 @@
+---
+title: "Getting Started: Your First Buburuza API Call"
+description: "Register for developer access, install the SDK, create a wallet, and process your first payment — all in under 10 minutes with the Buburuza API."
+sidebarTitle: "Quick Start"
+---
+
+This guide walks you through everything you need to make your first successful Buburuza API call — from registering a developer account to processing a real payment and handling webhook events. You'll work in the sandbox environment throughout, so no live funds are involved.
+
+<Warning>
+  **Developer Preview** — The Buburuza API is currently in development and not yet available for public use. This guide reflects the planned developer experience. Early access is available to select partners starting **Q1 2026**. Contact [developers@buburuza.com](mailto:developers@buburuza.com) to join the waitlist.
+</Warning>
+
+**Prerequisites** before you begin:
+
+- Node.js 18\+, Python 3.9\+, or Java 11\+ installed in your development environment
+- Company details ready for compliance verification
+- A brief description of your intended integration use case
+
+---
+
+<Steps>
+  <Step title="Register for developer access">
+    Submit your registration to [developers.buburuza.com](https://developers.buburuza.com). Provide your company details, contact information, and a description of your intended use case. Approvals typically complete within 24–48 hours.
+
+    ```bash
+    curl -X POST https://api.buburuza.com/v1/developer/register \
+      -H "Content-Type: application/json" \
+      -d '{
+        "company": "Acme Corporation",
+        "email": "developer@acme.com",
+        "phone": "+1-555-0123",
+        "country": "US",
+        "use_case": "E-commerce marketplace payments",
+        "expected_volume": "1000 transactions/month"
+      }'
+    ```
+
+    After submitting, you'll receive a response with your registration ID and next steps:
+
+    ```json
+    {
+      "registration_id": "reg_1234567890abcdef",
+      "status": "pending_verification",
+      "next_steps": [
+        "Check your email for verification link",
+        "Complete business verification form",
+        "Upload business documentation"
+      ],
+      "estimated_approval": "24-48 hours"
+    }
+    ```
+
+    Check your inbox for the verification link, then complete the business verification form and upload the required documentation.
+  </Step>
+  <Step title="Install the SDK">
+    Once approved, install the Buburuza SDK for your language of choice. All three SDKs expose the same API surface, so you can switch languages at any time.
+
+    <CodeGroup>
+
+    ```bash npm
+    npm install @buburuza/sdk
+    ```
+
+    ```bash pip
+    pip install buburuza-python
+    ```
+
+    ```xml Maven (pom.xml)
+    <dependency>
+        <groupId>com.buburuza</groupId>
+        <artifactId>buburuza-java</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    ```
+
+    </CodeGroup>
+  </Step>
+  <Step title="Configure your API key">
+    You'll receive two API keys with your approval: one for the sandbox environment and one for production. Start with your sandbox key — it prefixes with `bb_test_`.
+
+    <CodeGroup>
+
+    ```javascript JavaScript
+    import { BuburuzdaAPI } from '@buburuza/sdk';
+    
+    // Initialize for sandbox testing
+    const buburuza = new BuburuzdaAPI({
+      apiKey: 'bb_test_1234567890abcdef',
+      environment: 'sandbox', // switch to 'production' when ready
+      version: 'v1'
+    });
+    
+    // Verify the connection
+    const status = await buburuza.health.check();
+    console.log('API Status:', status);
+    ```
+
+    ```python Python
+    from buburuza import BuburuzdaAPI
+    
+    # Initialize client
+    buburuza = BuburuzdaAPI(
+        api_key='bb_test_1234567890abcdef',
+        environment='sandbox'
+    )
+    
+    # Test connection
+    status = buburuza.health.check()
+    print(f"API Status: {status}")
+    ```
+
+    </CodeGroup>
+
+    <Tip>
+      Store your API key in an environment variable (e.g., `BUBURUZA_API_KEY`) rather than hardcoding it. Never commit API keys to source control.
+    </Tip>
+  </Step>
+  <Step title="Create a customer">
+    Before you can issue a wallet or process payments, you need a customer record. The customer object stores identity details required for KYC compliance.
+
+    ```javascript
+    const customer = await buburuza.customers.create({
+      email: 'john.doe@example.com',
+      phone: '+1-555-0199',
+      firstName: 'John',
+      lastName: 'Doe',
+      dateOfBirth: '1990-01-15',
+      address: {
+        street: '123 Main Street',
+        city: 'San Francisco',
+        state: 'CA',
+        postalCode: '94102',
+        country: 'US'
+      },
+      metadata: {
+        source: 'mobile_app',
+        referral_code: 'FRIEND123'
+      }
+    });
+    
+    console.log('Customer created:', customer.id);
+    // Output: Customer created: cust_1234567890abcdef
+    ```
+
+    Save the returned `customer.id` — you'll use it in the next steps.
+  </Step>
+  <Step title="Create a wallet">
+    Create a USD wallet for your customer. A customer can hold multiple wallets in different currencies.
+
+    ```javascript
+    const wallet = await buburuza.wallets.create({
+      customerId: customer.id,
+      currency: 'USD',
+      type: 'personal',
+      name: 'Primary Checking'
+    });
+    
+    console.log('Wallet created:', wallet);
+    // Output:
+    // {
+    //   id: 'wallet_1234567890abcdef',
+    //   customerId: 'cust_1234567890abcdef',
+    //   currency: 'USD',
+    //   balance: 0,
+    //   availableBalance: 0,
+    //   status: 'active'
+    // }
+    ```
+  </Step>
+  <Step title="Process your first payment">
+    In the sandbox, deposits are simulated. Fund the wallet first, then send money to another wallet. All amounts are in the smallest currency unit (cents for USD).
+
+    ```javascript
+    // Add funds to the wallet (simulated in sandbox)
+    const deposit = await buburuza.transactions.create({
+      type: 'deposit',
+      walletId: wallet.id,
+      amount: 10000,      // $100.00
+      currency: 'USD',
+      source: {
+        type: 'bank_account',
+        accountId: 'bank_acc_sandbox_123'
+      },
+      description: 'Initial deposit'
+    });
+    
+    // Send money to another wallet
+    const transfer = await buburuza.transactions.create({
+      type: 'transfer',
+      fromWalletId: wallet.id,
+      toWalletId: 'wallet_recipient_456',
+      amount: 2500,       // $25.00
+      currency: 'USD',
+      description: 'Payment for services',
+      metadata: {
+        orderId: 'order_789',
+        category: 'services'
+      }
+    });
+    
+    console.log('Transfer completed:', transfer.id);
+    ```
+  </Step>
+  <Step title="Set up webhooks">
+    Configure a webhook endpoint so Buburuza can push real-time event notifications to your application. You need a publicly accessible URL — use a tool like [ngrok](https://ngrok.com) during local development.
+
+    ```javascript
+    // Register your webhook endpoint
+    const webhook = await buburuza.webhooks.create({
+      url: 'https://yourapp.com/webhooks/buburuza',
+      events: [
+        'transaction.completed',
+        'transaction.failed',
+        'kyc.completed',
+        'wallet.balance_updated'
+      ],
+      description: 'Main application webhook'
+    });
+    
+    // Handle incoming events in your Express app
+    app.post('/webhooks/buburuza', (req, res) => {
+      const event = req.body;
+    
+      switch (event.type) {
+        case 'transaction.completed':
+          console.log('Transaction completed:', event.data.transaction.id);
+          // Update your database, send notifications, etc.
+          break;
+    
+        case 'kyc.completed':
+          console.log('KYC completed for customer:', event.data.customer.id);
+          // Unlock additional features for verified customers
+          break;
+      }
+    
+      res.status(200).send('OK');
+    });
+    ```
+
+    <Note>
+      Always respond with HTTP `200` promptly. If your endpoint takes longer than 30 seconds, Buburuza will retry the delivery with exponential backoff.
+    </Note>
+  </Step>
+  <Step title="Test in sandbox">
+    The sandbox provides realistic test data and card numbers so you can validate your integration end-to-end without touching live funds.
+
+    ```javascript
+    // Create a virtual test card
+    const testCard = await buburuza.cards.create({
+      customerId: customer.id,
+      type: 'virtual',
+      currency: 'USD',
+      metadata: {
+        testing: true
+      }
+    });
+    
+    // Process a test card payment using the sandbox test Visa number
+    const testPayment = await buburuza.payments.create({
+      amount: 1000,       // $10.00
+      currency: 'USD',
+      source: {
+        type: 'card',
+        number: '4111111111111111', // Test Visa card
+        expMonth: 12,
+        expYear: 2030,
+        cvc: '123'
+      },
+      destination: {
+        walletId: wallet.id
+      }
+    });
+    ```
+
+    Use different amounts to simulate different outcomes:
+
+    ```javascript
+    const scenarios = [
+      { amount: 100,    expected: 'success' },
+      { amount: 999999, expected: 'insufficient_funds' },
+      { amount: -100,   expected: 'invalid_amount' }
+    ];
+    
+    for (const scenario of scenarios) {
+      try {
+        const result = await buburuza.transactions.create({
+          type: 'withdrawal',
+          walletId: wallet.id,
+          amount: scenario.amount,
+          currency: 'USD'
+        });
+        console.log(`Amount ${scenario.amount}: success`);
+      } catch (error) {
+        console.log(`Amount ${scenario.amount}: ${error.code}`);
+      }
+    }
+    ```
+  </Step>
+</Steps>
+
+---
+
+## Common integration patterns
+
+These patterns show how to adapt the core API primitives to typical product scenarios.
+
+<Tabs>
+  <Tab title="E-commerce marketplace">
+    Split a payment between a seller and your platform in a single API call. Amounts must sum to the total payment amount.
+
+    ```javascript
+    const marketplacePayment = await buburuza.payments.create({
+      amount: 10000,      // $100.00
+      currency: 'USD',
+      splits: [
+        { recipient: 'seller_wallet_123', amount: 9500 },  // 95% to seller
+        { recipient: 'platform_wallet_456', amount: 500 }   // 5% platform fee
+      ],
+      metadata: {
+        orderId: 'order_789',
+        productId: 'product_456'
+      }
+    });
+    ```
+  </Tab>
+  <Tab title="Subscription service">
+    Create a recurring billing plan with intelligent retry logic for failed payments.
+
+    ```javascript
+    const subscription = await buburuza.subscriptions.create({
+      customerId: customer.id,
+      planId: 'premium_monthly',
+      price: 2999,        // $29.99
+      currency: 'USD',
+      trialDays: 14,
+      retryPolicy: {
+        maxAttempts: 3,
+        intervalDays: [1, 3, 7]
+      }
+    });
+    ```
+  </Tab>
+  <Tab title="Gig economy">
+    Pay gig workers instantly as soon as a job is completed. The `instant` speed setting targets delivery in minutes.
+
+    ```javascript
+    const instantPayout = await buburuza.payouts.create({
+      recipientId: 'driver_123',
+      amount: 4500,       // $45.00
+      currency: 'USD',
+      speed: 'instant',
+      description: 'Ride earnings - Trip #456'
+    });
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Error handling
+
+All Buburuza API errors follow a consistent structure with a machine-readable `code` field. Build your error handling around these codes rather than HTTP status codes or message strings.
+
+```javascript
+try {
+  const transaction = await buburuza.transactions.create({
+    type: 'transfer',
+    fromWalletId: 'wallet_123',
+    toWalletId: 'wallet_456',
+    amount: 5000,
+    currency: 'USD'
+  });
+} catch (error) {
+  switch (error.code) {
+    case 'insufficient_funds':
+      // Prompt the user to top up their wallet
+      console.log('Not enough funds in wallet');
+      break;
+
+    case 'wallet_not_found':
+      // Validate the wallet ID before retrying
+      console.log('Invalid wallet ID');
+      break;
+
+    case 'rate_limit_exceeded':
+      // Back off and retry — implement exponential backoff
+      console.log('Too many requests, backing off');
+      break;
+
+    default:
+      // Log unexpected errors for investigation
+      console.log('Unexpected error:', error.message);
+  }
+}
+```
+
+Common error codes you'll encounter in the sandbox and production:
+
+| Code | HTTP status | Description |
+| --- | --- | --- |
+| `insufficient_funds` | 422 | The source wallet does not have enough balance |
+| `wallet_not_found` | 404 | The specified wallet ID does not exist |
+| `customer_not_found` | 404 | The specified customer ID does not exist |
+| `rate_limit_exceeded` | 429 | You have exceeded the request rate limit |
+| `invalid_amount` | 422 | The amount is zero, negative, or exceeds the maximum |
+| `kyc_required` | 403 | The customer must complete KYC verification first |
+| `invalid_api_key` | 401 | The API key is missing, malformed, or revoked |
+| `webhook_delivery_failed` | — | Buburuza could not reach your webhook URL |
+
+<Tip>
+  Implement exponential backoff with jitter for `rate_limit_exceeded` errors. Start with a 1-second delay, double it on each retry, and cap at 60 seconds.
+</Tip>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/api/authentication">
+    Deep-dive into JWT authentication, API key rotation, biometric flows, and token scoping.
+  </Card>
+
+  <Card title="Core Banking API" icon="building-columns" href="/api/core-banking">
+    Full endpoint reference for wallets, transfers, cards, and transaction history.
+  </Card>
+
+  <Card title="AI Services API" icon="brain" href="/api/ai-services">
+    Parse natural language payment intents, run risk assessments, and automate compliance workflows.
+  </Card>
+
+  <Card title="SDKs and libraries" icon="code" href="/api/sdks-and-libraries">
+    Installation guides and changelogs for JavaScript, Python, Java, iOS, Android, and React Native SDKs.
+  </Card>
+</CardGroup>

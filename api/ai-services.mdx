@@ -1,0 +1,1051 @@
+---
+title: "AI Services API — Intelligent Engine B1 Reference"
+description: "Reference for Buburuza's AI Services API — parse banking intent, score transaction risk, automate AML/KYC compliance, and generate financial insights."
+sidebarTitle: "AI Services API"
+---
+
+The Buburuza AI Services API exposes the Intelligent Engine B1 — a multi-agent AI system purpose-built for financial services. You can use it to parse natural language banking commands, detect fraud in real time, automate AML and KYC compliance workflows, and deliver personalized financial guidance to your users.
+
+<Warning>
+  The AI Services API is in **developer preview**. Endpoints and response schemas may change between releases. Contact [developers@buburuza.com](mailto:developers@buburuza.com) to join the early access program.
+</Warning>
+
+<Note>
+  All AI Services endpoints require the `ai:read` or `ai:write` scope. See the [Authentication](/api/authentication) page for details on requesting scopes.
+</Note>
+
+---
+
+## Natural language processing
+
+### Parse banking intent
+
+**POST** `/v1/ai/parse-intent`
+
+Convert a free-text banking request into a structured intent object. The engine resolves the recipient, amount, and currency from natural language and returns a `confidence` score between 0 and 1. Use this endpoint to drive natural language interfaces without building your own NLP pipeline.
+
+#### Request parameters
+
+<ParamField body="customerId" type="string" required>
+  The customer submitting the natural language request. Used to resolve contacts and apply account-specific context.
+</ParamField>
+
+<ParamField body="message" type="string" required>
+  The natural language input from the user (e.g. "Send \$250 to my mom for her birthday").
+</ParamField>
+
+<ParamField body="context" type="object">
+  Optional context that improves intent resolution accuracy.
+
+  <Expandable title="context properties">
+    <ParamField body="context.recentContacts" type="object[]">
+      List of contacts with `name`, `accountId`, and optionally `relationship`.
+    </ParamField>
+
+    <ParamField body="context.accountBalance" type="number">
+      Current account balance in the smallest currency unit. Used for validation checks.
+    </ParamField>
+
+    <ParamField body="context.recentTransactions" type="string[]">
+      Recent transaction categories (e.g. `['grocery', 'restaurant']`) to improve disambiguation.
+    </ParamField>
+
+    <ParamField body="context.currentLocation" type="string">
+      The user's current location as a city/region string.
+    </ParamField>
+
+    <ParamField body="context.timezone" type="string">
+      IANA timezone string (e.g. `America/Los_Angeles`).
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+#### Example
+
+<CodeGroup>
+
+```javascript javascript
+const intent = await buburuza.ai.parseIntent({
+  customerId: 'cust_1234567890abcdef',
+  message: 'I want to send $250 to my mom for her birthday gift',
+  context: {
+    recentContacts: [
+      { name: 'Mom', accountId: 'acc_mom_123', relationship: 'family' },
+      { name: 'Sarah Johnson', accountId: 'acc_sarah_456', relationship: 'friend' }
+    ],
+    accountBalance: 150000,
+    recentTransactions: ['grocery', 'restaurant', 'gas'],
+    currentLocation: 'San Francisco, CA',
+    timezone: 'America/Los_Angeles'
+  }
+});
+
+console.log('Action:', intent.action);
+console.log('Confidence:', intent.confidence);
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/ai/parse-intent',
+    headers={'Authorization': f'Bearer {access_token}'},
+    json={
+        'customerId': 'cust_1234567890abcdef',
+        'message': 'I want to send $250 to my mom for her birthday gift',
+        'context': {
+            'recentContacts': [
+                {'name': 'Mom', 'accountId': 'acc_mom_123', 'relationship': 'family'}
+            ],
+            'accountBalance': 150000,
+            'recentTransactions': ['grocery', 'restaurant', 'gas'],
+            'currentLocation': 'San Francisco, CA'
+        }
+    }
+)
+intent = response.json()
+```
+
+</CodeGroup>
+
+#### Response fields
+
+<ResponseField name="intentId" type="string" required>
+  Unique identifier for this intent. Pass to `POST /v1/transactions/ai-intent` to execute.
+</ResponseField>
+
+<ResponseField name="confidence" type="number" required>
+  Confidence score from 0 to 1. Scores below 0.7 should trigger a clarification prompt rather than automatic execution.
+</ResponseField>
+
+<ResponseField name="action" type="string" required>
+  The resolved action (e.g. `send_money`, `check_balance`, `schedule_transfer`).
+</ResponseField>
+
+<ResponseField name="parameters" type="object" required>
+  Resolved intent parameters including `amount`, `currency`, `recipient`, `description`, and `urgency`.
+</ResponseField>
+
+<ResponseField name="suggestedFollowUps" type="string[]">
+  Conversational follow-up prompts to surface to the user.
+</ResponseField>
+
+<ResponseField name="validationChecks" type="object">
+  Pre-execution checks: `sufficientFunds`, `recipientValid`, and `withinLimits`.
+</ResponseField>
+
+```json response
+{
+  "intentId": "intent_1234567890abcdef",
+  "confidence": 0.94,
+  "action": "send_money",
+  "parameters": {
+    "amount": 25000,
+    "currency": "USD",
+    "recipient": {
+      "name": "Mom",
+      "accountId": "acc_mom_123",
+      "confidence": 0.98
+    },
+    "description": "birthday gift",
+    "urgency": "normal"
+  },
+  "suggestedFollowUps": [
+    "Would you like to add a birthday message?",
+    "Should this be a recurring monthly gift?"
+  ],
+  "validationChecks": {
+    "sufficientFunds": true,
+    "recipientValid": true,
+    "withinLimits": true
+  }
+}
+```
+
+---
+
+### Conversational banking
+
+**POST** `/v1/ai/conversation`
+
+Maintain a stateful conversation with the AI assistant across multiple turns. Pass the same `sessionId` to continue an existing conversation. The engine uses the customer's financial profile and goals to provide context-aware responses.
+
+#### Request parameters
+
+<ParamField body="customerId" type="string" required>
+  The customer having the conversation.
+</ParamField>
+
+<ParamField body="sessionId" type="string" required>
+  Session identifier. Generate a new UUID to start a conversation; reuse the same ID to continue one.
+</ParamField>
+
+<ParamField body="message" type="string" required>
+  The user's message in this turn.
+</ParamField>
+
+<ParamField body="context" type="object">
+  Customer profile and goals that personalize the response.
+
+  <Expandable title="context properties">
+    <ParamField body="context.customerProfile" type="object">
+      Profile fields including `age`, `income`, `currentSavings`, `monthlyExpenses`, and `creditScore`.
+    </ParamField>
+
+    <ParamField body="context.goals" type="object[]">
+      Financial goals with `type`, `target`, and `timeline`.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<CodeGroup>
+
+```javascript javascript
+const conversation = await buburuza.ai.conversation({
+  customerId: 'cust_1234567890abcdef',
+  sessionId: 'session_1234567890abcdef',
+  message: "What's the best way to save for a house down payment?",
+  context: {
+    customerProfile: {
+      age: 28,
+      income: 85000,
+      currentSavings: 25000,
+      monthlyExpenses: 4500,
+      creditScore: 750
+    },
+    goals: [
+      { type: 'home_purchase', target: 400000, timeline: '2 years' }
+    ]
+  }
+});
+
+console.log('Response:', conversation.response);
+console.log('Suggested actions:', conversation.nextActions);
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/ai/conversation',
+    headers={'Authorization': f'Bearer {access_token}'},
+    json={
+        'customerId': 'cust_1234567890abcdef',
+        'sessionId': 'session_1234567890abcdef',
+        'message': "What's the best way to save for a house down payment?",
+        'context': {
+            'customerProfile': {
+                'age': 28,
+                'income': 85000,
+                'currentSavings': 25000,
+                'monthlyExpenses': 4500,
+                'creditScore': 750
+            },
+            'goals': [
+                {'type': 'home_purchase', 'target': 400000, 'timeline': '2 years'}
+            ]
+        }
+    }
+)
+result = response.json()
+```
+
+</CodeGroup>
+
+```json response
+{
+  "sessionId": "session_1234567890abcdef",
+  "response": "Based on your goal of buying a $400,000 home in 2 years, you'll need about $80,000 for a 20% down payment. You currently have $25,000 saved, so you need an additional $55,000 — about $2,300 per month.\n\nRecommendations:\n1. Move current savings to a high-yield account at 4.5% APY\n2. Set up $2,400 automated monthly transfers\n3. Trim $400 from discretionary spending\n\nWould you like me to set up the automated savings plan?",
+  "suggestions": [
+    "Set up automated savings plan",
+    "Open high-yield savings account",
+    "Review monthly budget",
+    "Explore mortgage pre-approval"
+  ],
+  "confidence": 0.92,
+  "sentiment": "helpful",
+  "nextActions": [
+    {
+      "type": "create_savings_goal",
+      "parameters": { "target": 80000, "deadline": "2027-11-07" }
+    }
+  ]
+}
+```
+
+---
+
+### Financial question answering
+
+**POST** `/v1/ai/financial-qa`
+
+Submit a complex financial question with customer-specific context and receive structured advice. Useful for scenarios like debt-versus-investment tradeoffs, tax-efficiency analysis, or retirement planning.
+
+<CodeGroup>
+
+```javascript javascript
+const financialAnswer = await buburuza.ai.financialQA({
+  question: 'Should I pay off my credit card debt or invest in my 401k first?',
+  customerContext: {
+    creditCardDebt: 8500,
+    creditCardAPR: 0.1899,
+    employerMatch: 0.50,      // 50% match up to 6% of salary
+    currentContribution: 0.03, // Currently contributing 3%
+    annualIncome: 75000,
+    taxBracket: 0.22
+  }
+});
+
+console.log('Advice:', financialAnswer.advice);
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/ai/financial-qa',
+    headers={'Authorization': f'Bearer {access_token}'},
+    json={
+        'question': 'Should I pay off my credit card debt or invest in my 401k first?',
+        'customerContext': {
+            'creditCardDebt': 8500,
+            'creditCardAPR': 0.1899,
+            'employerMatch': 0.50,
+            'currentContribution': 0.03,
+            'annualIncome': 75000,
+            'taxBracket': 0.22
+        }
+    }
+)
+answer = response.json()
+```
+
+</CodeGroup>
+
+---
+
+## Fraud detection and risk
+
+### Score transaction risk
+
+**POST** `/v1/ai/risk-score`
+
+Evaluate a transaction's fraud risk before or after processing. The engine returns a `riskScore` from 0–100, a `riskLevel` label, and a breakdown of contributing factors.
+
+#### Request parameters
+
+<ParamField body="transactionId" type="string" required>
+  The transaction to score.
+</ParamField>
+
+<ParamField body="transaction" type="object" required>
+  Transaction details: `amount`, `currency`, `merchant`, `location`, `paymentMethod`, and `cardLastFour`.
+</ParamField>
+
+<ParamField body="customerContext" type="object" required>
+  Customer behavioral baseline: `customerId`, `accountAge`, `averageTransactionAmount`, `typicalLocations`, `recentBehavior`, and `deviceFingerprint`.
+</ParamField>
+
+<CodeGroup>
+
+```javascript javascript
+const riskScore = await buburuza.ai.assessRisk({
+  transactionId: 'txn_pending_123',
+  transaction: {
+    amount: 50000,
+    currency: 'USD',
+    merchant: 'Electronics Store XYZ',
+    location: 'New York, NY',
+    paymentMethod: 'card',
+    cardLastFour: '1234'
+  },
+  customerContext: {
+    customerId: 'cust_1234567890abcdef',
+    accountAge: '2 years',
+    averageTransactionAmount: 8500,
+    typicalLocations: ['San Francisco, CA', 'Oakland, CA'],
+    recentBehavior: 'normal',
+    deviceFingerprint: 'device_abc123'
+  }
+});
+
+console.log('Risk Score:', riskScore.riskScore); // 0–100
+console.log('Risk Level:', riskScore.riskLevel); // 'low', 'medium', 'high'
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/ai/risk-score',
+    headers={'Authorization': f'Bearer {access_token}'},
+    json={
+        'transactionId': 'txn_pending_123',
+        'transaction': {
+            'amount': 50000,
+            'currency': 'USD',
+            'merchant': 'Electronics Store XYZ',
+            'location': 'New York, NY',
+            'paymentMethod': 'card',
+            'cardLastFour': '1234'
+        },
+        'customerContext': {
+            'customerId': 'cust_1234567890abcdef',
+            'accountAge': '2 years',
+            'averageTransactionAmount': 8500,
+            'typicalLocations': ['San Francisco, CA', 'Oakland, CA'],
+            'recentBehavior': 'normal',
+            'deviceFingerprint': 'device_abc123'
+        }
+    }
+)
+risk = response.json()
+```
+
+</CodeGroup>
+
+```json response
+{
+  "transactionId": "txn_pending_123",
+  "riskScore": 25,
+  "riskLevel": "low",
+  "factors": [
+    {
+      "factor": "transaction_amount",
+      "weight": 0.3,
+      "description": "Transaction amount is within normal range"
+    },
+    {
+      "factor": "location_anomaly",
+      "weight": 0.4,
+      "description": "Transaction location is outside usual patterns"
+    },
+    {
+      "factor": "merchant_reputation",
+      "weight": 0.2,
+      "description": "Merchant has good reputation and history"
+    }
+  ],
+  "recommendations": [
+    "Approve transaction",
+    "Send confirmation notification"
+  ],
+  "confidence": 0.88
+}
+```
+
+---
+
+### Behavioral analysis
+
+**POST** `/v1/ai/behavior-analysis`
+
+Analyze a customer's behavioral patterns over a time window to detect anomalies. Returns a `normalcyScore` — values significantly below baseline may indicate account compromise.
+
+#### Request parameters
+
+<ParamField body="customerId" type="string" required>
+  The customer whose behavior to analyze.
+</ParamField>
+
+<ParamField body="timeframe" type="string" required>
+  Analysis window. Accepts `7d`, `30d`, or `90d`.
+</ParamField>
+
+<ParamField body="analysisType" type="string" required>
+  Analysis depth: `standard` or `comprehensive`.
+</ParamField>
+
+<ParamField body="includeFactors" type="string[]">
+  Behavioral signals to include: `spending_patterns`, `login_behavior`, `device_usage`, `geographic_patterns`.
+</ParamField>
+
+```javascript behavioral-analysis.js
+const behaviorAnalysis = await buburuza.ai.analyzeBehavior({
+  customerId: 'cust_1234567890abcdef',
+  timeframe: '30d',
+  analysisType: 'comprehensive',
+  includeFactors: [
+    'spending_patterns',
+    'login_behavior',
+    'device_usage',
+    'geographic_patterns'
+  ]
+});
+
+console.log('Normalcy Score:', behaviorAnalysis.normalcyScore);
+```
+
+---
+
+## Compliance automation
+
+### AML transaction monitoring
+
+**POST** `/v1/ai/aml-monitor`
+
+Run a transaction through automated Anti-Money Laundering screening. The engine checks against CTR thresholds, suspicious pattern indicators, and aggregated daily volumes, and returns `alerts` with recommended regulatory actions.
+
+#### Request parameters
+
+<ParamField body="customerId" type="string" required>
+  The customer associated with the transaction.
+</ParamField>
+
+<ParamField body="transactionId" type="string" required>
+  The transaction to screen.
+</ParamField>
+
+<ParamField body="transaction" type="object" required>
+  Transaction details: `amount`, `currency`, `type`, and `counterparty` (with `name`, `country`, `accountNumber`).
+</ParamField>
+
+<ParamField body="thresholds" type="object">
+  Override default reporting thresholds. Fields: `singleTransaction`, `dailyAggregate`, and `suspiciousPattern`.
+</ParamField>
+
+<CodeGroup>
+
+```javascript javascript
+const amlAnalysis = await buburuza.ai.monitorAML({
+  customerId: 'cust_1234567890abcdef',
+  transactionId: 'txn_1234567890abcdef',
+  transaction: {
+    amount: 1000000, // $10,000
+    currency: 'USD',
+    type: 'wire_transfer',
+    counterparty: {
+      name: 'ABC Corporation',
+      country: 'US',
+      accountNumber: '9876543210'
+    }
+  },
+  thresholds: {
+    singleTransaction: 1000000, // $10,000 CTR threshold
+    dailyAggregate: 1000000,
+    suspiciousPattern: true
+  }
+});
+
+console.log('AML Status:', amlAnalysis.amlStatus);
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/ai/aml-monitor',
+    headers={'Authorization': f'Bearer {access_token}'},
+    json={
+        'customerId': 'cust_1234567890abcdef',
+        'transactionId': 'txn_1234567890abcdef',
+        'transaction': {
+            'amount': 1000000,
+            'currency': 'USD',
+            'type': 'wire_transfer',
+            'counterparty': {
+                'name': 'ABC Corporation',
+                'country': 'US',
+                'accountNumber': '9876543210'
+            }
+        }
+    }
+)
+aml = response.json()
+```
+
+</CodeGroup>
+
+```json response
+{
+  "transactionId": "txn_1234567890abcdef",
+  "amlStatus": "requires_reporting",
+  "alerts": [
+    {
+      "type": "currency_transaction_report",
+      "reason": "Transaction exceeds $10,000 threshold",
+      "action": "file_ctr",
+      "deadline": "2025-11-14T23:59:59Z"
+    }
+  ],
+  "riskIndicators": [
+    {
+      "indicator": "large_cash_transaction",
+      "severity": "medium",
+      "description": "Transaction amount exceeds CTR threshold"
+    }
+  ],
+  "recommendations": [
+    "File Currency Transaction Report (CTR)",
+    "Verify customer identity documentation",
+    "Document business purpose of transaction"
+  ],
+  "complianceScore": 85
+}
+```
+
+---
+
+### KYC risk assessment
+
+**POST** `/v1/ai/kyc-assessment`
+
+Evaluate a customer's KYC risk level using submitted documents and optional enrichment checks including sanctions screening, PEP (politically exposed person) checks, and adverse media scanning.
+
+#### Request parameters
+
+<ParamField body="customerId" type="string" required>
+  The customer to assess.
+</ParamField>
+
+<ParamField body="documents" type="object[]" required>
+  List of submitted documents. Each object requires `type` (`government_id`, `proof_of_address`), `documentId`, and `verificationStatus`.
+</ParamField>
+
+<ParamField body="additionalChecks" type="string[]">
+  Optional enrichment checks: `sanctions_screening`, `pep_check`, `adverse_media`.
+</ParamField>
+
+<CodeGroup>
+
+```javascript javascript
+const kycAssessment = await buburuza.ai.assessKYC({
+  customerId: 'cust_1234567890abcdef',
+  documents: [
+    {
+      type: 'government_id',
+      documentId: 'doc_1234567890abcdef',
+      verificationStatus: 'verified'
+    },
+    {
+      type: 'proof_of_address',
+      documentId: 'doc_0987654321fedcba',
+      verificationStatus: 'verified'
+    }
+  ],
+  additionalChecks: [
+    'sanctions_screening',
+    'pep_check',
+    'adverse_media'
+  ]
+});
+
+console.log('KYC Risk Level:', kycAssessment.riskLevel);
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/ai/kyc-assessment',
+    headers={'Authorization': f'Bearer {access_token}'},
+    json={
+        'customerId': 'cust_1234567890abcdef',
+        'documents': [
+            {
+                'type': 'government_id',
+                'documentId': 'doc_1234567890abcdef',
+                'verificationStatus': 'verified'
+            }
+        ],
+        'additionalChecks': ['sanctions_screening', 'pep_check', 'adverse_media']
+    }
+)
+kyc = response.json()
+```
+
+</CodeGroup>
+
+---
+
+## Financial insights
+
+### Spending analysis
+
+**POST** `/v1/ai/spending-analysis`
+
+Analyze a customer's spending patterns over a defined timeframe, categorize transactions automatically, and generate budget recommendations and a spending forecast.
+
+#### Request parameters
+
+<ParamField body="customerId" type="string" required>
+  The customer whose spending to analyze.
+</ParamField>
+
+<ParamField body="timeframe" type="string" required>
+  Analysis window: `30d`, `60d`, or `90d`.
+</ParamField>
+
+<ParamField body="categories" default="auto_detect" type="string">
+  Use `auto_detect` to let the engine categorize transactions, or pass an array of category names.
+</ParamField>
+
+<ParamField body="compareToAverage" type="boolean">
+  When `true`, benchmark the customer's spending against anonymized peer averages.
+</ParamField>
+
+<ParamField body="includeForecasting" type="boolean">
+  When `true`, include a next-month spending forecast in the response.
+</ParamField>
+
+<CodeGroup>
+
+```javascript javascript
+const spendingInsights = await buburuza.ai.analyzeSpending({
+  customerId: 'cust_1234567890abcdef',
+  timeframe: '90d',
+  categories: 'auto_detect',
+  compareToAverage: true,
+  includeForecasting: true
+});
+
+console.log('Top category:', spendingInsights.categories);
+console.log('Forecast:', spendingInsights.forecast);
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/ai/spending-analysis',
+    headers={'Authorization': f'Bearer {access_token}'},
+    json={
+        'customerId': 'cust_1234567890abcdef',
+        'timeframe': '90d',
+        'categories': 'auto_detect',
+        'compareToAverage': True,
+        'includeForecasting': True
+    }
+)
+insights = response.json()
+```
+
+</CodeGroup>
+
+```json response
+{
+  "customerId": "cust_1234567890abcdef",
+  "analysisDate": "2025-11-07T15:30:00Z",
+  "timeframe": "90d",
+  "totalSpending": 1275000,
+  "categories": {
+    "groceries": { "amount": 45000, "percentage": 35.3, "trend": "stable" },
+    "dining": { "amount": 32000, "percentage": 25.1, "trend": "increasing" },
+    "transportation": { "amount": 28000, "percentage": 22.0, "trend": "decreasing" },
+    "entertainment": { "amount": 15000, "percentage": 11.8, "trend": "stable" },
+    "other": { "amount": 7500, "percentage": 5.8, "trend": "stable" }
+  },
+  "insights": [
+    {
+      "type": "trend_alert",
+      "category": "dining",
+      "message": "Dining expenses increased 23% compared to last quarter",
+      "suggestion": "Consider meal planning to reduce restaurant spending"
+    },
+    {
+      "type": "optimization",
+      "category": "transportation",
+      "message": "Transportation costs reduced by 15%",
+      "suggestion": "Continue using public transit and ride-sharing"
+    }
+  ],
+  "forecast": {
+    "nextMonth": 42500,
+    "confidence": 0.87
+  },
+  "budgetRecommendations": {
+    "groceries": 40000,
+    "dining": 25000,
+    "transportation": 30000,
+    "entertainment": 15000
+  }
+}
+```
+
+---
+
+### Investment recommendations
+
+**POST** `/v1/ai/investment-advice`
+
+Generate personalized investment recommendations based on a customer's risk tolerance, time horizon, existing portfolio, and current market conditions.
+
+#### Request parameters
+
+<ParamField body="customerId" type="string" required>
+  The customer to generate recommendations for.
+</ParamField>
+
+<ParamField body="investmentProfile" type="object" required>
+  Profile including `riskTolerance` (`conservative`, `moderate`, `aggressive`), `timeHorizon`, `goals`, `currentPortfolio`, and `monthlyInvestment`.
+</ParamField>
+
+<ParamField body="marketContext" type="object">
+  Optional current market context: `currentMarketConditions` and `economicIndicators`.
+</ParamField>
+
+```javascript investment-advice.js
+const investmentAdvice = await buburuza.ai.generateInvestmentAdvice({
+  customerId: 'cust_1234567890abcdef',
+  investmentProfile: {
+    riskTolerance: 'moderate',
+    timeHorizon: '10_years',
+    goals: ['retirement', 'wealth_building'],
+    currentPortfolio: {
+      stocks: 60,
+      bonds: 30,
+      cash: 10
+    },
+    monthlyInvestment: 150000 // $1,500.00
+  },
+  marketContext: {
+    currentMarketConditions: 'volatile',
+    economicIndicators: ['inflation_concerns', 'rate_uncertainty']
+  }
+});
+
+console.log('Recommendations:', investmentAdvice.recommendations);
+```
+
+---
+
+### AI credit assessment
+
+**POST** `/v1/ai/credit-assessment`
+
+Run an AI-powered credit assessment using both traditional metrics and alternative data sources (utility payments, rent history, phone payments). Returns a credit decision, recommended limit, and interest rate.
+
+#### Request parameters
+
+<ParamField body="customerId" type="string" required>
+  The customer applying for credit.
+</ParamField>
+
+<ParamField body="applicationData" type="object" required>
+  Application details: `requestedAmount`, `purpose`, `income`, and `employment` (with `status`, `tenure`, and `employer`).
+</ParamField>
+
+<ParamField body="bankingHistory" type="object">
+  Account history: `accountAge`, `averageBalance`, `overdrafts`, and `transactionVolume`.
+</ParamField>
+
+<ParamField body="alternativeData" type="object">
+  Alternative credit signals: `utilityPayments`, `rentPayments`, `phonePayments`. Values: `on_time` or `late`.
+</ParamField>
+
+<CodeGroup>
+
+```javascript javascript
+const creditAssessment = await buburuza.ai.assessCredit({
+  customerId: 'cust_1234567890abcdef',
+  applicationData: {
+    requestedAmount: 2500000, // $25,000 credit limit
+    purpose: 'home_improvement',
+    income: 95000,
+    employment: {
+      status: 'employed',
+      tenure: '3 years',
+      employer: 'Tech Corp Inc'
+    }
+  },
+  bankingHistory: {
+    accountAge: '2 years',
+    averageBalance: 850000,
+    overdrafts: 0,
+    transactionVolume: 'high'
+  },
+  alternativeData: {
+    utilityPayments: 'on_time',
+    rentPayments: 'on_time',
+    phonePayments: 'on_time'
+  }
+});
+
+console.log('Decision:', creditAssessment.decision);
+console.log('Recommended limit:', creditAssessment.recommendedLimit);
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/ai/credit-assessment',
+    headers={'Authorization': f'Bearer {access_token}'},
+    json={
+        'customerId': 'cust_1234567890abcdef',
+        'applicationData': {
+            'requestedAmount': 2500000,
+            'purpose': 'home_improvement',
+            'income': 95000,
+            'employment': {
+                'status': 'employed',
+                'tenure': '3 years',
+                'employer': 'Tech Corp Inc'
+            }
+        },
+        'bankingHistory': {
+            'accountAge': '2 years',
+            'averageBalance': 850000,
+            'overdrafts': 0,
+            'transactionVolume': 'high'
+        },
+        'alternativeData': {
+            'utilityPayments': 'on_time',
+            'rentPayments': 'on_time',
+            'phonePayments': 'on_time'
+        }
+    }
+)
+assessment = response.json()
+```
+
+</CodeGroup>
+
+```json response
+{
+  "customerId": "cust_1234567890abcdef",
+  "assessmentId": "assess_1234567890abcdef",
+  "decision": "approved",
+  "recommendedLimit": 2000000,
+  "interestRate": 0.1299,
+  "aiCreditScore": 742,
+  "factors": [
+    {
+      "factor": "payment_history",
+      "weight": 35,
+      "score": 850,
+      "impact": "positive"
+    },
+    {
+      "factor": "banking_behavior",
+      "weight": 25,
+      "score": 780,
+      "impact": "positive"
+    },
+    {
+      "factor": "income_stability",
+      "weight": 20,
+      "score": 720,
+      "impact": "positive"
+    }
+  ],
+  "confidence": 0.91,
+  "explanation": "Strong payment history and stable banking patterns indicate low risk. Approved with $20,000 limit based on income and financial behavior."
+}
+```
+
+---
+
+## Error handling
+
+AI-specific errors differ from standard API errors. The engine may return structured errors when it lacks context, when confidence is too low to act safely, or when a model is temporarily unavailable.
+
+### AI error codes
+
+| Code | Description | Recommended action |
+| --- | --- | --- |
+| `insufficient_context` | The request lacks enough information to resolve intent | Prompt the user for clarification |
+| `low_confidence` | The model's confidence score is below the action threshold | Require human review before proceeding |
+| `model_unavailable` | The AI model is temporarily unavailable | Fall back to rule-based processing |
+| `rate_limit_exceeded` | Too many requests to the AI endpoint | Implement exponential backoff |
+
+### Handling AI errors
+
+```javascript ai-error-handling.js
+try {
+  const intent = await buburuza.ai.parseIntent({
+    customerId: 'cust_123',
+    message: 'Send money'
+  });
+} catch (error) {
+  switch (error.code) {
+    case 'insufficient_context':
+      // Ask the user for more detail
+      console.log('Need more information to understand intent');
+      break;
+
+    case 'low_confidence':
+      // Route to human review
+      console.log('Confidence too low:', error.details.confidence);
+      break;
+
+    case 'model_unavailable':
+      // Fall back to rule-based processing
+      console.log('AI model temporarily unavailable');
+      break;
+
+    case 'rate_limit_exceeded':
+      // Back off and retry
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      break;
+  }
+}
+```
+
+---
+
+## Testing in sandbox
+
+The sandbox environment returns predictable, deterministic AI responses so you can write reliable integration tests without depending on live model inference.
+
+<Tip>
+  Pass `context: { testing: true }` in any AI request to guarantee consistent sandbox responses across test runs.
+</Tip>
+
+<AccordionGroup>
+  <Accordion title="Predictable intent responses">
+    In sandbox, `POST /v1/ai/parse-intent` always returns a confidence of `0.95` and resolves the first contact in your `recentContacts` array as the recipient.
+
+    ```javascript sandbox-intent.js
+    const testIntent = await buburuza.ai.parseIntent({
+      customerId: 'test_customer_123',
+      message: 'Send $100 to John',
+      context: { testing: true }
+    });
+    
+    console.log(testIntent.confidence); // Always 0.95 in sandbox
+    ```
+  </Accordion>
+
+  <Accordion title="Predictable risk scores">
+    Transactions under $$1,000 return `riskLevel: low` with a `riskScore` of `10`. Transactions over $$5,000 return `riskLevel: medium` with a `riskScore` of `55`.
+
+    ```javascript sandbox-risk.js
+    const riskScore = await buburuza.ai.assessRisk({
+      transactionId: 'txn_test_123',
+      transaction: { amount: 500, currency: 'USD' },
+      customerContext: { customerId: 'test_customer_123' }
+    });
+    
+    console.log(riskScore.riskLevel); // 'low'
+    console.log(riskScore.riskScore); // 10
+    ```
+  </Accordion>
+
+  <Accordion title="Predictable AML outcomes">
+    Transactions under $$10,000 return `amlStatus: clear`. Transactions at or above $$10,000 return `amlStatus: requires_reporting` with a CTR alert, matching production behavior.
+
+    ```javascript sandbox-aml.js
+    const aml = await buburuza.ai.monitorAML({
+      customerId: 'test_customer_123',
+      transactionId: 'txn_test_456',
+      transaction: { amount: 1000000, currency: 'USD', type: 'wire_transfer' }
+    });
+    
+    console.log(aml.amlStatus); // 'requires_reporting'
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Model versions
+
+The AI Services API runs versioned models. Current production versions:
+
+| Model | Version | Accuracy |
+| --- | --- | --- |
+| Fraud Detection | v2.1.0 | 98.5% |
+| Intent Parsing | v1.8.0 | 92% |
+| Risk Assessment | v2.5.0 | 91% |
+| Credit Scoring | v3.0.0 | 89% |

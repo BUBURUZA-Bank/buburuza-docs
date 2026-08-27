@@ -1,0 +1,752 @@
+---
+title: "Authentication API — Buburuza Developer Reference"
+description: "Learn how to authenticate with the Buburuza API using API keys, OAuth 2.0, and biometric methods. Covers token generation, refresh, scopes, MFA, and webhooks."
+sidebarTitle: "Authentication"
+---
+
+The Buburuza API uses JWT-based authentication across all endpoints. You can authenticate server-to-server with an API key, act on behalf of users via OAuth 2.0, or add biometric verification for mobile flows. Every request must include a valid `Authorization: Bearer <token>` header — requests without one return a `401 Unauthorized` error.
+
+## Authentication methods
+
+Buburuza supports three authentication methods depending on your use case:
+
+<AccordionGroup>
+  <Accordion title="API key (server-to-server)" defaultOpen>
+    Use a long-lived API key for backend services communicating directly with the Buburuza API. Prefix production keys with `bb_live_` and sandbox keys with `bb_test_`.
+
+    ```bash cURL
+    curl -X GET https://api.buburuza.com/v1/customers \
+      -H "Authorization: Bearer bb_live_1234567890abcdef" \
+      -H "Content-Type: application/json"
+    ```
+  </Accordion>
+
+  <Accordion title="OAuth 2.0 (user authentication)">
+    Use OAuth 2.0 when your application needs to act on behalf of a user. Redirect users to the Buburuza authorization server, receive an authorization code, and exchange it for an access token.
+
+    ```javascript oauth-redirect.js
+    const authUrl = buburuza.auth.getAuthorizationUrl({
+      clientId: 'your_client_id',
+      redirectUri: 'https://yourapp.com/callback',
+      scope: ['accounts:read', 'transactions:write'],
+      state: 'random_state_string'
+    });
+    
+    window.location.href = authUrl;
+    ```
+  </Accordion>
+
+  <Accordion title="Biometric (mobile)">
+    For mobile apps requiring enhanced security, you can trigger device biometric verification (fingerprint, face, or voice) and receive a signed challenge that the Buburuza API validates.
+
+    ```javascript biometric.js
+    const biometricAuth = await buburuza.auth.requestBiometric({
+      userId: 'user_123',
+      method: 'fingerprint', // 'fingerprint', 'face', 'voice'
+      challenge: 'auth_challenge_456'
+    });
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Generating an access token
+
+**POST** `/v1/auth/token`
+
+Exchange your client credentials for a short-lived JWT access token. For machine-to-machine flows, use `grant_type: client_credentials`. For user-facing flows, use `grant_type: authorization_code` after redirecting the user through the OAuth flow.
+
+### Request parameters
+
+<ParamField body="grant_type" type="string" required>
+  The OAuth 2.0 grant type. One of `client_credentials`, `authorization_code`, or `refresh_token`.
+</ParamField>
+
+<ParamField body="client_id" type="string" required>
+  Your application's client ID, found in the Buburuza developer dashboard.
+</ParamField>
+
+<ParamField body="client_secret" type="string" required>
+  Your application's client secret. Never expose this in client-side code.
+</ParamField>
+
+<ParamField body="scope" type="string">
+  Space-separated list of scopes to request (e.g. `accounts transactions`). Defaults to your application's configured scopes.
+</ParamField>
+
+<ParamField body="code" type="string">
+  Required when `grant_type` is `authorization_code`. The code received at your redirect URI.
+</ParamField>
+
+<ParamField body="redirect_uri" type="string">
+  Required when `grant_type` is `authorization_code`. Must exactly match the URI used in the authorization request.
+</ParamField>
+
+### Example
+
+<CodeGroup>
+
+```javascript javascript
+const tokenResponse = await fetch('https://api.buburuza.com/v1/auth/token', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    grant_type: 'client_credentials',
+    client_id: 'your_client_id',
+    client_secret: 'your_client_secret',
+    scope: 'accounts transactions'
+  })
+});
+
+const { access_token, token_type, expires_in } = await tokenResponse.json();
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/auth/token',
+    json={
+        'grant_type': 'client_credentials',
+        'client_id': 'your_client_id',
+        'client_secret': 'your_client_secret',
+        'scope': 'accounts transactions'
+    }
+)
+
+data = response.json()
+access_token = data['access_token']
+expires_in = data['expires_in']
+```
+
+</CodeGroup>
+
+### Response fields
+
+<ResponseField name="access_token" type="string" required>
+  A signed JWT to include in the `Authorization` header of every API request.
+</ResponseField>
+
+<ResponseField name="token_type" type="string" required>
+  Always `Bearer`.
+</ResponseField>
+
+<ResponseField name="expires_in" type="number" required>
+  Token lifetime in seconds. Tokens expire after 3600 seconds (1 hour).
+</ResponseField>
+
+<ResponseField name="scope" type="string" required>
+  The space-separated scopes granted to this token.
+</ResponseField>
+
+<ResponseField name="refresh_token" type="string">
+  A long-lived token you can use to obtain new access tokens without re-authenticating. Rotate this on every use.
+</ResponseField>
+
+```json response
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "scope": "accounts transactions",
+  "refresh_token": "rt_1234567890abcdef"
+}
+```
+
+---
+
+## Refreshing tokens
+
+**POST** `/v1/auth/refresh`
+
+Use your refresh token to obtain a new access token before the current one expires. The refresh token itself is rotated on every use — store the new one returned in the response.
+
+### Request parameters
+
+<ParamField body="grant_type" type="string" required>
+  Must be `refresh_token`.
+</ParamField>
+
+<ParamField body="refresh_token" type="string" required>
+  The refresh token from your most recent token response.
+</ParamField>
+
+### Example
+
+<CodeGroup>
+
+```javascript javascript
+const refreshResponse = await buburuza.auth.refreshToken({
+  refreshToken: 'rt_1234567890abcdef'
+});
+
+console.log('New access token:', refreshResponse.accessToken);
+```
+
+```python python
+import requests
+
+response = requests.post(
+    'https://api.buburuza.com/v1/auth/refresh',
+    json={
+        'grant_type': 'refresh_token',
+        'refresh_token': 'rt_1234567890abcdef'
+    }
+)
+
+data = response.json()
+new_access_token = data['access_token']
+new_refresh_token = data['refresh_token']
+```
+
+</CodeGroup>
+
+```json response
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "refresh_token": "rt_0987654321fedcba"
+}
+```
+
+<Warning>
+  Refresh tokens are single-use. After refreshing, the previous refresh token is immediately invalidated. Always persist the new refresh token returned in the response.
+</Warning>
+
+---
+
+## Validating a token
+
+**GET** `/v1/auth/validate`
+
+Check whether a token is still valid and inspect its granted scopes. Useful when your server receives a token from a client and needs to verify it before trusting downstream requests.
+
+### Example
+
+<CodeGroup>
+
+```javascript javascript
+const validation = await buburuza.auth.validateToken({
+  token: access_token
+});
+
+console.log('Token valid:', validation.valid);
+console.log('Scopes:', validation.scopes);
+```
+
+```python python
+import requests
+
+response = requests.get(
+    'https://api.buburuza.com/v1/auth/validate',
+    headers={'Authorization': f'Bearer {access_token}'}
+)
+
+validation = response.json()
+print('Token valid:', validation['valid'])
+print('Scopes:', validation['scopes'])
+```
+
+</CodeGroup>
+
+### Response fields
+
+<ResponseField name="valid" type="boolean" required>
+  `true` if the token is active and has not expired or been revoked.
+</ResponseField>
+
+<ResponseField name="expires_at" type="string" required>
+  ISO 8601 timestamp of when the token expires.
+</ResponseField>
+
+<ResponseField name="scopes" type="string[]" required>
+  Array of scopes granted to this token.
+</ResponseField>
+
+<ResponseField name="client_id" type="string" required>
+  The client ID that issued this token.
+</ResponseField>
+
+<ResponseField name="user_id" type="string">
+  The user this token was issued on behalf of. Present only for user-scoped tokens.
+</ResponseField>
+
+```json response
+{
+  "valid": true,
+  "expires_at": "2025-11-07T16:30:00Z",
+  "scopes": ["accounts:read", "transactions:write"],
+  "client_id": "your_client_id",
+  "user_id": "user_123"
+}
+```
+
+---
+
+## OAuth 2.0 flows
+
+Choose the flow that matches your application type.
+
+<Tabs>
+  <Tab title="Authorization code (web apps)">
+    Use this flow for web applications with a secure server-side backend. The user authenticates in the browser and your backend exchanges the authorization code for tokens.
+
+    **Step 1 — Redirect the user to Buburuza:**
+
+    ```javascript step-1-redirect.js
+    const authUrl =
+      `https://auth.buburuza.com/oauth/authorize?` +
+      `response_type=code&` +
+      `client_id=${clientId}&` +
+      `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+      `scope=accounts transactions&` +
+      `state=${state}`;
+    
+    // Redirect the user
+    window.location.href = authUrl;
+    ```
+
+    **Step 2 — Exchange the code for a token:**
+
+    ```javascript step-2-exchange.js
+    const tokenResponse = await fetch('https://api.buburuza.com/v1/auth/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        client_id: 'your_client_id',
+        client_secret: 'your_client_secret',
+        code: 'authorization_code_from_callback',
+        redirect_uri: 'https://yourapp.com/callback'
+      })
+    });
+    ```
+
+    <Note>
+      Always verify that the `state` parameter in the callback matches the value you sent in step 1 to prevent CSRF attacks.
+    </Note>
+  </Tab>
+  <Tab title="Client credentials (machine-to-machine)">
+    Use this flow for backend services that do not act on behalf of a user. Your server authenticates directly with its own credentials.
+
+    ```javascript client-credentials.js
+    const clientAuth = await buburuza.auth.clientCredentials({
+      clientId: 'your_client_id',
+      clientSecret: 'your_client_secret',
+      scope: ['accounts:read', 'transactions:write']
+    });
+    
+    // Use clientAuth.access_token for all subsequent API requests
+    ```
+
+    ```python client-credentials.py
+    import requests
+    
+    response = requests.post(
+        'https://api.buburuza.com/v1/auth/token',
+        json={
+            'grant_type': 'client_credentials',
+            'client_id': 'your_client_id',
+            'client_secret': 'your_client_secret',
+            'scope': 'accounts:read transactions:write'
+        }
+    )
+    token = response.json()['access_token']
+    ```
+  </Tab>
+  <Tab title="PKCE (mobile apps)">
+    Use PKCE (Proof Key for Code Exchange) for mobile applications that cannot securely store a client secret. PKCE adds a cryptographic challenge to the authorization code flow.
+
+    ```javascript pkce-flow.js
+    import { generateCodeChallenge, generateCodeVerifier } from '@buburuza/sdk';
+    
+    // Step 1: Generate PKCE parameters
+    const codeVerifier = generateCodeVerifier();
+    const codeChallenge = await generateCodeChallenge(codeVerifier);
+    
+    // Step 2: Authorization request with PKCE
+    const authUrl =
+      `https://auth.buburuza.com/oauth/authorize?` +
+      `response_type=code&` +
+      `client_id=${clientId}&` +
+      `redirect_uri=${redirectUri}&` +
+      `code_challenge=${codeChallenge}&` +
+      `code_challenge_method=S256&` +
+      `scope=accounts transactions`;
+    
+    // Step 3: Exchange the code using the verifier (no client_secret needed)
+    const tokenResponse = await buburuza.auth.exchangeCodeForToken({
+      code: authorizationCode,
+      codeVerifier: codeVerifier,
+      clientId: 'your_client_id'
+    });
+    ```
+
+    <Tip>
+      Store `codeVerifier` only in memory for the duration of the authorization flow. Never persist it to disk or send it over the network before the token exchange.
+    </Tip>
+  </Tab>
+</Tabs>
+
+---
+
+## Available scopes
+
+Request only the scopes your application needs. Requesting unnecessary scopes increases your attack surface and may cause users to decline authorization.
+
+| Scope | Description | Access level |
+| --- | --- | --- |
+| `accounts:read` | Read account information and balances | Read-only |
+| `accounts:write` | Create and modify accounts | Read/write |
+| `transactions:read` | View transaction history | Read-only |
+| `transactions:write` | Create transactions and transfers | Read/write |
+| `cards:read` | View card information | Read-only |
+| `cards:write` | Issue and manage cards | Read/write |
+| `investments:read` | View portfolio and positions | Read-only |
+| `investments:write` | Execute trades and manage portfolio | Read/write |
+| `kyc:read` | View KYC status and documents | Read-only |
+| `kyc:write` | Initiate and manage KYC processes | Read/write |
+| `ai:read` | Access AI insights and analytics | Read-only |
+| `ai:write` | Submit requests to AI services | Read/write |
+
+### Scope examples
+
+<CodeGroup>
+
+```javascript read-only.js
+// Minimal scopes for a read-only dashboard
+const readOnlyToken = await buburuza.auth.clientCredentials({
+  clientId: 'your_client_id',
+  clientSecret: 'your_client_secret',
+  scope: ['accounts:read', 'transactions:read']
+});
+```
+
+```javascript full-access.js
+// Full scopes for a comprehensive financial app
+const fullAccessToken = await buburuza.auth.clientCredentials({
+  clientId: 'your_client_id',
+  clientSecret: 'your_client_secret',
+  scope: [
+    'accounts:write',
+    'transactions:write',
+    'cards:write',
+    'investments:write'
+  ]
+});
+```
+
+</CodeGroup>
+
+---
+
+## Multi-factor authentication (MFA)
+
+### Setting up MFA
+
+**POST** `/v1/auth/mfa/enable`
+
+Register an MFA method for a user. Supports TOTP authenticator apps, SMS, and email. When using `totp`, the response includes a `secret` and `qrCodeUrl` to display to the user for scanning into their authenticator app.
+
+<ParamField body="userId" type="string" required>
+  The user to enable MFA for.
+</ParamField>
+
+<ParamField body="method" type="string" required>
+  MFA method: `totp`, `sms`, or `email`.
+</ParamField>
+
+<ParamField body="phoneNumber" type="string">
+  Required when `method` is `sms`. E.164 format (e.g. `+15550123`).
+</ParamField>
+
+```javascript enable-mfa.js
+const mfaSetup = await buburuza.auth.mfa.enable({
+  userId: 'user_123',
+  method: 'totp',
+  phoneNumber: '+1-555-0123' // Required for SMS
+});
+
+console.log('MFA Secret:', mfaSetup.secret);
+console.log('QR Code URL:', mfaSetup.qrCodeUrl);
+```
+
+### Verifying an MFA code
+
+**POST** `/v1/auth/mfa/verify`
+
+Verify the one-time code a user submits during an MFA challenge.
+
+<ParamField body="userId" type="string" required>
+  The user submitting the MFA code.
+</ParamField>
+
+<ParamField body="code" type="string" required>
+  The 6-digit one-time code from the user's authenticator app or SMS.
+</ParamField>
+
+<ParamField body="method" type="string" required>
+  The MFA method to verify against: `totp`, `sms`, or `email`.
+</ParamField>
+
+```javascript verify-mfa.js
+const mfaVerification = await buburuza.auth.mfa.verify({
+  userId: 'user_123',
+  code: '123456',
+  method: 'totp'
+});
+
+if (mfaVerification.verified) {
+  // Grant access to sensitive operations
+  console.log('MFA verification successful');
+}
+```
+
+---
+
+## Biometric authentication
+
+### Register biometric credentials
+
+**POST** `/v1/auth/biometric/register`
+
+Register device biometric credentials for a user. The `publicKey` is generated by the device's secure enclave and used to verify future biometric challenges.
+
+```javascript biometric-register.js
+const biometricRegistration = await buburuza.auth.biometric.register({
+  userId: 'user_123',
+  biometricType: 'fingerprint',
+  deviceId: 'device_456',
+  publicKey: biometricPublicKey, // Generated by the device
+  metadata: {
+    deviceModel: 'iPhone 14 Pro',
+    osVersion: 'iOS 16.1'
+  }
+});
+```
+
+### Verify with biometrics
+
+**POST** `/v1/auth/biometric/verify`
+
+Authenticate a user using a signed biometric challenge. The `signature` is the biometric-signed version of the `challenge` string.
+
+```javascript biometric-verify.js
+const biometricAuth = await buburuza.auth.biometric.verify({
+  userId: 'user_123',
+  challenge: 'auth_challenge_789',
+  signature: biometricSignature, // Challenge signed by the device
+  biometricType: 'fingerprint'
+});
+
+if (biometricAuth.verified) {
+  console.log('Biometric authentication successful');
+  // Access token is provided in the response
+}
+```
+
+---
+
+## Webhook signature verification
+
+All webhook events from Buburuza include an `x-buburuza-signature` header containing an HMAC-SHA256 signature of the raw request body. Verify this signature before processing any webhook event.
+
+<Warning>
+  Always verify webhook signatures before acting on the event payload. Processing unverified webhooks can expose your application to replay and injection attacks.
+</Warning>
+
+<CodeGroup>
+
+```javascript node.js
+const crypto = require('crypto');
+
+function verifyWebhookSignature(payload, signature, secret) {
+  const expectedSignature = crypto
+    .createHmac('sha256', secret)
+    .update(payload)
+    .digest('hex');
+
+  return crypto.timingSafeEqual(
+    Buffer.from(signature, 'hex'),
+    Buffer.from(expectedSignature, 'hex')
+  );
+}
+
+// Express.js webhook handler
+app.post('/webhooks/buburuza', (req, res) => {
+  const signature = req.headers['x-buburuza-signature'];
+  const payload = JSON.stringify(req.body);
+
+  if (!verifyWebhookSignature(payload, signature, webhookSecret)) {
+    return res.status(401).send('Invalid signature');
+  }
+
+  const event = req.body;
+  console.log('Verified webhook event:', event.type);
+
+  res.status(200).send('OK');
+});
+```
+
+```python python
+import hmac
+import hashlib
+
+def verify_webhook_signature(payload: bytes, signature: str, secret: str) -> bool:
+    expected = hmac.new(
+        secret.encode(),
+        payload,
+        hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(signature, expected)
+
+# Flask webhook handler
+from flask import request, abort
+
+@app.route('/webhooks/buburuza', methods=['POST'])
+def handle_webhook():
+    signature = request.headers.get('x-buburuza-signature')
+    payload = request.get_data()
+
+    if not verify_webhook_signature(payload, signature, WEBHOOK_SECRET):
+        abort(401)
+
+    event = request.json
+    print('Verified webhook event:', event['type'])
+    return 'OK', 200
+```
+
+</CodeGroup>
+
+<Tip>
+  Use `crypto.timingSafeEqual` (Node.js) or `hmac.compare_digest` (Python) for signature comparison. Standard string equality is vulnerable to timing attacks.
+</Tip>
+
+---
+
+## Rate limits
+
+The authentication endpoints have dedicated rate limits separate from the rest of the API.
+
+| Endpoint | Limit |
+| --- | --- |
+| `POST /v1/auth/token` | 10 requests per minute per IP |
+| `GET /v1/auth/validate` | 100 requests per minute per token |
+| `POST /v1/auth/biometric/verify` | 5 requests per minute per user |
+
+When you exceed a rate limit, the API returns `429 Too Many Requests`. Use exponential backoff to retry:
+
+```javascript retry-with-backoff.js
+async function authenticateWithRetry(credentials, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await buburuza.auth.authenticate(credentials);
+    } catch (error) {
+      if (error.code === 'rate_limit_exceeded' && attempt < maxRetries) {
+        const delay = Math.pow(2, attempt) * 1000; // Exponential backoff
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      throw error;
+    }
+  }
+}
+```
+
+---
+
+## Security best practices
+
+### Token storage
+
+Store tokens in secure, server-side storage. On the client side, prefer HTTP-only cookies over `localStorage` — they are inaccessible to JavaScript and therefore protected from XSS attacks.
+
+```javascript token-storage.js
+// Prefer: store tokens in HTTP-only cookies on your backend
+res.cookie('access_token', access_token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'strict',
+  maxAge: 3600000 // 1 hour
+});
+
+// Acceptable fallback: localStorage (but note XSS risk)
+localStorage.setItem('buburuza_access_token', access_token);
+```
+
+### Token refresh strategy
+
+Implement a refresh manager that checks token expiry before every request, rather than waiting for a `401` response.
+
+```javascript auth-manager.js
+class BuburuザAuthManager {
+  constructor(apiKey, refreshToken) {
+    this.apiKey = apiKey;
+    this.refreshToken = refreshToken;
+    this.accessToken = null;
+    this.tokenExpiry = null;
+  }
+
+  async getValidToken() {
+    if (this.accessToken && this.tokenExpiry > Date.now()) {
+      return this.accessToken;
+    }
+
+    const tokenResponse = await this.refreshAccessToken();
+    this.accessToken = tokenResponse.access_token;
+    this.tokenExpiry = Date.now() + tokenResponse.expires_in * 1000;
+
+    return this.accessToken;
+  }
+
+  async makeAuthenticatedRequest(endpoint, options = {}) {
+    const token = await this.getValidToken();
+
+    return fetch(`https://api.buburuza.com${endpoint}`, {
+      ...options,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    });
+  }
+}
+```
+
+### Error handling
+
+Handle the three most common auth errors in all API call wrappers:
+
+```javascript error-handling.js
+async function makeSecureApiCall(endpoint, data) {
+  try {
+    return await buburuza.api.request(endpoint, data);
+  } catch (error) {
+    switch (error.code) {
+      case 'invalid_token':
+        // Token expired or revoked — refresh and retry
+        await refreshAccessToken();
+        return makeSecureApiCall(endpoint, data);
+
+      case 'insufficient_scope':
+        // Token lacks the required permission
+        throw new Error('Application needs additional permissions');
+
+      case 'rate_limit_exceeded':
+        // Back off and retry after a delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return makeSecureApiCall(endpoint, data);
+
+      default:
+        throw error;
+    }
+  }
+}
+```

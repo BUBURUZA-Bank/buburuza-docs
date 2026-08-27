@@ -1,0 +1,246 @@
+---
+title: "How Buburuza-Chain Works: Fees, Sequencers, and Bridges"
+description: "How Buburuza-Chain achieves low fees and high throughput — covering dynamic fee pricing, the sequencer model, fraud proofs, and cross-chain bridge mechanics."
+sidebarTitle: "Core Mechanics"
+---
+
+Buburuza-Chain achieves 40,000 transactions per second at under \$0.001 per transaction not by luck, but because of deliberate choices in how its fee structure, sequencer model, and data architecture fit together. This page explains the mechanics behind the chain — how fees are calculated and distributed, how the sequencer model keeps transactions flowing, how fraud proofs protect your funds, and how assets move between chains. You don't need to be a blockchain developer to follow this; the goal is to give you a clear picture of how the system works for you.
+
+## Fee structure
+
+### EIP-1559 inspired dynamic pricing
+
+Buburuza-Chain uses a fee model inspired by Ethereum's EIP-1559. Every block has a target gas usage. When the network is busy and blocks fill above that target, the base fee rises automatically. When the network is quiet, the base fee falls. This eliminates fee spikes driven by manual bidding wars and keeps your transaction costs predictable.
+
+**How the base fee adjusts between blocks:**
+
+```text
+Base Fee(n+1) = Base Fee(n) × (1 + ((Gas Used - Target Gas) / Target Gas) × Adjustment Factor)
+```
+
+**Network parameters:**
+
+| Parameter | Value |
+| --- | --- |
+| Target gas per block | 15,000,000 gas units |
+| Maximum gas per block | 30,000,000 gas units |
+| Adjustment factor | 0.125 (12.5% maximum change per block) |
+| Minimum base fee | 0.1 gwei |
+| Block time | 250ms average |
+
+**Your total transaction cost:**
+
+```text
+Total Fee = (Base Fee + Priority Fee) × Gas Used
+```
+
+The base fee is the mandatory cost set by the network. The priority fee is an optional tip you can add to move your transaction to the front of the queue — useful during congestion but not required for normal usage.
+
+<Note>
+  On Buburuza-Chain, priority fees are rarely necessary. At 40,000 TPS capacity and 250ms blocks, the network has headroom to absorb most transaction volumes without congestion.
+</Note>
+
+---
+
+## Gas fee distribution
+
+Every \$BUB collected in transaction fees is split three ways. This split is hardcoded into the protocol's fee collector contract and cannot be changed without a governance vote.
+
+<Tabs>
+  <Tab title="60% burned">
+    The largest portion of every fee is permanently destroyed. Burned tokens are sent to the dead address (`0x000000000000000000000000000000000000dead`) and are irretrievable. This creates deflationary pressure that scales directly with how much the network is used — more transactions means more burning.
+
+    At full network adoption, annual burns are projected at 2–8% of circulating supply.
+  </Tab>
+  <Tab title="35% to sequencers">
+    Sequencer operators receive 35% of all fees in exchange for processing and ordering transactions. This payment covers their operating costs and provides profit incentive to maintain the infrastructure. Rewards are distributed proportionally based on each sequencer's performance score — not split equally.
+  </Tab>
+  <Tab title="5% to treasury">
+    The remaining 5% flows to the community-controlled treasury. These funds pay for protocol development, security audits, infrastructure upgrades, and emergency reserves. All treasury spending requires a governance vote to authorize.
+  </Tab>
+</Tabs>
+
+### Dynamic fee adjustments
+
+The fee mechanism has built-in pressure valves for extreme conditions:
+
+- **High congestion (\>75% block utilization):** Additional burning activates on top of the standard 60%, absorbing fee revenue while deterring spam.
+- **AI service fees:** When you use premium AI features (document processing, advanced analytics, priority KYC), the entire fee is burned — 100%, not just 60%.
+- **Emergency burns:** Governance can trigger additional burn mechanisms during sustained congestion or market volatility.
+
+---
+
+## How the sequencer model works
+
+Sequencers are the engines that keep Buburuza-Chain running. They receive your transactions, order them into blocks, and post those blocks to Arbitrum L2 for final settlement.
+
+### Primary and backup sequencers
+
+<CardGroup cols={2}>
+  <Card title="Primary sequencer" icon="server">
+    Operated by the Buburuza Foundation. Processes the vast majority of transactions under normal conditions with minimal latency.
+  </Card>
+
+  <Card title="Backup sequencers" icon="shield">
+    5–10 independent operators bonding 100,000 \$BUB each. If the primary sequencer goes offline, backup sequencers take over automatically — no human intervention required.
+  </Card>
+</CardGroup>
+
+### Sequencer performance requirements
+
+Sequencer operators must maintain strict standards to keep earning rewards:
+
+| Requirement | Target |
+| --- | --- |
+| Uptime | 99.9% (maximum 43 minutes downtime per year) |
+| Transaction inclusion latency | \<250ms |
+| Hardware (minimum) | 16 CPU cores, 64 GB RAM, 2 TB NVMe storage |
+| Data archival | Full node with archival data for compliance |
+
+### Performance scoring
+
+Sequencer rewards are not split equally — each operator's share is proportional to their performance score:
+
+```text
+Operator Revenue = (Total Network Fees × 35% × Individual Performance Score) / Active Operators
+```
+
+| Score component | Weight | What it measures |
+| --- | --- | --- |
+| Uptime | 40% | Percentage of time the sequencer is live and responsive |
+| Latency | 30% | How quickly blocks are produced (target: sub-250ms) |
+| Throughput | 20% | Transaction processing efficiency |
+| Community score | 10% | Governance participation and network contributions |
+
+### What happens when a sequencer misbehaves
+
+Operators who fail to meet performance standards or act maliciously have a portion of their bonded \$BUB slashed:
+
+| Violation type | Slash amount | Examples |
+| --- | --- | --- |
+| Minor infractions | 5% of bond | Late blocks, brief downtime |
+| Major violations | 20% of bond | Extended downtime, failed upgrades |
+| Critical failures | 50% of bond | Consensus attacks, data withholding |
+
+<Warning>
+  Slashing is enforced by smart contract, not human judgment. The conditions that trigger slashing are defined in the protocol and publicly auditable.
+</Warning>
+
+---
+
+## Fraud proofs and how they protect you
+
+Buburuza-Chain uses an **optimistic rollup** model. This means the sequencer posts blocks to Arbitrum L2 without proving their validity upfront — the assumption is that the sequencer is honest. But there's a catch: anyone can submit a fraud proof within the challenge window if they detect an invalid state transition.
+
+Here's what that means in practice:
+
+1. The sequencer batches your transactions and posts them to Arbitrum L2.
+2. A challenge window opens. Any network participant can verify the batch and submit a fraud proof if something is wrong.
+3. If a valid fraud proof is submitted, the invalid batch is rolled back and the sequencer's bond is slashed.
+4. If no fraud proof is submitted by the end of the challenge window, the batch achieves L2 finality.
+
+This model gives you the speed benefits of a trusted sequencer while retaining the ability to punish malicious behavior after the fact. The economic cost of slashing makes attacks unprofitable.
+
+<Note>
+  For most transactions, sub-second L3 finality is all you need. L2 finality (~15 minutes) matters for withdrawals back to Arbitrum, and L1 finality (~12 minutes) matters for transfers all the way to Ethereum.
+</Note>
+
+---
+
+## Smart contract interactions
+
+On Buburuza-Chain, smart contracts execute without requiring manual steps from you. When you redeem USDB for USDC, that's a smart contract. When you swap tokens on the DEX, that's a smart contract. When your sequencer rewards are distributed, that's a smart contract.
+
+### Account abstraction (ERC-4337)
+
+Standard crypto wallets have friction that traditional banking users find unfamiliar. Buburuza implements ERC-4337 account abstraction to smooth that out:
+
+<AccordionGroup>
+  <Accordion title="Social recovery">
+    Instead of a seed phrase that's impossible to recover if lost, you can designate trusted contacts who can help you regain access to your account. No seed phrase anxiety.
+  </Accordion>
+
+  <Accordion title="Flexible fee payment">
+    You can pay gas fees in \$BUB or in approved stablecoins. You don't need to hold ETH to interact with the chain.
+  </Accordion>
+
+  <Accordion title="Batch transactions">
+    Multiple operations can be bundled into a single user action. Approving a token and executing a swap, for example, is one step — not two separate transactions.
+  </Accordion>
+
+  <Accordion title="Session keys">
+    Grant a DApp temporary, limited permissions without exposing your main account keys. When the session expires, the permission is revoked automatically.
+  </Accordion>
+</AccordionGroup>
+
+### Privacy for on-chain operations
+
+Not everything about your transactions needs to be public. Buburuza-Chain uses several techniques to keep sensitive data private while maintaining verifiability:
+
+- **Zero-knowledge proofs** — the chain can verify that a document is authentic without revealing the document itself. Your KYC is verified without your personal information sitting on a public ledger.
+- **Off-chain data storage** — sensitive information is encrypted and stored off-chain. Only cryptographic hashes — fingerprints of the data, not the data itself — are recorded on-chain.
+- **Selective disclosure** — you control what information is shared with which parties, allowing compliance with regulatory requirements without blanket data exposure.
+
+---
+
+## Cross-chain bridge mechanics
+
+Moving assets between Buburuza-Chain and other networks is handled by bridge contracts. The process differs depending on which direction you're moving and which chain you're bridging to.
+
+### Depositing into Buburuza-Chain (L2 → L3)
+
+<Steps>
+  <Step title="Initiate the deposit">
+    Submit a deposit transaction on Arbitrum L2. The bridge contract locks your assets on L2.
+  </Step>
+  <Step title="Wait for confirmation">
+    The deposit processes in 1–2 minutes. The bridge contract on Buburuza-Chain L3 verifies the L2 lock and releases the equivalent assets to your L3 wallet.
+  </Step>
+  <Step title="Assets available">
+    Your assets are now on Buburuza-Chain and can be used immediately for transactions, DeFi, or any other on-chain activity.
+  </Step>
+</Steps>
+
+### Withdrawing from Buburuza-Chain (L3 → L2)
+
+<Steps>
+  <Step title="Initiate the withdrawal">
+    Submit a withdrawal transaction on Buburuza-Chain L3. Your assets are locked on L3.
+  </Step>
+  <Step title="Challenge period">
+    A ~15-minute challenge window opens. During this time, any network participant can submit a fraud proof if the withdrawal is based on an invalid state. This is a security mechanism, not a processing delay.
+  </Step>
+  <Step title="Finalization">
+    If no valid fraud proof is submitted, the bridge contract on Arbitrum L2 releases the equivalent assets to your L2 wallet.
+  </Step>
+</Steps>
+
+### Supported assets and routes
+
+| Asset type | Supported routes | Notes |
+| --- | --- | --- |
+| ETH | L3 ↔ L2 ↔ Ethereum Mainnet | Native Arbitrum bridge |
+| ERC-20 tokens (including \$BUB, USDB, EURB) | L3 ↔ L2 ↔ Ethereum Mainnet | Native Arbitrum bridge |
+| NFTs | L3 ↔ L2 | Native Arbitrum bridge |
+| Base / Optimism assets | L3 ↔ L2 ↔ Base or Optimism | Via third-party aggregators (Socket, Across) |
+| Bitcoin (wrapped) | Inbound only | Via custodian wrap (e.g. BitGo) |
+
+### Bridge fees
+
+Bridge fees vary by route and direction. A portion of every bridge fee is burned:
+
+- **L2 ↔ L3 bridge fees:** 50% burned, 50% to bridge operators.
+- **Cross-chain interoperability fees:** 75% burned, 25% to treasury.
+
+<Tip>
+  AI-powered routing inside Buburuza automatically selects the bridge route with the best combination of cost, speed, and security for your specific transfer. You don't need to compare routes manually.
+</Tip>
+
+### Bridge security
+
+The bridge infrastructure has multiple layers of protection against malicious activity:
+
+- **Time delays** on withdrawals create a window for fraud detection.
+- **Multi-signature controls** require multiple authorized parties to sign critical bridge operations.
+- **Emergency pause** — governance can halt bridge activity instantly if a vulnerability is discovered.
+- **Decentralized insurance** covers bridge operations, providing a financial backstop for users in the event of a smart contract exploit.

@@ -1,0 +1,215 @@
+---
+title: "Account Setup & Security — Buburuza Onboarding Guide"
+description: "Learn how to create your Buburuza account, complete identity verification, and use the security features that keep your money safe."
+sidebarTitle: "Account Setup & Security"
+---
+
+Setting up your Buburuza account takes just a few minutes. You'll verify your identity once, and from there you can start sending, receiving, and managing money right away. This page walks you through every step of the process and explains the security features protecting your account.
+
+## Creating your account
+
+<Steps>
+  <Step title="Register your email">
+    Go to [buburuza.com](https://buburuza.com) and enter your email address. You'll receive a confirmation link — click it to verify your email and activate your account.
+
+    You can also add a phone number during registration for an extra layer of account recovery.
+  </Step>
+  <Step title="Choose your account type">
+    Select the account type that matches your needs:
+
+    - **Personal** — for individuals managing everyday finances
+    - **Business** — for companies, with team access and approval workflows
+    - **Trust** — for trust structures with beneficiary management
+
+    Each type requires different supporting documents, so choose carefully before proceeding.
+  </Step>
+  <Step title="Complete identity verification (KYC)">
+    Buburuza uses Sumsub to verify your identity in real time. You'll upload a supported ID document and take a short selfie video for liveness detection.
+
+    Most applications are approved within 30 seconds. If your application needs a closer look, it's escalated to a human reviewer who will contact you directly.
+  </Step>
+  <Step title="Get immediate basic access">
+    Once your initial verification is approved, you can send, receive, and hold funds straight away. Higher transaction limits and advanced features unlock when you complete enhanced verification.
+  </Step>
+</Steps>
+
+## Identity verification (KYC)
+
+Buburuza partners with Sumsub, a trusted identity verification provider, to confirm your identity securely before you can transact.
+
+### Accepted documents
+
+Buburuza accepts identity documents from 180\+ countries, including:
+
+- Passport
+- Driver's license
+- National ID card
+- Utility bill (for address verification)
+
+<Note>
+  Make sure your document is valid, not expired, and clearly legible in the photo you submit. Blurry or cropped images are the most common reason for delays.
+</Note>
+
+### How verification works
+
+1. You upload a photo of your document.
+2. Sumsub authenticates the document and extracts your details.
+3. You complete a short liveness check — a selfie video — so the system can match your face to the ID.
+4. Advanced anti-spoofing technology confirms the check is performed by a real person in real time.
+
+**85% of applicants are approved within 30 seconds.** Complex cases are reviewed by a human compliance analyst, typically within one business day.
+
+### Verification tiers
+
+<AccordionGroup>
+  <Accordion title="Basic verification">
+    Completed with a valid ID and liveness check. Unlocks sending, receiving, and holding funds with standard transaction limits.
+  </Accordion>
+
+  <Accordion title="Enhanced verification">
+    Requires additional documentation (such as proof of address or source of funds). Unlocks higher transaction limits and advanced features.
+  </Accordion>
+
+  <Accordion title="Premium verification">
+    Required for investment services, crypto-collateralized lending, and access to Real-World Asset (RWA) investments. Full documentation review applies.
+  </Accordion>
+
+  <Accordion title="Institutional onboarding">
+    For corporate clients. Includes enhanced due diligence, company documentation, and a dedicated onboarding specialist.
+  </Accordion>
+</AccordionGroup>
+
+## Security features
+
+### Multi-factor authentication (MFA)
+
+Your account is protected by multiple layers of authentication. You can configure which factors you use in **Settings → Security**.
+
+<Tabs>
+  <Tab title="Password & PIN">
+    Your primary login credential must meet complexity requirements. Buburuza monitors against known breach databases and alerts you if your credentials appear in a data leak.
+  </Tab>
+  <Tab title="Second factor">
+    Choose one or more secondary factors:
+
+    - **SMS code** — sent to your registered phone number
+    - **Email code** — sent to your verified email address
+    - **Authenticator app** — time-based one-time passwords (TOTP) via apps like Authy or Google Authenticator
+    - **Hardware security key** — physical keys such as YubiKey for the strongest protection
+
+    <Tip>
+      An authenticator app or hardware key is more secure than SMS. If you're storing significant funds, enable one of these options.
+    </Tip>
+  </Tab>
+  <Tab title="Biometrics">
+    On mobile, you can authenticate using:
+
+    - **Fingerprint** recognition
+    - **Face recognition**
+    - **Voice pattern** verification
+
+    Biometrics are stored on your device and never transmitted to Buburuza servers.
+  </Tab>
+</Tabs>
+
+### Behavioral monitoring
+
+Buburuza continuously monitors how you interact with the app to detect unusual activity — even between logins. This works silently in the background and doesn't require any action from you.
+
+<AccordionGroup>
+  <Accordion title="What behavioral monitoring detects">
+    The system analyzes patterns including:
+
+    - Typing rhythm and keystroke timing
+    - Touch pressure and gesture patterns on mobile
+    - Navigation flow and timing within the app
+
+    If your session shows patterns inconsistent with your normal behavior, Buburuza will trigger a step-up verification challenge before allowing sensitive actions.
+  </Accordion>
+
+  <Accordion title="Risk-based authentication">
+    Buburuza assigns a real-time risk score to every login and transaction attempt, factoring in your device, location, time of day, and transaction amount. Higher-risk actions automatically require additional verification — you won't need to configure this yourself.
+  </Accordion>
+</AccordionGroup>
+
+### Transaction alerts
+
+You'll receive instant notifications for all account activity. You can customize alert thresholds and channels in **Settings → Notifications**.
+
+- Alerts fire in real time for every transaction
+- New payees require confirmation before a transfer completes
+- Large or unusual transactions may have a short cooling-off period before processing
+- You can set spending limits per category or merchant
+
+<Warning>
+  If you receive an alert for a transaction you don't recognize, freeze your account immediately using the one-touch freeze button in the app, then contact support.
+</Warning>
+
+## Privacy and data protection
+
+### Encryption
+
+All of your data is protected with strong encryption at every point:
+
+| Layer | Standard |
+| --- | --- |
+| Data at rest | AES-256 with regular key rotation |
+| Data in transit | TLS 1.3 with perfect forward secrecy |
+| Database fields | Field-level encryption for sensitive data |
+| Backups | Encrypted and stored across geographically distributed locations |
+
+Encryption keys are stored in hardware security modules (HSMs) certified to FIPS 140-2 Level 3 — the same standard used by government agencies.
+
+### Zero-knowledge proofs
+
+Buburuza uses zero-knowledge proof technology to verify your identity and satisfy compliance requirements without exposing your underlying personal data. This means:
+
+- Your identity can be confirmed for a transaction without sharing your full personal details with counterparties
+- Regulatory checks can run without transferring raw data across borders
+- Your transaction history remains private while still being auditable for compliance purposes
+
+<Note>
+  You don't need to do anything to enable zero-knowledge proofs — they work automatically as part of Buburuza's compliance and verification infrastructure.
+</Note>
+
+## Account recovery
+
+If you lose access to your account, Buburuza offers several recovery paths depending on what you still have access to.
+
+<AccordionGroup>
+  <Accordion title="Social recovery">
+    Designate trusted contacts in **Settings → Recovery**. If you lose access, those contacts can collectively approve account restoration. Each contact receives a partial authorization request — no single contact can restore your account alone.
+  </Accordion>
+
+  <Accordion title="Document recovery">
+    Verify your identity with enhanced documentation (government ID plus secondary verification) to prove ownership and regain access. This process may take 1-3 business days.
+  </Accordion>
+
+  <Accordion title="Backup authentication device">
+    Register a backup device during setup. If you lose your primary device, the backup can be used to authenticate and regain access without going through full document recovery.
+  </Accordion>
+
+  <Accordion title="Time-locked recovery">
+    For high-security accounts, you can enable a delayed recovery option. Recovery requests are held for a notification period before taking effect, giving you time to cancel a fraudulent recovery attempt if someone else tries to access your account.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Set up at least two recovery options when you create your account. Recovery is significantly harder without them.
+</Tip>
+
+## Emergency controls
+
+If you ever think your account has been compromised, you can take immediate action without contacting support first.
+
+### Account freeze
+
+A one-touch **Freeze Account** button is available on the app home screen and in **Settings → Security**. Activating it instantly suspends all account activity — no transactions can be initiated or completed while the freeze is active. You can unfreeze your account at any time from the same screen after completing step-up verification.
+
+### Emergency contacts
+
+Designate emergency contacts in **Settings → Emergency Contacts**. These individuals can be granted limited, read-only visibility into your account in a crisis situation, helping coordinate a response without giving full account access.
+
+### Travel protection
+
+If you're traveling internationally, enable **Travel Mode** in **Settings → Security** before you leave. This adjusts location-based security rules so your normal activity abroad doesn't trigger false fraud alerts, while still flagging genuinely unusual transactions.
