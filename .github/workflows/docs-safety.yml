@@ -1,0 +1,80 @@
+name: docs-safety
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  forbidden-patterns:
+    name: Check for forbidden patterns
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan for forbidden patterns
+        shell: bash
+        run: |
+          set -uo pipefail
+
+          # This repo backs a PUBLIC site (docs.buburuza.com). No secrets,
+          # credentials, or real account identifiers may ever land here.
+
+          hard_patterns=(
+            '\bAKIA[0-9A-Z]{16}\b'
+            '\bASIA[0-9A-Z]{16}\b'
+            '-----BEGIN (OPENSSH|RSA|EC) PRIVATE KEY-----'
+            '-----BEGIN PRIVATE KEY-----'
+            '\bghp_[A-Za-z0-9_]{36,}\b'
+            '\bgho_[A-Za-z0-9_]{36,}\b'
+            '\bghu_[A-Za-z0-9_]{36,}\b'
+            '\bghs_[A-Za-z0-9_]{36,}\b'
+            '\bgithub_pat_[A-Za-z0-9_]{82,}\b'
+            '\bxox[baprs]-[0-9A-Za-z-]{10,}\b'
+            '\bsk_live_[0-9A-Za-z]{20,}\b'
+            'otpauth://'
+            '\b(vault|op|1password)://'
+          )
+
+          contextual_patterns=(
+            '(recovery|backup) code[s]?[[:space:]]*[:=][[:space:]]*[A-Za-z0-9]{4,}'
+            '(account[_ -]?(id|number)|aws_account_id)[^0-9]{0,40}[0-9]{12}\b'
+          )
+
+          excludes=(
+            --exclude-dir=.git
+            --exclude=docs-safety.yml
+          )
+
+          fail=0
+
+          run_pattern() {
+            local kind="$1" pattern="$2"
+            local hits
+            local flags=(-IEnr)
+            [[ "$kind" == "contextual" ]] && flags+=(-i)
+            hits=$(grep "${flags[@]}" "${excludes[@]}" -- "$pattern" . 2>/dev/null || true)
+            if [[ -n "$hits" ]]; then
+              echo "::error::Forbidden $kind pattern matched: $pattern"
+              echo "$hits"
+              fail=1
+            fi
+          }
+
+          for p in "${hard_patterns[@]}";       do run_pattern hard       "$p"; done
+          for p in "${contextual_patterns[@]}"; do run_pattern contextual "$p"; done
+
+          if [[ "$fail" -ne 0 ]]; then
+            echo
+            echo "One or more forbidden patterns were found."
+            echo "This repository backs the public site docs.buburuza.com —"
+            echo "credentials and real identifiers are never allowed here."
+            exit 1
+          fi
+
+          echo "No forbidden patterns found."
