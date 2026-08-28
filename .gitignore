@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment / secrets
+.env
+.env.*
+
+# OS
+.DS_Store
+
+# Local Mintlify dev artifacts
+.mint/output/
