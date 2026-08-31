@@ -1,0 +1,86 @@
+---
+title: "Money Movement API"
+description: "Funding, transfers, withdrawals, transactions, and fee previews."
+---
+
+# Money Movement API
+
+Money movement endpoints live under `/api/v1/app/`. All calls require a Bearer access token.
+
+## Funding (deposits)
+
+Funding is two steps. There is **no client POST to create a deposit** — inbound funds appear in transactions automatically after provider webhooks clear them.
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/accounts/{account_id}/funding-methods` | Available methods (`fiat`, `crypto`) with the wallet per option |
+| GET | `/wallets/{wallet_id}/deposit-instructions` | Fiat: ACH + wire `rails[]`; crypto: `address`, `chain`, `asset` |
+
+Pass `?amount_minor=` on the instructions call to get a per-rail `fee_preview`.
+
+## Transfers
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/transfers/fee-preview` | Price the transfer before it exists |
+| POST | `/transfers` | Create a transfer; `fee_quote_id` required |
+| GET | `/transfers/{transfer_id}` | Transfer status |
+
+Rules:
+
+- The fee is **on top**: the destination receives the entered amount, the payer is debited more.
+- The quote is bound to the transfer, lives **ten minutes**, and is consumed by **one** payment.
+- Creating a transfer without a valid quote is refused — nothing is priced on the fly.
+
+## Withdrawals (payouts)
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/withdrawals/fee-preview` | Price a payout (currency from the source wallet) |
+| POST | `/withdrawals` | Create a withdrawal to a recipient |
+| GET | `/withdrawals/{withdrawal_id}` | Withdrawal status |
+
+## Transactions
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/transactions` | List — filter by `account_id`, `wallet_id`, `kind`, `status` |
+| GET | `/transactions/{transaction_id}` | Detail |
+| GET | `/transactions/{transaction_id}/recipient` | The transaction's recipient |
+
+## Payment intents
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/payment-intents` | List payment intents |
+| POST | `/payment-intents` | Create an intent |
+| GET | `/payment-intents/{payment_intent_id}` | Intent detail |
+| POST | `/payment-intents/{payment_intent_id}/resolve` | Resolve the intent |
+
+## Rates
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/rates` | Current exchange rates (read-only) |
+
+## Example: price and send a transfer
+
+```bash
+# 1. Price it
+curl "https://app.buburuza.io/api/v1/app/transfers/fee-preview" \
+  -H "Authorization: Bearer <access_token>" \
+  -H "Content-Type: application/json" \
+  -d '{"source_wallet_id":"w_…","destination_wallet_id":"w_…","amount_minor":"100000"}'
+
+# 2. Bind the quote and send
+curl -X POST https://app.buburuza.io/api/v1/app/transfers \
+  -H "Authorization: Bearer <access_token>" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: txn-2026-08-27-001" \
+  -d '{"source_wallet_id":"w_…","destination_wallet_id":"w_…","amount_minor":"100000","fee_quote_id":"<from preview>"}'
+```
+
+## Related
+
+- [Recipients & Beneficiaries API](/api/recipients-beneficiaries) — payees for withdrawals.
+- [Accounts & Wallets API](/api/accounts-wallets) — balances and deposit instructions.

@@ -1,0 +1,51 @@
+---
+title: "Accounts & Wallets"
+description: "How organisation accounts, fiat accounts, and stablecoin wallets work in Buburuza."
+---
+
+# Accounts & Wallets
+
+## Organisation payment account
+
+Every verified organisation gets one **payment account**, provisioned automatically after KYB passes. The account is the umbrella for everything money-related: wallets, balances, statements, and bank letters.
+
+| Property | Meaning |
+| --- | --- |
+| `status` | `active` once provisioning completes; money movement is enabled only when active |
+| `money_movement_enabled` | Whether transfers, payouts, and funding are allowed |
+| `legal_entity` | The organisation the account belongs to |
+
+## Wallets
+
+Each account holds two kinds of wallets:
+
+| Kind | Rails | Purpose |
+| --- | --- | --- |
+| `fiat` | ACH, wire | Hold fiat balances, receive deposits, fund payouts |
+| `stablecoin` | Crypto deposit address | Hold stablecoin balances, receive crypto top-ups |
+
+A default fiat and a default stablecoin wallet are created automatically when the account activates. You can provision additional wallets per account.
+
+## Balances
+
+Balances are returned as **decimal strings** to avoid floating-point errors, with three components:
+
+- `available` — what you can spend right now,
+- `pending` — funds in flight (deposits not yet settled, holds),
+- `hold` — amounts reserved by in-flight operations.
+
+## Statements & documents
+
+- **Bank letter** — a document confirming your account details, available per account.
+- **Statements** — per-period account statements.
+
+Both are available in the dashboard and through the API.
+
+## Limits & tiers
+
+Your KYB tier determines what your account can do (light vs full verification). Until KYB passes and the account is active, money movement endpoints return `403`.
+
+## API
+
+- [Accounts & Wallets API](/api/accounts-wallets) — endpoints and examples.
+- [Money Movement](/payments) — funding, transfers, and payouts on top of your wallets.

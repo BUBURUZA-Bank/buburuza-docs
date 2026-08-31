@@ -1,0 +1,73 @@
+---
+title: "Accounts & Wallets API"
+description: "Accounts, wallets, balances, funding methods, statements, and the /me profile endpoint."
+---
+
+# Accounts & Wallets API
+
+Everything under `/api/v1/app/accounts/*` and `/api/v1/app/wallets/*` requires a Bearer access token and is scoped to the authenticated organisation.
+
+## Accounts
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/accounts` | List accounts with wallet summaries and balances |
+| GET | `/accounts/{account_id}` | Account detail with its wallets |
+| GET | `/accounts/{account_id}/wallets` | Paginated wallets for the account |
+| POST | `/accounts/{account_id}/wallets` | Provision an additional wallet |
+
+## Wallets
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/wallets/{wallet_id}` | Wallet detail with balances |
+| GET | `/wallets/{wallet_id}/balance-history` | Historical balance series |
+| GET | `/wallets/{wallet_id}/deposit-instructions` | Funding instructions (see below) |
+| GET | `/wallets/{wallet_id}/deposit-instructions/document` | Printable funding document |
+
+## Documents
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/accounts/{account_id}/documents/bank-letter` | Account confirmation letter |
+| GET | `/accounts/{account_id}/documents/statements/{period}` | Statement for a period |
+
+## Account & wallet kinds
+
+| Kind | Rails | Notes |
+| --- | --- | --- |
+| `fiat` | ACH, wire | Fiat balance; funding via bank rails |
+| `stablecoin` | Crypto address | Stablecoin balance; funding via on-chain deposit |
+
+Default wallets are auto-provisioned when the payment account becomes `ACTIVE`. Responses are **provider-neutral**: no provider identifiers, no bridge references. Balances are decimal strings:
+
+```json
+{
+  "available": "12500.00",
+  "pending": "0.00",
+  "hold": "0.00"
+}
+```
+
+## Profile (`/me`)
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/me` | Dashboard bootstrap: user, organisation (`legal_entity`), active state |
+| GET | `/me/referral-code` | The user's referral code |
+
+## Errors
+
+| HTTP | When |
+| --- | --- |
+| 403 | KYB tier insufficient, or the payment account is not `ACTIVE` |
+| 404 | Resource does not exist or does not belong to the session's organisation |
+
+## Example
+
+```bash
+curl https://app.buburuza.io/api/v1/app/accounts \
+  -H "Authorization: Bearer <access_token>"
+```
+
+See [Money Movement API](/api/money-movement) for funding instructions, transfers, and transactions.

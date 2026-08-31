@@ -1,0 +1,60 @@
+---
+title: "Money Movement"
+description: "Funding your account, sending transfers and payouts, and reading your transaction history."
+---
+
+# Money Movement
+
+## Funding (money in)
+
+Top-ups are a **two-step** flow: pick a method, then fetch instructions.
+
+<Steps>
+  <Step title="Choose a funding method">
+    Select **fiat** (ACH or wire) or **crypto** for the wallet you want to fund.
+  </Step>
+  <Step title="Get instructions">
+    Fiat: account and routing details for the selected rail. Crypto: a deposit address with chain and asset.
+  </Step>
+  <Step title="Send funds">
+    Initiate the transfer from your bank or wallet. Inbound money appears in your transaction list automatically once it clears — there is no deposit step on our side.
+  </Step>
+</Steps>
+
+## Transfers
+
+A transfer moves money between wallets.
+
+1. **Fee preview** — price the transfer before it exists. The returned quote is bound to the amount and route.
+2. **Create** — submit the transfer with the `fee_quote_id` from the preview.
+3. **Track** — poll the transfer status.
+
+<Note>
+The fee is charged **on top** of the amount you enter: the recipient receives exactly what you typed, and you are debited amount + fee. Quotes expire after ten minutes and are consumed by a single payment.
+</Note>
+
+## Payouts (withdrawals)
+
+Withdrawals send money to an external recipient:
+
+1. Create a **recipient** once (or reuse an existing one).
+2. Get a **fee preview** for the withdrawal.
+3. Create the withdrawal and track it.
+
+## Recipients & beneficiaries
+
+- **Recipients** are reusable payee records you manage (create, update, delete).
+- **Beneficiaries** link your recipients to provider-side accounts, including unlinking and relinking when a provider changes a reference.
+
+## Transactions
+
+Every money event — deposit, transfer, payout, fee — lands in the **transactions** list with a `kind` and `status`. Filter by account, wallet, kind, or status; each transaction carries its recipient and timestamps.
+
+## Rates
+
+Current exchange rates are available as a read-only endpoint, so your product can show up-to-date conversion numbers without calling elsewhere.
+
+## API
+
+- [Money Movement API](/api/money-movement) — endpoints, request and response examples.
+- [Recipients & Beneficiaries API](/api/recipients-beneficiaries) — payee management.
