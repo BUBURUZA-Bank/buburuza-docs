@@ -713,7 +713,7 @@ res.cookie('access_token', access_token, {
 Implement a refresh manager that checks token expiry before every request, rather than waiting for a `401` response.
 
 ```javascript auth-manager.js
-class BuburuザAuthManager {
+class BuburuzaAuthManager {
   constructor(apiKey, refreshToken) {
     this.apiKey = apiKey;
     this.refreshToken = refreshToken;

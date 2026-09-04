@@ -66,6 +66,13 @@ jobs:
             'filed automatically'
           )
 
+          # Identifier corruption: a bad find/replace once turned "za" into Japanese
+          # kana across the SDK pages, breaking every code sample. Keep it out.
+          text_corruption=(
+            'Buburu[\xe3\x81\x96\xe3\x82\xb6]'
+            'Buburuzda'
+          )
+
           excludes=(
             --exclude-dir=.git
             --exclude=docs-safety.yml
@@ -89,6 +96,7 @@ jobs:
           for p in "${hard_patterns[@]}";       do run_pattern hard       "$p"; done
           for p in "${contextual_patterns[@]}"; do run_pattern contextual "$p"; done
           for p in "${prohibited_claims[@]}";   do run_pattern claim      "$p"; done
+          for p in "${text_corruption[@]}";    do run_pattern corruption "$p"; done
 
           if [[ "$fail" -ne 0 ]]; then
             echo

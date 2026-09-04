@@ -32,7 +32,7 @@ Buburuza provides native SDKs for all major programming languages and platforms 
   </Card>
 
   <Card title="iOS Swift" icon="apple">
-    `BuburuザSDK`
+    `BuburuzaSDK`
 
     Swift concurrency, SwiftUI bindings, biometric auth.
   </Card>
@@ -65,10 +65,10 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     ### Quick start
 
     ```typescript
-    import { BuburuざAPI } from '@buburuza/sdk';
+    import { BuburuzaAPI } from '@buburuza/sdk';
     
     // Initialize the client
-    const buburuza = new BuburuざAPI({
+    const buburuza = new BuburuzaAPI({
       apiKey: 'bb_test_1234567890abcdef',
       environment: 'sandbox', // 'sandbox' | 'production'
       version: 'v1'
@@ -203,11 +203,11 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     ### Quick start
 
     ```python
-    from buburuza import BuburuざAPI
+    from buburuza import BuburuzaAPI
     from buburuza.models import CreateCustomerRequest, CreateWalletRequest
     
     # Initialize the client
-    buburuza = BuburuざAPI(
+    buburuza = BuburuzaAPI(
         api_key='bb_test_1234567890abcdef',
         environment='sandbox'
     )
@@ -243,14 +243,14 @@ Buburuza provides native SDKs for all major programming languages and platforms 
 
     ### Async support
 
-    Use `AsyncBuburuざAPI` for high-throughput workloads. You can run concurrent operations with `asyncio.gather`.
+    Use `AsyncBuburuzaAPI` for high-throughput workloads. You can run concurrent operations with `asyncio.gather`.
 
     ```python
     import asyncio
-    from buburuza import AsyncBuburuざAPI
+    from buburuza import AsyncBuburuzaAPI
     
     async def main():
-        buburuza = AsyncBuburuざAPI(
+        buburuza = AsyncBuburuzaAPI(
             api_key='bb_test_1234567890abcdef',
             environment='sandbox'
         )
@@ -274,14 +274,14 @@ Buburuza provides native SDKs for all major programming languages and platforms 
 
     ### Django integration
 
-    The `BuburuざModelMixin` and `BuburuざViewMixin` helpers wire the SDK into Django models and class-based views.
+    The `BuburuzaModelMixin` and `BuburuzaViewMixin` helpers wire the SDK into Django models and class-based views.
 
     ```python
     # models.py
     from django.db import models
-    from buburuza.django import BuburuざModelMixin
+    from buburuza.django import BuburuzaModelMixin
     
-    class UserProfile(models.Model, BuburuざModelMixin):
+    class UserProfile(models.Model, BuburuzaModelMixin):
         user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
         buburuza_customer_id = models.CharField(max_length=50, blank=True)
     
@@ -299,9 +299,9 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     
     # views.py
     from django.shortcuts import render
-    from buburuza.django import BuburuざViewMixin
+    from buburuza.django import BuburuzaViewMixin
     
-    class WalletView(BuburuざViewMixin, TemplateView):
+    class WalletView(BuburuzaViewMixin, TemplateView):
         template_name = 'wallet.html'
     
         def get_context_data(self, **kwargs):
@@ -337,13 +337,13 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     ### Quick start
 
     ```java
-    import com.buburuza.BuburuざAPI;
+    import com.buburuza.BuburuzaAPI;
     import com.buburuza.models.*;
-    import com.buburuza.exceptions.BuburuざException;
+    import com.buburuza.exceptions.BuburuzaException;
     
     public class BankingApp {
         public static void main(String[] args) {
-            BuburuざAPI buburuza = new BuburuざAPI.Builder()
+            BuburuzaAPI buburuza = new BuburuzaAPI.Builder()
                 .apiKey("bb_test_1234567890abcdef")
                 .environment(Environment.SANDBOX)
                 .build();
@@ -380,7 +380,7 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     
                 System.out.println("Transaction completed: " + transaction.getId());
     
-            } catch (BuburuざException e) {
+            } catch (BuburuzaException e) {
                 System.err.println("API Error: " + e.getMessage());
                 System.err.println("Error Code: " + e.getCode());
             }
@@ -390,18 +390,18 @@ Buburuza provides native SDKs for all major programming languages and platforms 
 
     ### Spring Boot integration
 
-    Add `@EnableBuburuざ` to your configuration class. The Spring Boot starter auto-configures the `BuburuざAPI` bean from `application.properties`.
+    Add `@EnableBuburuza` to your configuration class. The Spring Boot starter auto-configures the `BuburuzaAPI` bean from `application.properties`.
 
     ```java
     // Configuration
     @Configuration
-    @EnableBuburuざ
-    public class BuburuざConfig {
+    @EnableBuburuza
+    public class BuburuzaConfig {
     
         @Bean
         @ConfigurationProperties("buburuza")
-        public BuburuざProperties buburuざProperties() {
-            return new BuburuざProperties();
+        public BuburuzaProperties buburuzaProperties() {
+            return new BuburuzaProperties();
         }
     }
     
@@ -410,7 +410,7 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     public class BankingService {
     
         @Autowired
-        private BuburuざAPI buburuza;
+        private BuburuzaAPI buburuza;
     
         public Customer createCustomer(String email, String firstName, String lastName) {
             CreateCustomerRequest request = CreateCustomerRequest.builder()
@@ -468,7 +468,7 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     ]
     
     // Or via CocoaPods
-    // pod 'BuburuざSDK'
+    // pod 'BuburuzaSDK'
     
     // Or via Carthage
     // github "buburuza/buburuza-ios"
@@ -477,13 +477,13 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     ### Quick start
 
     ```swift
-    import BuburuざSDK
+    import BuburuzaSDK
     
     class BankingManager {
-        private let buburuza: BuburuざAPI
+        private let buburuza: BuburuzaAPI
     
         init() {
-            buburuza = BuburuざAPI(
+            buburuza = BuburuzaAPI(
                 apiKey: "bb_test_1234567890abcdef",
                 environment: .sandbox
             )
@@ -536,7 +536,7 @@ Buburuza provides native SDKs for all major programming languages and platforms 
 
     ```swift
     import SwiftUI
-    import BuburuざSDK
+    import BuburuzaSDK
     
     @MainActor
     class WalletViewModel: ObservableObject {
@@ -544,7 +544,7 @@ Buburuza provides native SDKs for all major programming languages and platforms 
         @Published var isLoading = false
         @Published var error: Error?
     
-        private let buburuza = BuburuざAPI.shared
+        private let buburuza = BuburuzaAPI.shared
     
         func loadWallets(for customerId: String) async {
             isLoading = true
@@ -604,12 +604,12 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     ### Quick start
 
     ```kotlin
-    import com.buburuza.BuburuざAPI
+    import com.buburuza.BuburuzaAPI
     import com.buburuza.models.*
     import kotlinx.coroutines.runBlocking
     
     class BankingManager {
-        private val buburuza = BuburuざAPI.Builder()
+        private val buburuza = BuburuzaAPI.Builder()
             .apiKey("bb_test_1234567890abcdef")
             .environment(Environment.SANDBOX)
             .build()
@@ -666,7 +666,7 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     import kotlinx.coroutines.launch
     
     class WalletViewModel : ViewModel() {
-        private val buburuza = BuburuざAPI.shared
+        private val buburuza = BuburuzaAPI.shared
     
         var wallets by mutableStateOf<List<Wallet>>(emptyList())
             private set
@@ -749,16 +749,16 @@ Buburuza provides native SDKs for all major programming languages and platforms 
     ### Quick start
 
     ```typescript
-    import { BuburuざAPI } from '@buburuza/react-native';
-    import { useBuburuざWallets } from '@buburuza/react-native/hooks';
+    import { BuburuzaAPI } from '@buburuza/react-native';
+    import { useBuburuzaWallets } from '@buburuza/react-native/hooks';
     
-    const buburuza = new BuburuざAPI({
+    const buburuza = new BuburuzaAPI({
       apiKey: 'bb_test_1234567890abcdef',
       environment: 'sandbox'
     });
     
     function WalletScreen({ customerId }: { customerId: string }) {
-      const { wallets, loading, error, refetch } = useBuburuざWallets(customerId);
+      const { wallets, loading, error, refetch } = useBuburuzaWallets(customerId);
     
       const handleTransfer = async (amount: number, toWalletId: string) => {
         try {
@@ -891,12 +891,12 @@ All SDKs expose a consistent error hierarchy so you can handle specific failure 
 <CodeGroup>
 
 ```javascript JavaScript / TypeScript
-import { BuburuざError } from '@buburuza/sdk';
+import { BuburuzaError } from '@buburuza/sdk';
 
 try {
   const transaction = await buburuza.transactions.create(request);
 } catch (error) {
-  if (error instanceof BuburuざError) {
+  if (error instanceof BuburuzaError) {
     switch (error.code) {
       case 'insufficient_funds':
         console.log('Account balance too low');
@@ -915,13 +915,13 @@ try {
 ```
 
 ```python Python
-from buburuza.exceptions import BuburuざError, InsufficientFundsError
+from buburuza.exceptions import BuburuzaError, InsufficientFundsError
 
 try:
     transaction = buburuza.transactions.create(request)
 except InsufficientFundsError as e:
     print(f"Insufficient funds: {e.available_balance}")
-except BuburuざError as e:
+except BuburuzaError as e:
     print(f"API Error: {e.message} (Code: {e.code})")
 ```
 
@@ -930,7 +930,7 @@ try {
     Transaction transaction = buburuza.transactions().create(request);
 } catch (InsufficientFundsException e) {
     System.out.println("Insufficient funds: " + e.getAvailableBalance());
-} catch (BuburuざException e) {
+} catch (BuburuzaException e) {
     System.out.println("API Error: " + e.getMessage() + " (Code: " + e.getCode() + ")");
 }
 ```
@@ -944,9 +944,9 @@ Every SDK ships a mock implementation you can drop into unit tests without makin
 <CodeGroup>
 
 ```javascript JavaScript / TypeScript
-import { MockBuburuざAPI } from '@buburuza/sdk/testing';
+import { MockBuburuzaAPI } from '@buburuza/sdk/testing';
 
-const mockBuburuza = new MockBuburuざAPI();
+const mockBuburuza = new MockBuburuzaAPI();
 
 // Configure mock responses
 mockBuburuza.transactions.create.mockResolvedValue({
@@ -969,9 +969,9 @@ test('should create transaction', async () => {
 ```
 
 ```python Python
-from buburuza.testing import MockBuburuざAPI
+from buburuza.testing import MockBuburuzaAPI
 
-mock_buburuza = MockBuburuざAPI()
+mock_buburuza = MockBuburuzaAPI()
 
 # Configure mock responses
 mock_buburuza.transactions.create.return_value = Transaction(
@@ -1001,7 +1001,7 @@ Switch between sandbox and production by changing a single option. Store your AP
 
 ```javascript
 // Development
-const devBuburuza = new BuburuざAPI({
+const devBuburuza = new BuburuzaAPI({
   apiKey: process.env.BUBURUZA_TEST_API_KEY,
   environment: 'sandbox',
   debug: true,
@@ -1009,7 +1009,7 @@ const devBuburuza = new BuburuざAPI({
 });
 
 // Production
-const prodBuburuza = new BuburuざAPI({
+const prodBuburuza = new BuburuzaAPI({
   apiKey: process.env.BUBURUZA_LIVE_API_KEY,
   environment: 'production',
   retryConfig: {
@@ -1019,7 +1019,7 @@ const prodBuburuza = new BuburuざAPI({
 });
 
 // Custom endpoint
-const customBuburuza = new BuburuざAPI({
+const customBuburuza = new BuburuzaAPI({
   apiKey: 'your_api_key',
   baseUrl: 'https://api.custom.buburuza.com',
   version: 'v2'
@@ -1031,7 +1031,7 @@ const customBuburuza = new BuburuざAPI({
 For server-side workloads, enable connection pooling and response caching to reduce latency. Use batch requests to fetch multiple resources in a single round trip.
 
 ```javascript
-const buburuza = new BuburuざAPI({
+const buburuza = new BuburuzaAPI({
   apiKey: 'your_api_key',
   environment: 'production',
   httpConfig: {
