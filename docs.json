@@ -20,6 +20,7 @@
           {
             "group": "Overview",
             "pages": [
+              "index",
               "introduction",
               "whitepaper/ecosystem-lightpaper",
               "whitepaper/products-and-services"
@@ -47,6 +48,12 @@
               "roadmap/foundation",
               "roadmap/ai-features",
               "roadmap/expansion"
+            ]
+          },
+          {
+            "group": "Legal",
+            "pages": [
+              "legal"
             ]
           }
         ]

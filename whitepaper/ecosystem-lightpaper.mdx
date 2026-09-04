@@ -4,7 +4,7 @@ description: "A comprehensive look at the Buburuza ecosystem—covering AI infra
 sidebarTitle: "Ecosystem Overview"
 ---
 
-Buburuza is building autonomous financial infrastructure that bridges traditional banking, cryptocurrency, and AI-native services into a unified ecosystem. By combining an AI-powered neobank with a Layer 3 blockchain built on Arbitrum Orbit, proprietary stablecoins (USDB and EURB), and real-world asset tokenization, Buburuza creates a self-running financial system that operates 24/7 with minimal human intervention. This page covers the full scope of that ecosystem—from the problems it solves to the technical layers that make it work.
+Buburuza is building autonomous financial infrastructure that bridges traditional banking, cryptocurrency, and AI-native services into a unified ecosystem. By combining an AI-powered financial platform with a Layer 3 blockchain built on Arbitrum Orbit, proprietary stablecoins (USDB and EURB), and real-world asset tokenization, Buburuza creates a self-running financial system that operates 24/7 with minimal human intervention. This page covers the full scope of that ecosystem—from the problems it solves to the technical layers that make it work.
 
 ## Executive summary
 
@@ -21,10 +21,6 @@ The system addresses three fundamental gaps in modern finance: the absence of mi
 
   <Card title="Layer 3 blockchain" icon="cube">
     A custom Arbitrum Orbit chain with 250ms block time, EVM compatibility, and deflationary tokenomics.
-  </Card>
-
-  <Card title="Trust-based legal structure" icon="scale-balanced">
-    Jersey Trust framework providing SPV creation, inheritance planning, and asset protection for all users.
   </Card>
 
   <Card title="Tokenized RWA platform" icon="industry">
@@ -91,10 +87,9 @@ Buburuza's architecture consists of four primary layers that communicate through
 
 Every Buburuza account includes:
 
-- **Jersey Trust beneficiary status** — legal structure providing asset protection and inheritance planning
 - **Multi-currency IBANs** — separate account numbers for local and international banking operations
 - **Linked blockchain wallets** — non-custodial cryptocurrency wallets with optional institutional-grade custody via Fireblocks
-- **Card products** — virtual and physical debit cards issued through the Rain partnership
+- **Card products** — virtual and physical cards issued through a licensed card issuing partner
 
 ### Settlement architecture
 
@@ -151,7 +146,7 @@ All AI operations follow a **suggest-confirm model**: the AI analyzes your data 
     Ensures you stay on the right side of regulations in every jurisdiction:
 
     - **Transaction monitoring** — identifies patterns indicating money laundering, terrorist financing, or fraud
-    - **Regulatory reporting** — automatically generates required reports for financial authorities
+    - **Regulatory reporting** — assembles and validates the data required for regulatory filings
     - **Market risk assessment** — monitors portfolio exposures and stress-tests against market conditions
     - **Liquidity management** — ensures adequate reserves for withdrawals and operational needs
 
@@ -486,7 +481,7 @@ Buburuza implements defense-in-depth security across infrastructure, application
 
 <Tabs>
   <Tab title="Infrastructure">
-    - Enterprise cloud infrastructure with 99.99% uptime SLAs
+    - Enterprise cloud infrastructure in a high-availability configuration
     - AES-256 encryption at rest, TLS 1.3 in transit
     - Hardware security modules (HSMs) for cryptographic key management
     - Network segmentation with isolated environments per service tier
@@ -507,24 +502,20 @@ Buburuza implements defense-in-depth security across infrastructure, application
   </Tab>
 </Tabs>
 
-### Regulatory licenses
+### Registrations and licences
 
-**Active licenses:**
+Buburuza does not currently hold a banking licence in any jurisdiction. Regulated money movement is performed by licensed partners who act as the money transmitter of record for the corridor.
 
-- **Canada (FINTRAC)** — Money Services Business Registration, enabling crypto-fiat conversion services for all Canadian customers
-- **Union of Comoros** — Banking License, enabling traditional banking services in Africa and providing correspondent banking access
-
-**Licenses in progress:**
-
-| Jurisdiction | License type | Timeline |
+| Jurisdiction | Registration or licence | Status |
 | --- | --- | --- |
-| United States | Money Transmission Licenses (state-by-state) | 18–36 months |
+| Canada | FINTRAC Money Services Business (MSB) registration | Application in progress |
+| United States | Money Transmission Licences (state-by-state) | 18–36 months |
 | Czech Republic | RFAA (enhanced MiCAR permissions) | 12–18 months |
 | Canada | RFAA (enhanced MSB for asset management) | 12–18 months |
 | Hong Kong | MSO (Money Service Operator) | 18–24 months |
 
 <Warning>
-  Certain products and services may not be available in all jurisdictions while licensing is in progress. Buburuza will geo-fence features in markets where it does not yet hold the required licenses.
+  Features are enabled market by market as permissions are granted. Where Buburuza and its partners do not hold the required permission, the feature is not offered in that market. See [Legal and regulatory](/legal).
 </Warning>
 
 ---
