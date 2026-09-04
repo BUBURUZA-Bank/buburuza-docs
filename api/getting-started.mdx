@@ -217,8 +217,18 @@ This guide walks you through everything you need to make your first successful B
       description: 'Main application webhook'
     });
     
-    // Handle incoming events in your Express app
+    // Handle incoming events in your Express app.
+    // Always verify the signature before acting on an event — see
+    // /api/authentication#webhook-signature-verification for verifyWebhookSignature.
     app.post('/webhooks/buburuza', (req, res) => {
+      const signature = req.headers['x-buburuza-signature'];
+      const timestamp = req.headers['x-buburuza-timestamp'];
+      const payload = JSON.stringify(req.body);
+    
+      if (!verifyWebhookSignature(payload, signature, webhookSecret, timestamp)) {
+        return res.status(401).send('Invalid signature');
+      }
+    
       const event = req.body;
     
       switch (event.type) {
