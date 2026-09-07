@@ -46,6 +46,33 @@ jobs:
             '(account[_ -]?(id|number)|aws_account_id)[^0-9]{0,40}[0-9]{12}\b'
           )
 
+          # Claims that must never reach the public site, whatever ships later.
+          # Each is a finding from the documentation compliance audit; see legal.mdx.
+          prohibited_claims=(
+            'FDIC-style'
+            'FDIC[ -]insured'
+            '\bCDIC[ -]insured\b'
+            'accredited investor'
+            'fiduciary'
+            '\bearn(s)? yield\b'
+            'yield automatically'
+            'uptime SLA'
+            '\b021000021\b'
+            'Rain partnership'
+            'Active licenses'
+            '\bneobank\b'
+            'a new kind of bank'
+            '(reports|reports are) (generated and )?submitted automatically'
+            'filed automatically'
+          )
+
+          # Identifier corruption: a bad find/replace once turned "za" into Japanese
+          # kana across the SDK pages, breaking every code sample. Keep it out.
+          text_corruption=(
+            'Buburu[\xe3\x81\x96\xe3\x82\xb6]'
+            'Buburuzda'
+          )
+
           excludes=(
             --exclude-dir=.git
             --exclude=docs-safety.yml
@@ -68,12 +95,18 @@ jobs:
 
           for p in "${hard_patterns[@]}";       do run_pattern hard       "$p"; done
           for p in "${contextual_patterns[@]}"; do run_pattern contextual "$p"; done
+          for p in "${prohibited_claims[@]}";   do run_pattern claim      "$p"; done
+          for p in "${text_corruption[@]}";    do run_pattern corruption "$p"; done
 
           if [[ "$fail" -ne 0 ]]; then
             echo
             echo "One or more forbidden patterns were found."
             echo "This repository backs the public site docs.buburuza.com —"
             echo "credentials and real identifiers are never allowed here."
+            echo
+            echo "A 'claim' match is a regulated statement that must not be published"
+            echo "regardless of what the product ships later. See legal.mdx and the"
+            echo "documentation compliance audit before changing this list."
             exit 1
           fi
 

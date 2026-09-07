@@ -4,6 +4,10 @@ description: "Full reference for the Buburuza Core Banking API — accounts, wal
 sidebarTitle: "Core Banking API"
 ---
 
+<Warning>
+  **Planned capability.** This page describes a design that is not yet built and is not available to customers. Specifications, timelines, and availability may change, and nothing here is a commitment to deliver. See [Legal and regulatory](/legal) for what is offered today.
+</Warning>
+
 The Buburuza Core Banking API gives you programmatic access to accounts, transactions, balances, and multi-currency operations. Every transaction is automatically written to the Buburuza-Chain L3 blockchain for an immutable audit trail. All monetary amounts are expressed in the smallest currency unit (cents for USD, pence for GBP, and so on).
 
 <Note>
@@ -95,7 +99,7 @@ account = response.json()
   "currency": "USD",
   "name": "Primary Checking Account",
   "accountNumber": "1234567890",
-  "routingNumber": "021000021",
+  "routingNumber": "000000000",
   "balance": 10000,
   "availableBalance": 10000,
   "status": "active",
@@ -141,7 +145,7 @@ account = response.json()
   "currency": "USD",
   "name": "Primary Checking Account",
   "accountNumber": "1234567890",
-  "routingNumber": "021000021",
+  "routingNumber": "000000000",
   "balance": 15750,
   "availableBalance": 15250,
   "pendingBalance": 500,
@@ -450,7 +454,7 @@ const externalTransfer = await buburuza.transactions.create({
   fromAccount: 'acc_1234567890abcdef',
   toExternalAccount: {
     accountNumber: '9876543210',
-    routingNumber: '021000021',
+    routingNumber: '000000000',
     accountType: 'checking',
     holderName: 'John Doe'
   },
@@ -730,7 +734,7 @@ const futureTransfer = await buburuza.transactions.createScheduled({
   fromAccount: 'acc_1234567890abcdef',
   toExternalAccount: {
     accountNumber: '9876543210',
-    routingNumber: '021000021'
+    routingNumber: '000000000'
   },
   amount: 120000,
   currency: 'USD',

@@ -4,6 +4,10 @@ description: "Meet B1, the multi-agent AI system behind Buburuza. Six specialize
 sidebarTitle: "AI Engine B1"
 ---
 
+<Warning>
+  **Planned capability.** This page describes a design that is not yet built and is not available to customers. Specifications, timelines, and availability may change, and nothing here is a commitment to deliver. See [Legal and regulatory](/legal) for what is offered today.
+</Warning>
+
 Buburuza doesn't run on customer service scripts or rigid rule engines — it runs on B1, a multi-agent artificial intelligence system purpose-built for banking. Six specialized AI agents operate simultaneously on your account, each an expert in its own domain. They predict cash shortfalls before they happen, route your payments along the fastest and cheapest path, detect fraud in milliseconds, and answer your questions at 2 a.m. in your own language. This page explains what each agent does for you and how the system is designed to keep you in control while doing the heavy lifting.
 
 ## What B1 does for you
@@ -75,7 +79,7 @@ Operating across multiple countries means navigating multiple regulatory regimes
 **What it does for you:**
 
 - **Continuous transaction monitoring.** The agent screens every transaction for patterns associated with money laundering, sanctions violations, and other financial crimes. When you send money across borders, it applies whichever jurisdiction's rules are most stringent.
-- **Automated regulatory reporting.** Required reports for financial authorities are generated and filed automatically — no paperwork lands on your desk.
+- **Reporting support.** The agent assembles and validates the data compliance analysts need for regulatory reporting. Filing decisions are made by qualified staff, not by the model.
 - **Market risk assessment.** The agent stress-tests your portfolio exposures against market conditions and flags liquidity concerns before they become problems.
 
 ---
@@ -146,7 +150,7 @@ AI that learns from your data is only useful if that learning doesn't compromise
 
 <AccordionGroup>
   <Accordion title="Differential privacy">
-    When B1 learns from aggregate patterns, mathematical noise is added to the data before analysis. This guarantees that your individual information cannot be reconstructed from the model's outputs, even in theory.
+    When B1 learns from aggregate patterns, it applies differential privacy: calibrated noise is added before analysis so that the presence or absence of any one person's data changes the output by a bounded amount. That bound — the privacy budget — is a parameter, not an absolute guarantee. Differential privacy limits inference risk; it does not eliminate it.
   </Accordion>
 
   <Accordion title="Federated learning">
@@ -177,7 +181,7 @@ B1 operates under financial-grade performance requirements designed for producti
 | Fraud detection response time | Under 100ms |
 | Customer support query resolution | Under 30 seconds |
 | System uptime | 99.95% |
-| Fraud detection accuracy | Above 99.5% |
+| Fraud detection accuracy | See the [model version table](/api/ai-services#model-versions) |
 
 <Note>
   Performance metrics are updated as the platform evolves. Actual figures in production may vary based on load and feature configuration.

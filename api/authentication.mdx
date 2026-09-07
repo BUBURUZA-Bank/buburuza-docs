@@ -4,6 +4,10 @@ description: "Learn how to authenticate with the Buburuza API using API keys, OA
 sidebarTitle: "Authentication"
 ---
 
+<Warning>
+  **Planned capability.** This page describes a design that is not yet built and is not available to customers. Specifications, timelines, and availability may change, and nothing here is a commitment to deliver. See [Legal and regulatory](/legal) for what is offered today.
+</Warning>
+
 The Buburuza API uses JWT-based authentication across all endpoints. You can authenticate server-to-server with an API key, act on behalf of users via OAuth 2.0, or add biometric verification for mobile flows. Every request must include a valid `Authorization: Bearer <token>` header — requests without one return a `401 Unauthorized` error.
 
 ## Authentication methods
@@ -473,8 +477,9 @@ const mfaSetup = await buburuza.auth.mfa.enable({
   phoneNumber: '+1-555-0123' // Required for SMS
 });
 
-console.log('MFA Secret:', mfaSetup.secret);
-console.log('QR Code URL:', mfaSetup.qrCodeUrl);
+// Render the QR code for the user to scan.
+// Never log, persist, or transmit mfaSetup.secret — it is the long-lived TOTP seed.
+renderQrCode(mfaSetup.qrCodeUrl);
 ```
 
 ### Verifying an MFA code
@@ -555,7 +560,7 @@ if (biometricAuth.verified) {
 
 ## Webhook signature verification
 
-All webhook events from Buburuza include an `x-buburuza-signature` header containing an HMAC-SHA256 signature of the raw request body. Verify this signature before processing any webhook event.
+All webhook events from Buburuza include an `x-buburuza-signature` header containing an HMAC-SHA256 signature over `<timestamp>.<raw body>`, and an `x-buburuza-timestamp` header carrying that timestamp. Verify both before processing any webhook event: the signature proves authenticity, and the timestamp bounds how long a captured request stays replayable.
 
 <Warning>
   Always verify webhook signatures before acting on the event payload. Processing unverified webhooks can expose your application to replay and injection attacks.
@@ -566,24 +571,34 @@ All webhook events from Buburuza include an `x-buburuza-signature` header contai
 ```javascript node.js
 const crypto = require('crypto');
 
-function verifyWebhookSignature(payload, signature, secret) {
+const REPLAY_WINDOW_SECONDS = 300;
+
+function verifyWebhookSignature(payload, signature, secret, timestamp) {
+  // Reject malformed input before it can throw inside timingSafeEqual.
+  if (typeof signature !== 'string' || !/^[0-9a-f]+$/i.test(signature)) return false;
+  if (!timestamp || Math.abs(Date.now() / 1000 - Number(timestamp)) > REPLAY_WINDOW_SECONDS) {
+    return false;
+  }
+
   const expectedSignature = crypto
     .createHmac('sha256', secret)
-    .update(payload)
+    .update(`${timestamp}.${payload}`)
     .digest('hex');
 
-  return crypto.timingSafeEqual(
-    Buffer.from(signature, 'hex'),
-    Buffer.from(expectedSignature, 'hex')
-  );
+  const received = Buffer.from(signature, 'hex');
+  const expected = Buffer.from(expectedSignature, 'hex');
+
+  // timingSafeEqual throws on a length mismatch, so compare lengths first.
+  return received.length === expected.length && crypto.timingSafeEqual(received, expected);
 }
 
 // Express.js webhook handler
 app.post('/webhooks/buburuza', (req, res) => {
   const signature = req.headers['x-buburuza-signature'];
+  const timestamp = req.headers['x-buburuza-timestamp'];
   const payload = JSON.stringify(req.body);
 
-  if (!verifyWebhookSignature(payload, signature, webhookSecret)) {
+  if (!verifyWebhookSignature(payload, signature, webhookSecret, timestamp)) {
     return res.status(401).send('Invalid signature');
   }
 
@@ -597,13 +612,24 @@ app.post('/webhooks/buburuza', (req, res) => {
 ```python python
 import hmac
 import hashlib
+import time
 
-def verify_webhook_signature(payload: bytes, signature: str, secret: str) -> bool:
-    expected = hmac.new(
-        secret.encode(),
-        payload,
-        hashlib.sha256
-    ).hexdigest()
+REPLAY_WINDOW_SECONDS = 300
+
+
+def verify_webhook_signature(
+    payload: bytes, signature: str | None, secret: str, timestamp: str | None
+) -> bool:
+    if not signature or not timestamp:
+        return False
+    try:
+        if abs(time.time() - float(timestamp)) > REPLAY_WINDOW_SECONDS:
+            return False
+    except ValueError:
+        return False
+
+    signed = f"{timestamp}.".encode() + payload
+    expected = hmac.new(secret.encode(), signed, hashlib.sha256).hexdigest()
     return hmac.compare_digest(signature, expected)
 
 # Flask webhook handler
@@ -612,9 +638,10 @@ from flask import request, abort
 @app.route('/webhooks/buburuza', methods=['POST'])
 def handle_webhook():
     signature = request.headers.get('x-buburuza-signature')
+    timestamp = request.headers.get('x-buburuza-timestamp')
     payload = request.get_data()
 
-    if not verify_webhook_signature(payload, signature, WEBHOOK_SECRET):
+    if not verify_webhook_signature(payload, signature, WEBHOOK_SECRET, timestamp):
         abort(401)
 
     event = request.json
@@ -625,7 +652,7 @@ def handle_webhook():
 </CodeGroup>
 
 <Tip>
-  Use `crypto.timingSafeEqual` (Node.js) or `hmac.compare_digest` (Python) for signature comparison. Standard string equality is vulnerable to timing attacks.
+  Use `crypto.timingSafeEqual` (Node.js) or `hmac.compare_digest` (Python) for signature comparison — standard string equality is vulnerable to timing attacks. Compare buffer lengths first: `timingSafeEqual` throws on a length mismatch, which turns a malformed header into a crash instead of a `401`.
 </Tip>
 
 ---
@@ -676,8 +703,9 @@ res.cookie('access_token', access_token, {
   maxAge: 3600000 // 1 hour
 });
 
-// Acceptable fallback: localStorage (but note XSS risk)
-localStorage.setItem('buburuza_access_token', access_token);
+// Do not do this: localStorage is readable by any script on the page,
+// so a single XSS flaw exposes a token that can move money.
+// localStorage.setItem('buburuza_access_token', access_token);
 ```
 
 ### Token refresh strategy
@@ -685,7 +713,7 @@ localStorage.setItem('buburuza_access_token', access_token);
 Implement a refresh manager that checks token expiry before every request, rather than waiting for a `401` response.
 
 ```javascript auth-manager.js
-class BuburuザAuthManager {
+class BuburuzaAuthManager {
   constructor(apiKey, refreshToken) {
     this.apiKey = apiKey;
     this.refreshToken = refreshToken;

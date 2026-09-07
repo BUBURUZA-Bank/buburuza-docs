@@ -11,3 +11,7 @@ node_modules/
 
 # Local Mintlify dev artifacts
 .mint/output/
+
+# Generated project summary — regenerate on demand, do not commit.
+# It restates page content and silently goes stale after edits.
+.atlas-analysis.json

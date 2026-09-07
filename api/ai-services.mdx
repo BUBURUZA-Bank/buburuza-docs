@@ -501,8 +501,12 @@ Run a transaction through automated Anti-Money Laundering screening. The engine 
 </ParamField>
 
 <ParamField body="thresholds" type="object">
-  Override default reporting thresholds. Fields: `singleTransaction`, `dailyAggregate`, and `suspiciousPattern`.
+  Optional tuning for **internal alerting only**. Fields: `dailyAggregate` and `suspiciousPattern`. Statutory reporting thresholds, including the \$10,000 CTR threshold, are fixed by regulation and cannot be overridden.
 </ParamField>
+
+<Warning>
+  Statutory reporting thresholds are set by regulation, not by configuration. Buburuza applies the thresholds in force for the jurisdiction of the transaction; the API does not accept overrides.
+</Warning>
 
 <CodeGroup>
 
@@ -521,8 +525,7 @@ const amlAnalysis = await buburuza.ai.monitorAML({
     }
   },
   thresholds: {
-    singleTransaction: 1000000, // $10,000 CTR threshold
-    dailyAggregate: 1000000,
+    dailyAggregate: 1000000,   // internal alerting only
     suspiciousPattern: true
   }
 });

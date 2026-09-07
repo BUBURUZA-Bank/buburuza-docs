@@ -81,10 +81,10 @@ This guide walks you through everything you need to make your first successful B
     <CodeGroup>
 
     ```javascript JavaScript
-    import { BuburuzdaAPI } from '@buburuza/sdk';
+    import { BuburuzaAPI } from '@buburuza/sdk';
     
     // Initialize for sandbox testing
-    const buburuza = new BuburuzdaAPI({
+    const buburuza = new BuburuzaAPI({
       apiKey: 'bb_test_1234567890abcdef',
       environment: 'sandbox', // switch to 'production' when ready
       version: 'v1'
@@ -96,10 +96,10 @@ This guide walks you through everything you need to make your first successful B
     ```
 
     ```python Python
-    from buburuza import BuburuzdaAPI
+    from buburuza import BuburuzaAPI
     
     # Initialize client
-    buburuza = BuburuzdaAPI(
+    buburuza = BuburuzaAPI(
         api_key='bb_test_1234567890abcdef',
         environment='sandbox'
     )
@@ -217,8 +217,18 @@ This guide walks you through everything you need to make your first successful B
       description: 'Main application webhook'
     });
     
-    // Handle incoming events in your Express app
+    // Handle incoming events in your Express app.
+    // Always verify the signature before acting on an event — see
+    // /api/authentication#webhook-signature-verification for verifyWebhookSignature.
     app.post('/webhooks/buburuza', (req, res) => {
+      const signature = req.headers['x-buburuza-signature'];
+      const timestamp = req.headers['x-buburuza-timestamp'];
+      const payload = JSON.stringify(req.body);
+    
+      if (!verifyWebhookSignature(payload, signature, webhookSecret, timestamp)) {
+        return res.status(401).send('Invalid signature');
+      }
+    
       const event = req.body;
     
       switch (event.type) {
