@@ -14,7 +14,7 @@ A **rail** is a route money travels. Two are offered today:
 | `ach` | Domestic US bank transfers |
 | `wire` | High-value and international bank transfers |
 
-Further rails are enabled progressively, and which ones are open is decided per environment rather than published here. Always read the rail list from the API rather than hard-coding it — that list is the authoritative answer for your space, and it changes without a documentation release.
+Further rails are enabled progressively. Which ones are open to you is shown in the app, and that list — not this page — is the authoritative answer for your space.
 
 A rail being offered does not mean it is open to you. Two separate gates decide that, and the difference matters:
 
@@ -101,15 +101,5 @@ Every money event lands in one list: funding, transfers, payouts, and fees alike
 
 ## Rates
 
-Current exchange rates are available as a read-only endpoint, so your product can display conversions without integrating a separate rate source.
+Current exchange rates are shown in the app, so you can see what a conversion will produce before you commit to it.
 
-## API
-
-<CardGroup cols={2}>
-  <Card title="Money Movement API" icon="arrow-right-arrow-left" href="/api/money-movement">
-    Funding, previews, transfers, payouts, transactions.
-  </Card>
-  <Card title="Recipients and Beneficiaries API" icon="address-book" href="/api/recipients-beneficiaries">
-    Managing payees and their provider links.
-  </Card>
-</CardGroup>

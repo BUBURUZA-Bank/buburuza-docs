@@ -43,34 +43,6 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "Developer",
-        "groups": [
-          {
-            "group": "Get started",
-            "pages": [
-              "api/overview",
-              "api/getting-started"
-            ]
-          },
-          {
-            "group": "API reference",
-            "pages": [
-              "api/authentication",
-              "api/onboarding",
-              "api/accounts-wallets",
-              "api/money-movement",
-              "api/recipients-beneficiaries"
-            ]
-          },
-          {
-            "group": "Clients",
-            "pages": [
-              "api/sdks-and-libraries"
-            ]
-          }
-        ]
       }
     ]
   }

@@ -13,7 +13,7 @@ A **space** owns a payment account, its wallets, its recipients, and the people 
 | Verified by | KYB — company and associated persons | KYC — the individual |
 | Can have members | Yes | No — it is yours alone |
 
-Switching space changes what every screen and every API call refers to. A request always acts on the space you are currently in.
+Switching space changes what every screen refers to. You always act on the space you are currently in.
 
 Opening a personal space is a single action, and it is idempotent: if you already own one, you are given the one you have rather than a second. Opening it does not move you into it — you switch when you choose to.
 
@@ -51,6 +51,6 @@ Someone who no longer wants access can also leave a space themselves.
 
 Each space has a referral code you can share. It is available from your profile.
 
-## API
+## Managing all of this
 
-The same operations are available over the API: list and switch spaces, open a personal space, invite and revoke, list and remove members, and read your referral code. See the [Developer](/api/overview) tab.
+Spaces, invitations, and members are managed from the dashboard.

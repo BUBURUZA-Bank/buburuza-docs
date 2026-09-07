@@ -24,7 +24,7 @@ A ticket is the right route when chat is not. It suits anything that needs inves
 
 <Steps>
   <Step title="Open a ticket">
-    Describe what happened and what you expected. If it concerns a specific payment, include its identifier from your transaction list, and the `correlation_id` if you have one from an API response.
+    Describe what happened and what you expected. If it concerns a specific payment, include its identifier from your transaction list.
   </Step>
   <Step title="Follow it">
     Your tickets are listed in the app with their current state; open any one to read the history.
@@ -39,7 +39,7 @@ The app publishes the support phone number with its opening hours, and an email 
 
 Two things make a support request resolvable on the first reply:
 
-- **The identifier.** A payment's id from your transaction list, or a `correlation_id` from an API response, locates the exact request.
+- **The identifier.** A payment's id from your transaction list locates the exact record.
 - **What you expected.** The gap between what happened and what you expected is usually the whole answer.
 
 ## What support cannot do
@@ -51,6 +51,6 @@ Some limits are structural rather than a matter of policy:
 - **Change a verification decision.** Verification is performed by a licensed provider. Where more evidence is needed, you are told what to submit.
 - **Confirm whether a regulatory report exists.** Nobody can tell you this — see [Compliance and security](/compliance-security).
 
-## API
+## Where to find it
 
-Requesting a chat token (`POST /api/v1/app/support/chat/token`), opening a ticket, listing tickets, and reading support availability are all available over the API. See the [Developer](/api/overview) tab.
+Chat, tickets, and the current availability are all reached from the help area of the app.

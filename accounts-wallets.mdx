@@ -44,7 +44,7 @@ Every balance is reported as a **decimal string**, not a floating-point number, 
 
 ## Statements and letters
 
-Two documents are produced per account, both in the dashboard and over the API:
+Two documents are produced per account:
 
 - an **account statement** for a period you choose,
 - a **bank letter** confirming the account's details, for counterparties who ask for one before paying you.
@@ -53,16 +53,11 @@ Two documents are produced per account, both in the dashboard and over the API:
 
 Two things stand between a space and money movement, and they fail differently:
 
-1. **Verification.** Until it passes, the account does not exist. Money-movement endpoints refuse the request.
+1. **Verification.** Until it passes, the account does not exist and no money can move.
 2. **Tier.** A company verified at a lighter tier may be able to receive funds while outbound movement stays closed. The dashboard shows which applies to you.
 
-## API
+## Related
 
-<CardGroup cols={2}>
-  <Card title="Accounts and Wallets API" icon="wallet" href="/api/accounts-wallets">
-    Accounts, wallets, balances, and deposit instructions.
-  </Card>
-  <Card title="Money Movement" icon="arrow-right-arrow-left" href="/payments">
-    What you can do once a wallet holds a balance.
-  </Card>
-</CardGroup>
+<Card title="Money movement" icon="arrow-right-arrow-left" href="/payments">
+  What you can do once a wallet holds a balance.
+</Card>
