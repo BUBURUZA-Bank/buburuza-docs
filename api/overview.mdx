@@ -1,156 +1,89 @@
 ---
-title: "Buburuza Developer API: Banking, AI, and Blockchain"
-description: "The Buburuza Developer Platform gives you Banking-as-a-Service, AI financial services, and blockchain infrastructure in a single REST API."
-sidebarTitle: "Overview"
+title: "API Overview"
+description: "Base URLs, conventions, envelopes, errors, idempotency, and authentication modes of the Buburuza API."
 ---
 
-The Buburuza Developer Platform gives you a single API surface to embed AI-native banking into any application. Built on a Layer 3 blockchain and powered by the Intelligent Engine B1, it delivers enterprise-grade financial services — from multi-currency wallets to smart-contract deployment — with the simplicity of modern REST APIs.
+# API Overview
 
-<Warning>
-  **Developer Preview** — The Buburuza API platform is not yet available for public use. This documentation describes the planned API structure and capabilities. Early access opens to select partners in **Q1 2026**. Contact [developers@buburuza.com](mailto:developers@buburuza.com) to join the waitlist.
-</Warning>
+The Buburuza API is a JSON REST API under `/api/v1`. It covers authentication, organisation onboarding, accounts & wallets, and money movement — the same operations available in the dashboard.
 
-## What you can build
+## Base URL
 
-<CardGroup cols={3}>
-  <Card title="Banking-as-a-Service" icon="building-columns">
-    Issue multi-currency wallets, process real-time payments, manage virtual and physical cards, and build investment platforms with DeFi integration.
-  </Card>
+```
+https://app.buburuza.io/api/v1
+```
 
-  <Card title="AI financial services" icon="brain">
-    Add conversational banking, AI-driven credit scoring, automated KYC/AML, and real-time financial analytics to your product.
-  </Card>
+The authoritative OpenAPI 3.x specification is available as a machine-readable contract; see [SDKs & Libraries](/api/sdks-and-libraries).
 
-  <Card title="Blockchain infrastructure" icon="link">
-    Deploy custom financial instruments as smart contracts on Arbitrum L3, manage \$BUB tokens and stablecoins, and access DeFi protocols.
-  </Card>
-</CardGroup>
+## Routing
 
-### Banking-as-a-Service
-
-- **Digital wallets** — Multi-currency wallets with instant settlement
-- **Payment processing** — Real-time transfers with sub-\$0.001 network costs
-- **Card issuance** — Virtual and physical card programs through a licensed issuing partner
-- **Investment platforms** — Trading and portfolio management with DeFi integration
-
-### AI-powered financial services
-
-- **Conversational banking** — Natural language financial interactions
-- **Risk assessment** — AI-driven credit scoring and fraud detection
-- **Compliance automation** — Automated KYC/AML with Sumsub integration
-- **Financial analytics** — Real-time insights and predictive analytics
-
-### Blockchain infrastructure
-
-- **Smart contracts** — Deploy custom financial instruments on Arbitrum L3
-- **Token management** — Native \$BUB token and stablecoin (USDB/EURB) integration
-- **DeFi integration** — Access to decentralized finance protocols
-- **Immutable records** — Blockchain-based audit trails and transparency
-
----
-
-## Core services
-
-The platform exposes six primary API domains, each covering a distinct area of financial functionality.
-
-| Service | Description |
+| Prefix | Area |
 | --- | --- |
-| **Authentication API** | JWT-based authentication with biometric support |
-| **Account Management API** | User accounts, profiles, and KYC verification |
-| **Transaction API** | Payments, transfers, and transaction history |
-| **Card Services API** | Card lifecycle management and transaction processing |
-| **Investment API** | Trading, portfolio management, and market data |
-| **AI Services API** | Natural language processing and intelligent automation |
+| `/api/v1/auth/*` | Authentication: signup, login, sessions, MFA, passkeys |
+| `/api/v1/app/*` | Application: onboarding, accounts, wallets, transfers, transactions |
 
-The platform also exposes blockchain-specific APIs: the **Buburuza-Chain API** for direct Layer 3 interaction, the **Smart Contract API** for contract deployment and interaction, the **Token API** for \$BUB and stablecoin operations, and the **DeFi Bridge API** for connecting to external protocols.
+## Conventions
 
----
+- **JSON**, field names in `snake_case`.
+- Every successful response is HTTP `200` with an envelope: `{ "data": <payload>, "correlation_id": "<uuid>" }`.
+- Every request may carry `X-Correlation-Id`; the server always returns a `correlation_id` in the body.
 
-## Performance specifications
+### Example
 
-Buburuza is built for high-volume production workloads. All figures reflect planned specifications at General Availability.
+```json
+{
+  "data": {
+    "user_id": "usr_01h…",
+    "first_name": "Jane"
+  },
+  "correlation_id": "4d3f9c1a-…-8f2b"
+}
+```
 
-| Metric | Specification |
-| --- | --- |
-| **Throughput** | 40,000 transactions per second (TPS) |
-| **Latency** | Sub-250ms response times |
-| **Availability** | 99.99% availability target |
-| **Global coverage** | Multi-region deployment for worldwide access |
+## Errors
 
----
+### Validation errors — HTTP 422
 
-## Supported currencies
+```json
+{
+  "type": "ValidationError",
+  "error": {
+    "amount": [
+      { "code": "greater_than", "message": "must be greater than 0", "data": null }
+    ]
+  },
+  "non_field_errors": []
+}
+```
 
-<CardGroup cols={3}>
-  <Card title="Fiat currencies" icon="dollar-sign">
-    USD, EUR, CAD, GBP, AUD, JPY, and 150\+ additional currencies
-  </Card>
+Field-level errors are objects keyed by field name; `non_field_errors` carries form-level problems.
 
-  <Card title="Cryptocurrencies" icon="bitcoin">
-    BTC, ETH, USDC, USDT, and major altcoins
-  </Card>
+### Other errors — 401 / 403 / 404 / 409 / 500
 
-  <Card title="Native stablecoins" icon="coins">
-    **USDB** (USD-backed) and **EURB** (EUR-backed), native to the Buburuza platform
-  </Card>
-</CardGroup>
+```json
+{
+  "type": "PermissionDenied",
+  "error": { "code": "account_not_active", "message": "…", "data": null }
+}
+```
 
-<Note>
-  Support for Central Bank Digital Currencies (CBDCs) is planned for a future release as government-issued digital currency programmes mature globally.
-</Note>
+A single `error` object with `code`, `message`, and `data`.
 
----
+## Idempotency
 
-## Developer tools
+Mutating endpoints where retries are dangerous accept an `Idempotency-Key` header. Repeating a request with the same key does not duplicate the operation.
 
-You have access to a full set of tools to build, test, and ship integrations faster.
+## Authentication modes
 
-- **SDKs** — Native libraries for JavaScript/TypeScript (`@buburuza/sdk`), Python (`buburuza-python`), Java (`com.buburuza:buburuza-java`), iOS Swift (`BuburuzaSDK`), Android Kotlin (`buburuza-android`), and React Native (`@buburuza/react-native`)
-- **Webhooks** — Real-time event notifications pushed to your endpoint for transactions, KYC events, balance updates, and more
-- **Sandbox environment** — A fully isolated testing environment with synthetic data, test card numbers, and scenario simulation
-- **Developer Dashboard** — Manage API keys, monitor usage analytics, and browse the interactive API explorer
-- **CLI tools** — Command-line interface for common operations
-- **VS Code extension** — IntelliSense and code snippets for Buburuza APIs
-- **Postman collection** — Pre-configured API requests ready to import
-
----
-
-## API roadmap
-
-Buburuza is releasing the Developer Platform in three phases.
-
-| Phase | Timeline | What ships |
+| Mode | Used for | How |
 | --- | --- | --- |
-| **Developer Preview** | Q1 2026 | Core Banking APIs (Accounts, Transactions, Cards), JavaScript and Python SDKs, Sandbox environment, Basic webhook support |
-| **Public Beta** | Q2 2026 | AI Services API with NLP, Mobile SDKs (iOS, Android, React Native), Advanced webhook filtering, Investment and trading APIs |
-| **General Availability** | Q2 2026 | Full blockchain API suite, Enterprise batch processing, Global compliance localisation, Advanced developer analytics |
+| None | Starting signup (`POST /auth/sign-up/email`) | — |
+| Registration | Signup steps after email confirmation (passkey, TOTP) | `X-Registration-Token` header |
+| Access | All authenticated app endpoints | `Authorization: Bearer <access_token>` |
+| MFA step-up | Completing login when MFA is required | `mfa_token` in the request body |
 
-<Tip>
-  Sign up for early access notifications and follow the [Buburuza GitHub](https://github.com/BUBURUZA-Bank) to track SDK releases and changelog updates as they land.
-</Tip>
+Access tokens are **short-lived**; refresh happens through an HttpOnly cookie on the auth service. Browser and mobile clients get this automatically.
 
----
+## Correlation & tracing
 
-## Where to go next
-
-<CardGroup cols={2}>
-  <Card title="Quick start" icon="rocket" href="/api/getting-started">
-    Make your first API call — register, install the SDK, create a wallet, and process a payment in under 10 minutes.
-  </Card>
-
-  <Card title="Authentication" icon="key" href="/api/authentication">
-    Learn how JWT-based auth works, how to manage API keys, and how to implement biometric authentication flows.
-  </Card>
-
-  <Card title="Core Banking API" icon="building-columns" href="/api/core-banking">
-    Detailed reference for accounts, wallets, transactions, and card services endpoints.
-  </Card>
-
-  <Card title="AI Services API" icon="brain" href="/api/ai-services">
-    Integrate natural language processing, AI-driven risk assessment, and intelligent automation.
-  </Card>
-
-  <Card title="SDKs and libraries" icon="code" href="/api/sdks-and-libraries">
-    Installation guides, changelogs, and usage examples for every official Buburuza SDK.
-  </Card>
-</CardGroup>
+Pass `X-Correlation-Id` on requests to tie client logs to server logs; the response body echoes the same identifier.

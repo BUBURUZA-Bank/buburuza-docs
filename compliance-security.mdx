@@ -1,0 +1,46 @@
+---
+title: "Compliance & Security"
+description: "How Buburuza verifies organisations, monitors transactions, and meets regulatory obligations."
+---
+
+# Compliance & Security
+
+## Verification (KYB/KYC)
+
+Every organisation must pass **Know Your Business (KYB)** verification before money movement is enabled:
+
+- Verification is performed by a **licensed identity provider** (Sumsub) in a hosted flow.
+- The required document set depends on the jurisdiction (currently **Canada and the US**).
+- Organisations verify at a tier: **light** or **full** verification. The tier gates the products and limits available to the account.
+
+Associated persons (directors, controllers, UBOs) are verified as part of the company verification.
+
+## Transaction monitoring
+
+All money movement is monitored continuously:
+
+- **KYT** — counterparty and transaction screening against sanction and watch lists.
+- **Travel Rule** — information sharing on transfers above applicable thresholds, as required by regulation.
+- **Reporting** — transaction reporting to regulators (e.g. FINTRAC obligations for Canadian activity).
+
+Monitoring is automatic; nothing is required from you beyond completing verification and keeping your organisation's information current.
+
+## Account security
+
+| Control | Details |
+| --- | --- |
+| Passkeys | WebAuthn credentials as the primary login factor — resistant to phishing and credential stuffing |
+| MFA | Optional TOTP step-up for logins |
+| Recovery codes | Single-use codes issued at signup for credential loss |
+| Session control | List and revoke sessions, log out everywhere |
+| Verification limits | Money movement disabled until KYB passes; tier-based product gating |
+
+## Data & privacy
+
+- We do not expose raw provider payloads or verification internals through any API.
+- Account data is scoped to your organisation; requests are authorised per session.
+- See [Onboarding & Security](/onboarding-and-security) for the user-facing flow.
+
+## API notes
+
+Compliance state surfaces through the API as statuses (KYB status, payment-account status) and standard error codes (`403` when a tier or status blocks an operation). The API never returns provider identifiers, raw evidence, or internal screening records.

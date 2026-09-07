@@ -21,33 +21,22 @@
             "group": "Overview",
             "pages": [
               "index",
-              "introduction",
-              "whitepaper/ecosystem-lightpaper",
-              "whitepaper/products-and-services"
+              "introduction"
             ]
           },
           {
             "group": "Getting Started",
             "pages": [
               "onboarding-and-security",
-              "whitepaper/quickstart"
+              "quickstart"
             ]
           },
           {
-            "group": "Core Platform",
+            "group": "Platform",
             "pages": [
-              "whitepaper/ai-engine-b1",
-              "buburuza-chain",
-              "blockchain/tokenomics",
-              "blockchain/core-mechanics"
-            ]
-          },
-          {
-            "group": "Roadmap",
-            "pages": [
-              "roadmap/foundation",
-              "roadmap/ai-features",
-              "roadmap/expansion"
+              "accounts-wallets",
+              "payments",
+              "compliance-security"
             ]
           },
           {
@@ -72,8 +61,10 @@
             "group": "API Reference",
             "pages": [
               "api/authentication",
-              "api/core-banking",
-              "api/ai-services"
+              "api/onboarding",
+              "api/accounts-wallets",
+              "api/money-movement",
+              "api/recipients-beneficiaries"
             ]
           },
           {
