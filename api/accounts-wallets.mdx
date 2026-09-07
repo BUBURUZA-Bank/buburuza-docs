@@ -1,73 +1,54 @@
 ---
-title: "Accounts & Wallets API"
-description: "Accounts, wallets, balances, funding methods, statements, and the /me profile endpoint."
+title: "Accounts and Wallets API"
+description: "Reading accounts, wallets, balances, funding methods, and deposit instructions."
 ---
 
-# Accounts & Wallets API
-
-Everything under `/api/v1/app/accounts/*` and `/api/v1/app/wallets/*` requires a Bearer access token and is scoped to the authenticated organisation.
+All paths below sit under `/api/v1/app`.
 
 ## Accounts
 
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/accounts` | List accounts with wallet summaries and balances |
-| GET | `/accounts/{account_id}` | Account detail with its wallets |
-| GET | `/accounts/{account_id}/wallets` | Paginated wallets for the account |
-| POST | `/accounts/{account_id}/wallets` | Provision an additional wallet |
+```text
+GET /accounts                → accounts in the active space
+GET /accounts/{account_id}   → one account
+```
+
+Check `status` and `money_movement_enabled` before attempting any payment. An account that is not active will refuse money movement with `403`, and no retry will change that until verification and provisioning complete.
 
 ## Wallets
 
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/wallets/{wallet_id}` | Wallet detail with balances |
-| GET | `/wallets/{wallet_id}/balance-history` | Historical balance series |
-| GET | `/wallets/{wallet_id}/deposit-instructions` | Funding instructions (see below) |
-| GET | `/wallets/{wallet_id}/deposit-instructions/document` | Printable funding document |
-
-## Documents
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/accounts/{account_id}/documents/bank-letter` | Account confirmation letter |
-| GET | `/accounts/{account_id}/documents/statements/{period}` | Statement for a period |
-
-## Account & wallet kinds
-
-| Kind | Rails | Notes |
-| --- | --- | --- |
-| `fiat` | ACH, wire | Fiat balance; funding via bank rails |
-| `stablecoin` | Crypto address | Stablecoin balance; funding via on-chain deposit |
-
-Default wallets are auto-provisioned when the payment account becomes `ACTIVE`. Responses are **provider-neutral**: no provider identifiers, no bridge references. Balances are decimal strings:
-
-```json
-{
-  "available": "12500.00",
-  "pending": "0.00",
-  "hold": "0.00"
-}
+```text
+GET /accounts/{account_id}/wallets          → wallets on the account
+GET /wallets/{wallet_id}                    → one wallet
+GET /wallets/{wallet_id}/balance-history    → balance over time
 ```
 
-## Profile (`/me`)
+Each wallet is `fiat` or `stablecoin`. A fiat wallet receives over payment rails; a stablecoin wallet receives at a deposit address.
 
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/me` | Dashboard bootstrap: user, organisation (`legal_entity`), active state |
-| GET | `/me/referral-code` | The user's referral code |
+## Balances
 
-## Errors
+A balance has three components, all decimal strings:
 
-| HTTP | When |
+| Component | Meaning |
 | --- | --- |
-| 403 | KYB tier insufficient, or the payment account is not `ACTIVE` |
-| 404 | Resource does not exist or does not belong to the session's organisation |
+| `available` | Spendable now — the figure payments are authorised against |
+| `pending` | In flight, not yet settled |
+| `hold` | Reserved by operations already under way |
 
-## Example
+Price and authorise against `available`. A value visible in `pending` is not spendable.
 
-```bash
-curl https://app.buburuza.io/api/v1/app/accounts \
-  -H "Authorization: Bearer <access_token>"
+## Funding
+
+```text
+GET /accounts/{account_id}/funding-methods       → open methods for this account
+GET /wallets/{wallet_id}/deposit-instructions    → how to pay into this wallet
 ```
 
-See [Money Movement API](/api/money-movement) for funding instructions, transfers, and transactions.
+Fiat instructions carry the account details for the chosen rail. Crypto instructions carry a deposit address with its chain and asset — send only that asset on that chain.
+
+## Payment account status
+
+```text
+GET  /payment-account/status   → provisioning state
+POST /payment-account/start    → begin provisioning where it is not automatic
+GET  /payment-agreement/link   → hosted provider agreement, when one is required
+```

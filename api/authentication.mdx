@@ -1,87 +1,97 @@
 ---
 title: "Authentication API"
-description: "Signup, passkey and email login, sessions, MFA, and profile endpoints under /api/v1/auth."
+description: "How a session is created and refreshed: email codes, passkeys, TOTP, recovery codes, step-up, and session management."
 ---
 
-# Authentication API
+Authentication is handled by the identity service. There is no password anywhere in the model: a session is established with an email one-time code and a phishing-resistant credential.
 
-All authentication lives under `/api/v1/auth`. Identity is owned by the auth service; app endpoints verify the issued tokens locally against the published JWKS (`/.well-known/jwks.json`, RS256).
+## The model
 
-## Signup (passwordless)
+| Piece | Role |
+| --- | --- |
+| **Email one-time code** | Proves control of the address, at signup and on a new device |
+| **Passkey (WebAuthn)** | The primary credential. Bound to the origin, so it cannot be phished or replayed |
+| **TOTP** | The fallback credential where passkeys are unavailable, and the optional extra step |
+| **Recovery code** | Single-use, issued once. The only route back with no other credential |
 
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| POST | `/auth/sign-up/email` | — | Start signup; sends a one-time code |
-| POST | `/auth/sign-up/email/confirmation` | `X-Registration-Token` | Confirm the code; returns the registration token for the next step |
-| POST | `/auth/sign-up/email/resend` | `X-Registration-Token` | Resend the code |
-| POST | `/auth/sign-up/referral` | — | Record a referral code during signup |
-| GET | `/auth/sign-up/state` | — | Current signup step (e.g. resuming on another device) |
-| POST | `/auth/sign-up/totp/enroll` | `X-Registration-Token` | Fallback credential: TOTP enrollment |
-| POST | `/auth/sign-up/totp/confirm` | `X-Registration-Token` | Confirm TOTP → `SignupSession` |
-| POST | `/auth/webauthn/register/options` | `X-Registration-Token` | Passkey registration options (`publicKey`) |
-| POST | `/auth/webauthn/register/verify` | `X-Registration-Token` | Verify attestation → `SignupSession` |
+## Signup
 
-After the last step you hold an access token and an authenticated session.
+```text
+POST /email                 → send the confirmation code
+POST /email/resend          → send it again
+POST /email/confirmation    → confirm the address
+```
 
-## Login
+After confirmation, enroll a credential before the account can be used.
 
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| POST | `/auth/webauthn/login/options` | — | Passkey login options |
-| POST | `/auth/webauthn/login/verify` | — | Verify assertion → `Session` |
-| POST | `/auth/login/email` | — | Request an email login code |
-| POST | `/auth/login/email/confirmation` | — | Confirm → `Session`, or `mfa_required` when MFA is on |
-| POST | `/auth/login/mfa` | `mfa_token` in body | MFA step-up to complete login |
-| POST | `/auth/login/recovery-code` | — | Sign in with a recovery code |
+## Enrolling a passkey
+
+```text
+POST /passkeys/enroll/options   → challenge and parameters for the authenticator
+POST /passkeys/enroll/verify    → submit the authenticator's response
+GET  /passkeys                  → list enrolled passkeys
+DELETE /passkeys/{id}           → remove one
+```
+
+Enroll a second passkey on another device before removing the first. An account with one passkey and lost recovery codes cannot be recovered.
+
+## Enrolling TOTP
+
+```text
+POST /mfa/enroll                  → begin enrollment
+POST /mfa/confirm                 → confirm with a generated code
+POST /mfa/recovery-code           → issue recovery codes
+POST /mfa/recovery-code/confirm   → acknowledge that they were stored
+```
+
+<Warning>
+  Recovery codes are shown once. Never log them, never write them to disk on the server, and never send them through support channels.
+</Warning>
+
+## Signing in
+
+```text
+GET  /login/options                → which methods this account can use
+POST /login/email                  → request an email code
+POST /login/email/confirmation     → submit the email code
+POST /login/verify                 → complete a passkey assertion
+POST /login/mfa                    → submit a TOTP code
+POST /login/mfa/recovery-code      → spend a recovery code
+POST /logout                       → end the session
+```
+
+## Step-up
+
+Sensitive actions re-confirm identity inside a live session:
+
+```text
+POST /passkeys/step-up/options   → challenge
+POST /passkeys/step-up           → assertion
+```
+
+A satisfied step-up authorises that action, not the rest of the session.
 
 ## Sessions
 
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| POST | `/auth/token/refresh` | refresh cookie | New access token; rotates the cookie |
-| POST | `/auth/logout` | Bearer | End the current session |
-| GET | `/auth/sessions` | Bearer | List active sessions (`is_current` marks this device) |
-| DELETE | `/auth/sessions/{session_id}` | Bearer | Revoke one session |
-| DELETE | `/auth/sessions` | Bearer | Revoke every session |
+Sessions can be listed and revoked individually or all at once. Revoking everywhere ends the current session too, so expect the next call to return `401` and re-authenticate.
 
-The refresh token never appears in request or response bodies: it lives in an HttpOnly cookie scoped to the auth service. On refresh the cookie is rotated via `Set-Cookie`.
+## Tokens
 
-## MFA (post-login, optional)
+Access tokens are short-lived and refreshed while the session is live. Verify them against the published JWKS:
 
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| POST | `/auth/mfa/enroll` | Bearer | Enable TOTP MFA for logins |
-| POST | `/auth/mfa/confirm` | Bearer | Confirm enrollment |
+```text
+GET /.well-known/jwks.json
+```
 
-<Note>
-Signup-time TOTP (the credential fallback) uses `/auth/sign-up/totp/*` — not `/auth/mfa/*`. Post-login MFA is a separate, optional factor.
-</Note>
+Do not hard-code a signing key — keys rotate, and the JWKS is the source of truth.
 
-## Passkey management
+<Warning>
+  Store tokens in server-side storage, or in an http-only cookie set by your backend. Do not put a token that can move money into `localStorage`: any script on the page can read it, so one XSS flaw is enough to lose it.
+</Warning>
 
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| GET | `/auth/webauthn/passkeys` | Bearer + refresh cookie | List the user's passkeys |
-| POST | `/auth/webauthn/passkeys/enroll/options` | Bearer + refresh cookie | Options for adding a passkey (`enroll_token`) |
-| POST | `/auth/webauthn/passkeys/enroll/verify` | Bearer | Submit the attestation |
-| DELETE | `/auth/webauthn/passkeys/{id}` | Bearer + refresh cookie | Remove a passkey |
+## Your identity
 
-## Profile (self)
-
-| Method | Path | Auth | Purpose |
-| --- | --- | --- | --- |
-| GET | `/auth/me` | Bearer | Current user |
-| PATCH | `/auth/me/profile` | Bearer | Update `first_name`, `last_name` |
-
-The company name is updated separately through [Onboarding](/api/onboarding).
-
-## Error codes (auth)
-
-| HTTP | Code | When |
-| --- | --- | --- |
-| 422 | `ValidationError` | Malformed input, expired/invalid tokens or codes |
-| 404 | `session_not_found` | Session id does not belong to the user |
-| 409 | `passkey_management_unavailable` | No usable refresh token for passkey management |
-| 403 | `passkey_management_forbidden` | Provider token lacks the required scope |
-| 404 | `passkey_not_found` | Unknown passkey id |
-| 422 | `passkey_enroll_token_invalid` / `enrollment_expired` / `webauthn_verification_failed` | Passkey ceremony failures |
+```text
+GET   /me            → the signed-in user
+PATCH /me/profile    → update profile fields
+```

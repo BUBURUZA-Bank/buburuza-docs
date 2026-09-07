@@ -1,60 +1,115 @@
 ---
 title: "Money Movement"
-description: "Funding your account, sending transfers and payouts, and reading your transaction history."
+description: "Rails and their standing, funding an account, pricing a payment, sending transfers and payouts, and reading the transaction list."
 ---
 
-# Money Movement
+Money movement has three parts: getting money in, sending it out, and knowing what it cost. Pricing comes first in every outbound flow — you never submit a payment without a quote in hand.
 
-## Funding (money in)
+## Rails and their standing
 
-Top-ups are a **two-step** flow: pick a method, then fetch instructions.
+A **rail** is a route money travels. Two are offered today:
+
+| Rail | Typical use |
+| --- | --- |
+| `ach` | Domestic US bank transfers |
+| `wire` | High-value and international bank transfers |
+
+Further rails are enabled progressively, and which ones are open is decided per environment rather than published here. Always read the rail list from the API rather than hard-coding it — that list is the authoritative answer for your space, and it changes without a documentation release.
+
+A rail being offered does not mean it is open to you. Two separate gates decide that, and the difference matters:
+
+<AccordionGroup>
+  <Accordion title="The deployment switch" icon="toggle-on">
+    Whether the rail is switched on for the environment you are using at all. A rail that is off is off for everyone.
+  </Accordion>
+  <Accordion title="The provider endorsement" icon="stamp">
+    Whether the payment provider has endorsed your space for that family of rails. Endorsements are issued per family, and a payout over a rail you hold no endorsement for is refused by the provider. A space registered before a rail was switched on holds no endorsement for it and has to ask for one.
+  </Accordion>
+</AccordionGroup>
+
+Listing your rails returns every rail this environment offers, each with its standing and, where it is closed, the reason. One state deserves attention: when an endorsement has not been read back from the provider yet, the rail is reported as available, because an unread endorsement never refuses a payout — but nothing should promise the rail works until it is confirmed. Where a rail needs documents or approval, you can request it and attach what it asks for.
+
+## Funding
+
+Getting money in is a two-step flow, then a wait.
 
 <Steps>
   <Step title="Choose a funding method">
-    Select **fiat** (ACH or wire) or **crypto** for the wallet you want to fund.
+    Pick the wallet and the method — a fiat rail, or crypto.
   </Step>
-  <Step title="Get instructions">
-    Fiat: account and routing details for the selected rail. Crypto: a deposit address with chain and asset.
+  <Step title="Fetch the instructions">
+    For a fiat rail you receive the account details to pay into. For crypto you receive a deposit address together with its chain and asset. Send only the named asset, on the named chain.
   </Step>
-  <Step title="Send funds">
-    Initiate the transfer from your bank or wallet. Inbound money appears in your transaction list automatically once it clears — there is no deposit step on our side.
+  <Step title="Send from your side">
+    Initiate the payment at your bank or wallet. Inbound funds land in your transaction list on their own once they clear — there is no deposit to confirm on the platform.
   </Step>
 </Steps>
 
-## Transfers
+## Pricing: the fee quote
 
-A transfer moves money between wallets.
+Every outbound payment is priced before it exists.
 
-1. **Fee preview** — price the transfer before it exists. The returned quote is bound to the amount and route.
-2. **Create** — submit the transfer with the `fee_quote_id` from the preview.
-3. **Track** — poll the transfer status.
+<Steps>
+  <Step title="Request a preview">
+    Ask for a fee preview for the amount and route you intend. You receive a quote carrying a `fee_quote_id`, the net amount, the fee, and the total that will be debited.
+  </Step>
+  <Step title="Submit against the quote">
+    Create the payment citing that `fee_quote_id`. The price you were shown is the price you are charged.
+  </Step>
+</Steps>
+
+Three properties of a quote are worth committing to memory:
+
+- **Fee on top.** The recipient receives exactly the amount you entered. Your wallet is debited that amount **plus** the fee. Net and fee always sum to the total debited.
+- **Single use.** A quote is consumed by one payment. A second payment needs a second quote.
+- **Ten minutes.** A quote expires ten minutes after it is issued. Submitting against a lapsed quote is refused, and the fix is to price again.
 
 <Note>
-The fee is charged **on top** of the amount you enter: the recipient receives exactly what you typed, and you are debited amount + fee. Quotes expire after ten minutes and are consumed by a single payment.
+  The fee is set per payment from the destination and the risk of the route, so it is not a single published percentage. The preview is the authoritative price for your payment, and it is the number to show your own users.
 </Note>
 
-## Payouts (withdrawals)
+## Transfers
 
-Withdrawals send money to an external recipient:
+A transfer moves money between wallets. Price it, submit it against the quote, then follow its status in the transaction list.
 
-1. Create a **recipient** once (or reuse an existing one).
-2. Get a **fee preview** for the withdrawal.
-3. Create the withdrawal and track it.
+## Payouts
 
-## Recipients & beneficiaries
+A payout sends money to someone outside the platform.
 
-- **Recipients** are reusable payee records you manage (create, update, delete).
-- **Beneficiaries** link your recipients to provider-side accounts, including unlinking and relinking when a provider changes a reference.
+<Steps>
+  <Step title="Create a recipient">
+    Record who is being paid, once. Recipients are reusable, and you can update or delete them later.
+  </Step>
+  <Step title="Price the payout">
+    Request a withdrawal fee preview for the amount and rail.
+  </Step>
+  <Step title="Send and track">
+    Submit against the quote and follow the payout in your transaction list.
+  </Step>
+</Steps>
+
+### Recipients and beneficiaries
+
+These are two layers of the same idea, and the split matters when something needs repairing:
+
+- A **recipient** is your record of a payee — the one you create, edit, and reuse.
+- A **beneficiary** is the link between that record and the provider's own account reference. When a provider changes a reference, the beneficiary can be unlinked and relinked without you rebuilding the recipient.
 
 ## Transactions
 
-Every money event — deposit, transfer, payout, fee — lands in the **transactions** list with a `kind` and `status`. Filter by account, wallet, kind, or status; each transaction carries its recipient and timestamps.
+Every money event lands in one list: funding, transfers, payouts, and fees alike. Each carries a **kind** and a **status**, and you can filter by account, wallet, kind, or status. A payment and its fee are separate entries, so the ledger reconciles against your own books without inference.
 
 ## Rates
 
-Current exchange rates are available as a read-only endpoint, so your product can show up-to-date conversion numbers without calling elsewhere.
+Current exchange rates are available as a read-only endpoint, so your product can display conversions without integrating a separate rate source.
 
 ## API
 
-- [Money Movement API](/api/money-movement) — endpoints, request and response examples.
-- [Recipients & Beneficiaries API](/api/recipients-beneficiaries) — payee management.
+<CardGroup cols={2}>
+  <Card title="Money Movement API" icon="arrow-right-arrow-left" href="/api/money-movement">
+    Funding, previews, transfers, payouts, transactions.
+  </Card>
+  <Card title="Recipients and Beneficiaries API" icon="address-book" href="/api/recipients-beneficiaries">
+    Managing payees and their provider links.
+  </Card>
+</CardGroup>

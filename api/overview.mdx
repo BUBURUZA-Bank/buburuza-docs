@@ -1,89 +1,96 @@
 ---
 title: "API Overview"
-description: "Base URLs, conventions, envelopes, errors, idempotency, and authentication modes of the Buburuza API."
+description: "Base URL, authentication, the response envelope, errors, and how the API maps onto the product."
 ---
 
-# API Overview
+The REST API is the same contract the dashboard uses. Anything you can do on a screen you can do over HTTP, against the space you are currently acting in.
 
-The Buburuza API is a JSON REST API under `/api/v1`. It covers authentication, organisation onboarding, accounts & wallets, and money movement — the same operations available in the dashboard.
+## Base URL and versioning
 
-## Base URL
+The public prefix is `/api/v1`, owned by the gateway. Money-movement resources are mounted under `/app`:
 
+```text
+https://<host>/api/v1/app/accounts
+https://<host>/api/v1/app/transfers
 ```
-https://app.buburuza.io/api/v1
+
+<Note>
+  The OpenAPI document published with the platform is the authoritative reference for exact request and response shapes. This section explains the model; the specification governs the details.
+</Note>
+
+## Authentication
+
+Every call carries a bearer token:
+
+```bash
+curl https://<host>/api/v1/app/accounts \
+  -H "Authorization: Bearer <access-token>"
 ```
 
-The authoritative OpenAPI 3.x specification is available as a machine-readable contract; see [SDKs & Libraries](/api/sdks-and-libraries).
+Access tokens are short-lived and refreshed while a session is live. See [Authentication](/api/authentication) for how a session is established and refreshed.
 
-## Routing
+## The space is implicit
 
-| Prefix | Area |
-| --- | --- |
-| `/api/v1/auth/*` | Authentication: signup, login, sessions, MFA, passkeys |
-| `/api/v1/app/*` | Application: onboarding, accounts, wallets, transfers, transactions |
+A request acts on the space you are currently in — the company space you switched to, or your personal one. You do not pass the space as a parameter; you switch it, and subsequent calls follow. This is why the same path returns different accounts for the same user.
 
-## Conventions
+## Response envelope
 
-- **JSON**, field names in `snake_case`.
-- Every successful response is HTTP `200` with an envelope: `{ "data": <payload>, "correlation_id": "<uuid>" }`.
-- Every request may carry `X-Correlation-Id`; the server always returns a `correlation_id` in the body.
-
-### Example
+Every successful response is wrapped:
 
 ```json
 {
-  "data": {
-    "user_id": "usr_01h…",
-    "first_name": "Jane"
-  },
-  "correlation_id": "4d3f9c1a-…-8f2b"
+  "data": { },
+  "correlation_id": "01J8Z..."
 }
 ```
+
+`data` carries the resource. `correlation_id` identifies the request end to end — quote it when you contact support and the exact request can be found.
 
 ## Errors
 
-### Validation errors — HTTP 422
+Errors carry a machine-readable `code`, a human `message`, and a `data` object with the specifics:
 
 ```json
 {
-  "type": "ValidationError",
-  "error": {
-    "amount": [
-      { "code": "greater_than", "message": "must be greater than 0", "data": null }
-    ]
-  },
-  "non_field_errors": []
+  "code": "quote_expired",
+  "message": "The fee quote is no longer valid",
+  "data": { },
+  "correlation_id": "01J8Z..."
 }
 ```
 
-Field-level errors are objects keyed by field name; `non_field_errors` carries form-level problems.
+Branch on `code`, never on `message` — messages are for people and may be reworded. Some codes originate at the payment provider and are passed through unchanged rather than remapped, so treat the set as open and always have a default branch.
 
-### Other errors — 401 / 403 / 404 / 409 / 500
+| Situation | What you get |
+| --- | --- |
+| Not signed in, or token expired | `401` |
+| Verification has not passed, or the tier does not allow the operation | `403` |
+| Resource not in this space | `404` |
+| Request understood but rejected | `422` with a specific `code` |
 
-```json
-{
-  "type": "PermissionDenied",
-  "error": { "code": "account_not_active", "message": "…", "data": null }
-}
-```
+## Amounts
 
-A single `error` object with `code`, `message`, and `data`.
+Monetary values are **decimal strings**, not floats. Parse them with a decimal type. A payment carries three of them — the net amount, the fee, and the total debited — and net plus fee always equals the total.
 
-## Idempotency
+## The resources
 
-Mutating endpoints where retries are dangerous accept an `Idempotency-Key` header. Repeating a request with the same key does not duplicate the operation.
-
-## Authentication modes
-
-| Mode | Used for | How |
-| --- | --- | --- |
-| None | Starting signup (`POST /auth/sign-up/email`) | — |
-| Registration | Signup steps after email confirmation (passkey, TOTP) | `X-Registration-Token` header |
-| Access | All authenticated app endpoints | `Authorization: Bearer <access_token>` |
-| MFA step-up | Completing login when MFA is required | `mfa_token` in the request body |
-
-Access tokens are **short-lived**; refresh happens through an HttpOnly cookie on the auth service. Browser and mobile clients get this automatically.
-
-## Correlation & tracing
-
-Pass `X-Correlation-Id` on requests to tie client logs to server logs; the response body echoes the same identifier.
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/api/authentication">
+    Signup, sign-in, passkeys, MFA, sessions, step-up.
+  </Card>
+  <Card title="Onboarding" icon="user-check" href="/api/onboarding">
+    KYB and KYC, document checklists, verification status.
+  </Card>
+  <Card title="Accounts and wallets" icon="wallet" href="/api/accounts-wallets">
+    Accounts, wallets, balances, deposit instructions.
+  </Card>
+  <Card title="Money movement" icon="arrow-right-arrow-left" href="/api/money-movement">
+    Rails, fee previews, transfers, payouts, transactions, rates.
+  </Card>
+  <Card title="Recipients and beneficiaries" icon="address-book" href="/api/recipients-beneficiaries">
+    Payee records and their provider links.
+  </Card>
+  <Card title="SDKs and clients" icon="code" href="/api/sdks-and-libraries">
+    Generating a typed client from the specification.
+  </Card>
+</CardGroup>

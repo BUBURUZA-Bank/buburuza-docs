@@ -1,97 +1,99 @@
 ---
-title: "API Quickstart"
-description: "A minimal end-to-end integration: signup, onboarding, accounts, and a first transfer through the API."
+title: "Developer Quickstart"
+description: "Authenticate, read your account, price a payment, and send it — the shortest working path through the API."
 ---
 
-# API Quickstart
+This walks the same path as the product [Quickstart](/quickstart), over HTTP. It assumes your space is already verified and its payment account is active; until then money-movement calls return `403`.
 
-A minimal integration path, using the API directly.
+## 1. Authenticate
 
-## 1. Create an account (signup)
+Obtain an access token by signing in — see [Authentication](/api/authentication) — then send it on every call:
 
 ```bash
-# Start signup — no authentication required
-curl -X POST https://app.buburuza.io/api/v1/auth/sign-up/email \
+export TOKEN="<access-token>"
+export BASE="https://<host>/api/v1"
+
+curl "$BASE/app/accounts" -H "Authorization: Bearer $TOKEN"
+```
+
+## 2. Find your account and wallets
+
+```bash
+curl "$BASE/app/accounts" -H "Authorization: Bearer $TOKEN"
+```
+
+Read the account's status before going further. If money movement is not enabled, nothing below will succeed.
+
+```bash
+curl "$BASE/app/accounts/<account_id>/wallets" -H "Authorization: Bearer $TOKEN"
+```
+
+## 3. Fund the wallet
+
+Ask which funding methods are open, then fetch instructions for the one you want:
+
+```bash
+curl "$BASE/app/accounts/<account_id>/funding-methods" -H "Authorization: Bearer $TOKEN"
+curl "$BASE/app/wallets/<wallet_id>/deposit-instructions" -H "Authorization: Bearer $TOKEN"
+```
+
+Send the money from your side. Inbound funds appear in the transaction list once they clear.
+
+## 4. Price the payment
+
+Never construct a payment without a quote — the amount is not enough to submit one.
+
+```bash
+curl "$BASE/app/transfers/fee-preview?source_wallet_id=<wallet_id>&amount=100.00&currency=USD" \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+The response carries a `fee_quote_id`, the net amount, the fee, and the total to be debited.
+
+## 5. Send it
+
+```bash
+curl -X POST "$BASE/app/transfers" \
+  -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"email": "you@example.com"}'
+  -d '{
+    "source_wallet_id": "<wallet_id>",
+    "destination": "<destination>",
+    "amount": "100.00",
+    "currency": "USD",
+    "fee_quote_id": "<fee_quote_id>"
+  }'
 ```
 
-You receive a one-time code by email. Confirm it to get a **registration token**:
+<Warning>
+  A quote is single-use and expires ten minutes after issue. Submitting against a consumed or lapsed quote fails with `quote_expired` — request a fresh preview rather than retrying the same one.
+</Warning>
+
+## 6. Track it
 
 ```bash
-curl -X POST https://app.buburuza.io/api/v1/auth/sign-up/email/confirmation \
-  -H "X-Registration-Token: <registration_token>" \
-  -d '{"code": "123456"}'
+curl "$BASE/app/transactions?account_id=<account_id>" -H "Authorization: Bearer $TOKEN"
 ```
 
-## 2. Enroll a credential
+## Handling failures
 
-Register a passkey (WebAuthn ceremony) using the registration token, or enroll TOTP as a fallback. After the ceremony your **signup session** is established and you receive an **access token**.
+```javascript
+const res = await fetch(`${BASE}/app/transfers`, { method: 'POST', headers, body });
+const payload = await res.json();
 
-## 3. Onboard your organisation
-
-```bash
-# Current onboarding step
-curl https://app.buburuza.io/api/v1/app/onboarding/state \
-  -H "Authorization: Bearer <access_token>"
-
-# Set the company name
-curl -X PATCH https://app.buburuza.io/api/v1/app/onboarding/profile \
-  -H "Authorization: Bearer <access_token>" \
-  -H "Content-Type: application/json" \
-  -d '{"company_name": "Acme Inc."}'
-
-# Start hosted KYB
-curl -X POST https://app.buburuza.io/api/v1/app/onboarding/kyb/start \
-  -H "Authorization: Bearer <access_token>" \
-  -H "Content-Type: application/json" \
-  -d '{"country": "CA"}'
+if (!res.ok) {
+  switch (payload.code) {
+    case 'quote_expired':
+      // Price again and resubmit with the new quote.
+      break;
+    case 'insufficient_funds':
+      // Check the wallet's available balance, not its total.
+      break;
+    default:
+      // Codes may originate at the provider — log correlation_id and stop.
+      console.error(payload.code, payload.correlation_id);
+  }
+}
 ```
 
-Poll KYB and payment-account status until the account is active:
-
-```bash
-curl https://app.buburuza.io/api/v1/app/onboarding/kyb/status \
-  -H "Authorization: Bearer <access_token>"
-
-curl https://app.buburuza.io/api/v1/app/onboarding/payment-account/status \
-  -H "Authorization: Bearer <access_token>"
-```
-
-## 4. Read your accounts and wallets
-
-```bash
-curl https://app.buburuza.io/api/v1/app/accounts \
-  -H "Authorization: Bearer <access_token>"
-```
-
-The response includes wallet summaries and balances (`available`, `pending`, `hold`).
-
-## 5. Fund and send
-
-```bash
-# Funding methods for the account
-curl https://app.buburuza.io/api/v1/app/accounts/<account_id>/funding-methods \
-  -H "Authorization: Bearer <access_token>"
-
-# Deposit instructions for a wallet (fiat rails or crypto address)
-curl https://app.buburuza.io/api/v1/app/wallets/<wallet_id>/deposit-instructions \
-  -H "Authorization: Bearer <access_token>"
-
-# Preview a transfer fee, then create the transfer
-curl https://app.buburuza.io/api/v1/app/transfers/fee-preview \
-  -H "Authorization: Bearer <access_token>" \
-  -d '{"source_wallet_id": "…", "destination_wallet_id": "…", "amount_minor": "10000"}'
-
-curl -X POST https://app.buburuza.io/api/v1/app/transfers \
-  -H "Authorization: Bearer <access_token>" \
-  -d '{"source_wallet_id": "…", "destination_wallet_id": "…", "amount_minor": "10000", "fee_quote_id": "<from preview>"}'
-```
-
-## Next steps
-
-- [API Overview](/api/overview) — conventions and error model.
-- [Authentication](/api/authentication) — full auth reference.
-- [Onboarding API](/api/onboarding) — every onboarding endpoint.
-- [Money Movement API](/api/money-movement) — transfers, withdrawals, transactions.
-- [SDKs & Libraries](/api/sdks-and-libraries) — generate a typed client from the OpenAPI spec.
+Always keep a default branch: the error set is open, and provider codes pass through unchanged.

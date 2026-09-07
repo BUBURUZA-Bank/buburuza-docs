@@ -1,69 +1,102 @@
 ---
-title: "Onboarding & Security"
-description: "How to sign up for Buburuza, verify your organisation, and protect your account."
+title: "Onboarding and Security"
+description: "How signup works, what KYB and KYC each ask for, and how sign-in, sessions, and recovery are handled."
 ---
-
-# Onboarding & Security
 
 ## Signup
 
-Accounts are created with an **email address**. There is no password: Buburuza is **passwordless by design**.
-
-1. Enter your email on the signup form.
-2. Confirm the one-time code sent to that address.
-3. Set up your primary credential — a **passkey** (WebAuthn). If your device does not support passkeys, a TOTP authenticator is offered as a fallback.
-4. Save your **recovery codes**. They are the only way back in if you lose every credential.
-
-## Organisation onboarding (KYB)
-
-After signup you onboard your **organisation** through a guided step machine:
+Buburuza is **passwordless by design**. There is no password to choose, reuse, or leak.
 
 <Steps>
-  <Step title="Legal & company name">
-    Provide the legal representative's name and the company name.
+  <Step title="Email">
+    Enter your email address and confirm the one-time code sent to it. The confirmed address becomes your identity on the platform.
   </Step>
-  <Step title="Document checklist">
-    Review the list of documents required for your jurisdiction (Canada or US).
+  <Step title="Primary credential">
+    Enroll a **passkey** (WebAuthn). Passkeys are bound to the site and cannot be phished or replayed. If your device does not support them, enroll a **TOTP authenticator** as the fallback credential.
   </Step>
-  <Step title="KYB verification">
-    Complete identity verification for the company and its associated persons. Verification is handled by a licensed identity provider (Sumsub) in a hosted flow.
-  </Step>
-  <Step title="Payment account">
-    When KYB passes, your organisation's **payment account is provisioned automatically** — nothing to do. You can watch the status while it activates.
-  </Step>
-  <Step title="Provider agreement (if required)">
-    Depending on the payment provider, you may be asked to accept hosted terms in an embedded frame before money movement is enabled.
+  <Step title="Recovery codes">
+    You are issued single-use **recovery codes**. They are shown once. They are the only route back into the account if you lose every enrolled credential.
   </Step>
 </Steps>
 
-You can pause and resume onboarding at any time; your progress is saved per step.
+## Verification
+
+Verification is what turns an account into one that can hold and move money. Which flow you take depends on the kind of space.
+
+<Tabs>
+  <Tab title="Company space — KYB">
+    The company and the people behind it are verified together.
+
+    | Step | What happens |
+    | --- | --- |
+    | Legal and company name | You state the legal representative and the company |
+    | Document checklist | The platform shows what your country of registration requires |
+    | Hosted verification | Sumsub runs the check for the company and its associated persons — directors, controllers, and beneficial owners |
+    | Payment account | Provisioned automatically once the verification passes |
+    | Provider agreement | Some providers require you to accept hosted terms before money movement opens |
+
+    Companies verify at a **tier**. The tier gates what the account may do, and a lighter tier can receive funds while outbound movement stays closed.
+  </Tab>
+  <Tab title="Personal space — KYC">
+    One individual is verified, for themselves.
+
+    | Step | What happens |
+    | --- | --- |
+    | Country of residence | You state where you live; this selects the verification profile |
+    | Hosted verification | Sumsub runs the identity check |
+    | Payment account | Provisioned automatically once the verification passes |
+
+    Your stated country of residence is recorded as given. It is never inferred from your network location, and it does not change if you travel.
+  </Tab>
+</Tabs>
+
+<Warning>
+  Verification is available only for companies registered in the **United States or Canada**, and individuals resident in those countries. Outside them there is no verification profile to run, so onboarding stops at that step.
+</Warning>
 
 <Tip>
-KYB is the gate for money movement. Until it passes, your account is in verification and cannot hold or move funds.
+  Nothing about verification is instant. The decision arrives from the reviewer asynchronously and the dashboard reflects it when it lands. If more is needed, you are told what and asked to resubmit.
 </Tip>
 
 ## Signing in
 
-- **Passkey login** — one touch, no codes. Works across your devices via platform sync.
-- **Email login** — a one-time code, useful on new devices.
-- **MFA (optional)** — you can enable an additional TOTP step for logins in settings.
-- **Recovery codes** — single-use codes printed at signup; keep them somewhere safe.
-
-## Session & device management
-
-- Every sign-in creates a **session** you can review and revoke individually or all at once.
-- Sessions are kept short-lived and refreshed automatically while you use the app.
-- Logging out everywhere invalidates every active session.
-
-## Security model
-
-| Control | Details |
+| Method | When you use it |
 | --- | --- |
-| Passwordless credentials | Passkeys (WebAuthn) as primary; TOTP as fallback and for optional MFA |
-| One-time codes | Email OTP for signup confirmation and email login |
-| Recovery codes | Single-use, issued at signup |
-| Session management | List, revoke one, revoke all; short-lived access tokens with cookie-based refresh |
-| Verification | KYB/KYC by a licensed identity provider (Sumsub) |
-| Monitoring | Continuous transaction monitoring and travel-rule reporting |
+| **Passkey** | Everyday sign-in. One touch, no codes to type |
+| **Email one-time code** | On a new device, or when a passkey is not available |
+| **TOTP** | As the enrolled fallback credential, or as an optional extra step you can switch on |
+| **Recovery code** | Last resort, when every other credential is gone. Each code works once |
 
-See [Compliance & Security](/compliance-security) for the compliance program, and the [Authentication API](/api/authentication) for the technical endpoints.
+You can review the sign-in methods on your account at any time and add or remove passkeys as you change devices.
+
+## Sessions and devices
+
+- Every sign-in creates a **session** you can see and revoke — one at a time or all at once.
+- Access tokens are short-lived and refresh quietly while you are using the app.
+- Revoking everywhere ends every active session immediately, including the one you are using.
+
+## Step-up
+
+Some actions ask you to re-confirm your identity even though you are already signed in — changing security settings, for example. This is a **step-up challenge**: you satisfy it with the credential you already have, and it applies to that action only.
+
+## What is not offered
+
+The platform does not have, and does not simulate, any of the following. If you have seen them described elsewhere, that description was wrong:
+
+- SMS as an authentication factor
+- Voice or face recognition
+- Social recovery through trusted contacts
+- A one-touch account freeze, travel mode, or emergency contacts
+
+Account safety rests on phishing-resistant credentials, short sessions you can revoke, and verification gating on money movement.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Compliance and security" icon="shield-halved" href="/compliance-security">
+    Verification tiers, monitoring, and reporting obligations.
+  </Card>
+  <Card title="Authentication API" icon="key" href="/api/authentication">
+    Sessions, credentials, and step-up over the API.
+  </Card>
+</CardGroup>

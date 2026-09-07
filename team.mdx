@@ -1,0 +1,56 @@
+---
+title: "Teams and Spaces"
+description: "How company and personal spaces work, how to invite people, and what each role can do."
+---
+
+## Spaces
+
+A **space** owns a payment account, its wallets, its recipients, and the people allowed to act on it. One person can belong to several company spaces and own one personal space, and move between them without signing out.
+
+| | Company space | Personal space |
+| --- | --- | --- |
+| Belongs to | A registered company | One individual |
+| Verified by | KYB — company and associated persons | KYC — the individual |
+| Can have members | Yes | No — it is yours alone |
+
+Switching space changes what every screen and every API call refers to. A request always acts on the space you are currently in.
+
+Opening a personal space is a single action, and it is idempotent: if you already own one, you are given the one you have rather than a second. Opening it does not move you into it — you switch when you choose to.
+
+## Members and roles
+
+A company space has members, each holding one role.
+
+| Role | What it can do |
+| --- | --- |
+| `OWNER` | Everything, including managing members and the company profile |
+| `ADMIN` | Day-to-day operation of the space, including money movement |
+| `VIEWER` | Read-only — can see the account, balances, and history, and move nothing |
+
+A member is either `ACTIVE` or `REMOVED`. Removing someone ends their access to the space; it does not touch their Buburuza account or the other spaces they belong to.
+
+## Invitations
+
+Bringing someone in is a two-sided flow, so nobody is added to a space without acting themselves.
+
+<Steps>
+  <Step title="Invite">
+    An owner invites a person by email and picks the role they will hold.
+  </Step>
+  <Step title="Accept">
+    The invited person signs in — or signs up, if they are new — and accepts. They then appear as a member.
+  </Step>
+  <Step title="Revoke, if needed">
+    An unaccepted invitation can be revoked at any time. A member who has already joined is removed instead.
+  </Step>
+</Steps>
+
+Someone who no longer wants access can also leave a space themselves.
+
+## Referral code
+
+Each space has a referral code you can share. It is available from your profile.
+
+## API
+
+The same operations are available over the API: list and switch spaces, open a personal space, invite and revoke, list and remove members, and read your referral code. See the [Developer](/api/overview) tab.

@@ -1,79 +1,65 @@
 ---
 title: "Onboarding API"
-description: "Organisation onboarding: state, profile, KYB, payment account, and provider agreement endpoints."
+description: "Opening a space, running KYB or KYC, reading the document checklist, and watching verification status."
 ---
 
-# Onboarding API
+Onboarding turns a signed-in user into a space that can hold money. Two paths exist and they differ only in who is verified.
 
-Organisation onboarding lives under `/api/v1/app/onboarding/*`. It is a **step machine**: each step unlocks the next, and progress is durable — you can resume at any time.
+## Spaces
 
-## Step model
-
-| Step | What happens |
-| --- | --- |
-| `legal_name` | Legal representative's name, set through the auth profile |
-| `company_name` | Company name via `PATCH /onboarding/profile` |
-| `kyb` | Hosted KYB verification (provider: Sumsub) |
-| `payment_account` | Server-side provisioning; poll the status |
-| `payment_agreement` | Hosted PSP terms in an iframe (only when required) |
-| `dashboard` | Onboarding complete |
-
-## Endpoints
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/onboarding/state` | Current step (`next_step`) for resume |
-| PATCH | `/onboarding/profile` | Set `company_name` (partial update) |
-| GET | `/onboarding/kyb/doc-list` | Pre-KYB document checklist for the jurisdiction |
-| POST | `/onboarding/kyb/doc-list/email-me` | Email the checklist |
-| POST | `/onboarding/kyb/start` | Start hosted KYB; requires `country` (`CA` or `US`) |
-| GET | `/onboarding/kyb/status` | Poll verification status |
-| POST | `/onboarding/payment-account/start` | Trigger account provisioning |
-| GET | `/onboarding/payment-account/status` | Poll provisioning; read-only |
-| GET | `/onboarding/payment-agreement/link` | Hosted terms URL (`agreement_url`, `display_mode: iframe`) when required |
-| POST | `/onboarding/payment-agreement/complete` | Confirm the agreement callback |
-
-## KYB flow in practice
-
-```bash
-# Where am I?
-curl https://app.buburuza.io/api/v1/app/onboarding/state \
-  -H "Authorization: Bearer <access_token>"
-
-# What documents will be needed?
-curl https://app.buburuza.io/api/v1/app/onboarding/kyb/doc-list \
-  -H "Authorization: Bearer <access_token>"
-
-# Start verification (Canada)
-curl -X POST https://app.buburuza.io/api/v1/app/onboarding/kyb/start \
-  -H "Authorization: Bearer <access_token>" \
-  -H "Content-Type: application/json" \
-  -d '{"country": "CA"}'
+```text
+GET  /me                       → the user, their spaces, and the active one
+POST /me/active-organization   → switch the active space
+POST /me/personal-space        → open the caller's personal space
 ```
 
-## Payment account provisioning
+Opening a personal space is idempotent: a caller who already owns one receives it rather than a second. Opening does not switch you into it — switch explicitly.
 
-You do **not** create the payment account yourself. After KYB passes, provisioning starts server-side. The client's job:
+## Company verification (KYB)
 
-1. Poll `GET /onboarding/payment-account/status`.
-2. If `agreement_required` is `true`, fetch `GET /onboarding/payment-agreement/link` and embed `agreement_url` in an iframe (web) or WebView (mobile), then `POST /onboarding/payment-agreement/complete` after the callback.
-3. Keep polling until the account is `ACTIVE`.
+```text
+GET  /kyb/doc-list   → documents required for the country of registration
+POST /kyb/start      → open the verification and get a hosted link
+GET  /kyb/status     → current state
+```
+
+`kyb/start` refuses a country the platform does not serve: there is no verification profile to run, so the request fails rather than opening something that could never complete.
+
+## Personal verification (KYC)
+
+```text
+POST /kyc/start    → open the verification for the space owner
+GET  /kyc/status   → current state
+```
+
+`kyc/start` takes the owner's **stated country of residence**. It selects the verification profile, is recorded as given, and is never inferred from network location. Replaying the call returns the existing verification with a fresh hosted link rather than opening a second one.
+
+Both calls refuse any country outside the United States and Canada.
+
+## Verification is asynchronous
+
+Neither call returns a decision. They open a filing and hand back a link to the hosted flow. The outcome arrives later from the provider, and status endpoints reflect it when it lands.
 
 <Note>
-Some payment providers do not require hosted terms. When `agreement_required` is `false` (or the link returns 404), skip the agreement step entirely.
+  There is no automatic approval path. Do not build a flow that assumes a positive outcome, and do not poll faster than your users can act — subscribe to the status your dashboard shows.
 </Note>
 
-## Prerequisites
+## Onboarding progress
 
-| Endpoint | Requires |
-| --- | --- |
-| `profile` | Completed signup credential (`SignupSession`) |
-| `kyb/start` | `country` in body (`CA` \| `US`) |
-| `payment-account/status` | KYB green (provisioning may already be running) |
-| `payment-agreement/link` | `agreement_required: true` in the status response |
-| `payment-agreement/complete` | A pending agreement; `Idempotency-Key` supported |
+Progress is stored per step so a user can leave and come back. The current step is readable, and the flow advances as each step completes.
 
-## Related
+## After verification passes
 
-- [Accounts & Wallets API](/api/accounts-wallets) — what you get after provisioning.
-- [Onboarding & Security](/onboarding-and-security) — the user-facing flow.
+The payment account is provisioned automatically. Depending on the provider, a hosted agreement may need accepting before money movement opens. Read the payment account status rather than assuming provisioning finished the moment verification did.
+
+## Legal agreements
+
+```text
+GET  /manifest             → current document set and version
+POST /acceptance-intents   → begin an acceptance
+POST /acceptances          → record it
+```
+
+Acceptance is recorded against immutable document versions. If the set is republished between the intent and the acceptance, the acceptance is refused and the user must act on the current versions.
+
+Whether an unaccepted document set restricts access is an environment decision, so do not build a client that assumes acceptance gates a request. Read the status and render it; let the API decide what to refuse.

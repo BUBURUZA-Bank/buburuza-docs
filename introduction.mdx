@@ -1,64 +1,94 @@
 ---
 title: "Introduction"
-description: "Buburuza is a payments platform for organisations: a fiat account, stablecoin wallets, and APIs for moving money."
+description: "What Buburuza is, who it serves, where it operates, and how a payment account comes to life."
 ---
 
-# What is Buburuza?
-
-Buburuza is a **payments platform for organisations**. A company opens one account, passes KYB verification, and gets:
-
-- a **fiat account** with ACH and wire funding rails,
-- **stablecoin wallets** for crypto top-ups and transfers,
-- a **REST API** (`/api/v1`) for automating money movement,
-- built-in **compliance**: KYB/KYC verification, transaction monitoring, and travel-rule reporting.
+Buburuza is a payments platform for companies and individuals. You verify once, and the platform gives you an account that holds balances, receives funds over payment rails, and sends money out to recipients you name — from the dashboard or over the API.
 
 <Note>
-  Buburuza is a financial technology company, not a bank. Regulated money movement is performed by licensed partners. See [Legal and regulatory](/legal) for who holds which permission.
+  Buburuza is a financial technology company, **not a bank**. It does not take deposits and does not offer deposit insurance. Regulated money movement is performed by licensed partners who act as the money transmitter of record. See [Legal and regulatory](/legal).
 </Note>
+
+## Two kinds of space
+
+Everything in Buburuza happens inside a **space**. A space owns the payment account, the wallets, the recipients, and the people who can act on it.
+
+| Space | Who it is for | Verification |
+| --- | --- | --- |
+| **Company space** | A registered company and the people who work in it | KYB — the company and its associated persons |
+| **Personal space** | One individual, acting for themselves | KYC — the individual |
+
+You can belong to several company spaces and own one personal space, and switch between them without signing out. The money surface is the same in both: same wallets, same rails, same fee model. What differs is who is verified and which documents are asked for.
+
+## Where Buburuza operates
+
+Onboarding serves two countries, for both kinds of space:
+
+| | Company registration | Individual residence |
+| --- | --- | --- |
+| **United States** | Served | Served |
+| **Canada** | Served | Served |
+| Everywhere else | Not onboarded | Not onboarded |
+
+A company registered elsewhere, or a person resident elsewhere, cannot complete verification: there is no verification profile to run for that country, so onboarding stops rather than starting something that could never finish.
 
 ## How it works
 
 <Steps>
   <Step title="Sign up">
-    Create an account with an email address. Access is passwordless: a passkey (WebAuthn) is the primary credential, with TOTP as a fallback.
+    Create an account with an email address. There is no password: you confirm a one-time code, then enroll a passkey, with a TOTP authenticator as the fallback. You are given recovery codes at the end.
   </Step>
-  <Step title="Complete KYB">
-    Verify your organisation through our KYB flow. Verification is performed by a licensed identity provider.
+  <Step title="Verify">
+    Open a company space and complete KYB, or open your personal space and complete KYC. Verification runs in a hosted flow operated by Sumsub, a licensed identity provider.
   </Step>
-  <Step title="Get your payment account">
-    After KYB passes, your organisation's payment account is provisioned automatically and your fiat and stablecoin wallets are created.
+  <Step title="Get a payment account">
+    When verification passes, the payment account for that space is provisioned automatically, and its first fiat and stablecoin wallets are created. Depending on the provider, you may be asked to accept hosted terms before money movement opens.
   </Step>
   <Step title="Move money">
-    Top up by ACH, wire, or crypto. Send transfers to other wallets and payouts to external recipients, with fee previews before every send.
+    Fund the account over an open rail, then send transfers and payouts. Every send is priced first: you get a quote, you see the fee, and you confirm against that quote.
   </Step>
 </Steps>
 
-## Who it's for
+## What the platform holds
 
-- **Businesses** that need a regulated account to hold fiat and stablecoins and pay suppliers, contractors, or partners.
-- **Developers** who want a payments API: accounts, wallets, transfers, recipients, and transaction history under one contract.
-- **Platforms** that embed money movement into their own products.
+Wallets come in two kinds.
 
-## Environments
+- A **fiat wallet** holds a balance in a supported currency and receives funds over payment rails.
+- A **stablecoin wallet** holds third-party stablecoins and receives them at a deposit address.
 
-| Environment | Signup / web | App + API |
-| --- | --- | --- |
-| Live | [buburuza.com](https://buburuza.com) | `app.buburuza.io` (API base `https://app.buburuza.io/api/v1`) |
-| Production rollout | `sandbox.buburuza.com` | `app.buburuza.com` |
+<Warning>
+  Buburuza does **not** issue a stablecoin. Stablecoin wallets hold assets issued by other parties — USDC is the default. Any ticker you see in the app is the issuer's, not Buburuza's.
+</Warning>
 
-The canonical API contract (OpenAPI 3.x, 78 endpoints) is maintained alongside the platform and is the authoritative reference for request and response shapes.
+## What Buburuza does not offer
 
-## Platform capabilities
+The platform is deliberately narrow. None of the following exists today, and each would carry its own licensing conditions before it could:
 
-| Capability | Details |
-| --- | --- |
-| **Onboarding & KYB** | Step-based organisation onboarding, document checklist, provider-hosted verification, payment-account provisioning |
-| **Accounts & wallets** | Fiat account (ACH / wire) and stablecoin wallets per organisation, decimal-string balances (`available`, `pending`, `hold`) |
-| **Funding** | Deposit instructions per rail; fee previews; inbound funds appear in the transaction list automatically |
-| **Transfers & payouts** | Wallet-to-wallet transfers with bound fee quotes (fee on top); withdrawals to external recipients |
-| **Recipients & beneficiaries** | Reusable payee records, linking to provider recipients |
-| **Transactions** | Full history with filters by account, wallet, kind, and status |
-| **Security** | Passkeys, optional MFA, session management, signed webhooks between services |
-| **Compliance** | KYB tiers, transaction monitoring, travel-rule reporting |
+- Cards of any kind
+- Interest or yield on balances
+- Lending, credit lines, or overdrafts
+- Investment products, investment advice, or portfolio management
+- Insurance
 
-See [Platform](/accounts-wallets) for the product surface, [Quickstart](/quickstart) for the first-run flow, and the [Developer](/api/overview) tab for the API.
+## Who it is for
+
+- **Companies** that need a verified account to hold balances and pay suppliers, contractors, and partners across borders.
+- **Individuals** in the US or Canada who want the same account for their own payments.
+- **Developers and platforms** embedding money movement into their own product, using the same API the dashboard uses.
+
+## Where to go next
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="bolt" href="/quickstart">
+    The shortest path from signup to a first payment.
+  </Card>
+  <Card title="Onboarding and security" icon="user-check" href="/onboarding-and-security">
+    Signup, both verification paths, and how sign-in works.
+  </Card>
+  <Card title="Money movement" icon="arrow-right-arrow-left" href="/payments">
+    Rails, funding, transfers, payouts, and the fee model.
+  </Card>
+  <Card title="Developer API" icon="code" href="/api/overview">
+    The REST contract behind all of it.
+  </Card>
+</CardGroup>
