@@ -36,10 +36,9 @@
             ]
           },
           {
-            "group": "Compliance and legal",
+            "group": "Verification and security",
             "pages": [
-              "compliance-security",
-              "legal"
+              "compliance-security"
             ]
           }
         ]

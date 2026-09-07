@@ -1,11 +1,11 @@
 ---
-title: "Compliance and Security"
-description: "How verification works, what is monitored, which obligations apply where, and what the platform will not tell you."
+title: "Verification and Security"
+description: "How verification works, why a payment can be held, and how your account is protected."
 ---
 
 ## Verification
 
-No space can hold or move money before it is verified. Verification is performed by **Sumsub**, a licensed identity provider, in a hosted flow — evidence goes to the provider, not through Buburuza's own screens.
+No space can hold or move money before it is verified. Verification runs in a hosted flow operated by **Sumsub**, our verification provider — your documents go to them, not through Buburuza's own screens.
 
 | Space | What is checked |
 | --- | --- |
@@ -20,30 +20,11 @@ Companies verify at a **tier**. A lighter tier can be enough to receive funds wh
   A verification decision arrives asynchronously from the reviewer. There is no automatic approval path, and no way to shortcut one from inside the product.
 </Note>
 
-## Monitoring
+## Why a payment can be held
 
-Money movement is screened continuously, without anything being required from you:
+Payments are screened as they move, and nothing is required from you for that to happen. A payment can be delayed or refused as a result — most often because something about the counterparty or the pattern needs a closer look.
 
-| Control | What it does |
-| --- | --- |
-| **Transaction monitoring** | Screens payments and counterparties against sanctions and watch lists |
-| **Risk scoring** | Maintains a risk tier for each verified customer, which the payment path prices against |
-| **Travel Rule** | Shares originator and beneficiary information on transfers above the applicable threshold, where regulation requires it |
-
-## Reporting obligations
-
-Who reports, and to whom, depends on the corridor — and it is not always Buburuza.
-
-| Jurisdiction | Who reports | Buburuza's part |
-| --- | --- | --- |
-| **Canada** | Buburuza, once its FINTRAC registration is issued | Monitoring, risk scoring, and the reports themselves |
-| **United States** | The licensed partner, as money transmitter of record, filing in its own name | Monitoring and risk scoring only |
-
-<Warning>
-  Buburuza's FINTRAC Money Services Business registration has been applied for and has not been issued. Until it is, Buburuza files nothing in Canada. See [Legal and regulatory](/legal).
-</Warning>
-
-Reporting decisions are made by qualified compliance staff. Automated systems detect patterns and assemble evidence; they do not determine suspicion and do not file. Buburuza does not disclose whether a report has been made about any particular customer or payment, and no agent can tell you.
+If that happens to you, the payment's status says so, and support can tell you what is needed to move it along. Some checks cannot be discussed in detail, and an agent declining to elaborate is following a rule rather than withholding help.
 
 ## Account security
 
@@ -56,23 +37,14 @@ Reporting decisions are made by qualified compliance staff. Automated systems de
 | Step-up | Sensitive actions re-confirm your identity even within a live session |
 | Verification gate | Money movement stays closed until verification passes |
 
-## What the platform will not expose
+## How your data is scoped
 
-Some things are deliberately absent from every response, and their absence is a feature:
+Everything you see is scoped to the space you are acting in, and every request is authorised against it. Switching space changes what you can reach; belonging to one space grants nothing in another.
 
-- Raw provider payloads and verification internals
-- Provider identifiers and internal screening records
-- Any indication of whether a regulatory report exists
-
-Data is scoped to the space you are acting in, and every request is authorised against it.
+Verification evidence stays with the verification provider. Buburuza's own screens never render it back to you or to anyone else.
 
 ## Related
 
-<CardGroup cols={2}>
-  <Card title="Legal and regulatory" icon="scale-balanced" href="/legal">
-    Permissions, what is not offered, and personal data.
-  </Card>
-  <Card title="Onboarding and security" icon="user-check" href="/onboarding-and-security">
-    The same ground from the account holder's side.
-  </Card>
-</CardGroup>
+<Card title="Onboarding and security" icon="user-check" href="/onboarding-and-security">
+  The same ground from the account holder's side.
+</Card>
