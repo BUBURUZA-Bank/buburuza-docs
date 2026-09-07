@@ -1,51 +1,63 @@
 ---
-title: "Accounts & Wallets"
-description: "How organisation accounts, fiat accounts, and stablecoin wallets work in Buburuza."
+title: "Accounts and Wallets"
+description: "The payment account a verified space receives, the wallets it holds, and how balances are reported."
 ---
 
-# Accounts & Wallets
+## The payment account
 
-## Organisation payment account
+Each verified space — company or personal — has exactly one **payment account**. It is provisioned automatically when verification passes; there is nothing to request. The account is the umbrella for everything money-related in that space: its wallets, its balances, and the documents that describe it.
 
-Every verified organisation gets one **payment account**, provisioned automatically after KYB passes. The account is the umbrella for everything money-related: wallets, balances, statements, and bank letters.
-
-| Property | Meaning |
+| Property | What it tells you |
 | --- | --- |
-| `status` | `active` once provisioning completes; money movement is enabled only when active |
-| `money_movement_enabled` | Whether transfers, payouts, and funding are allowed |
-| `legal_entity` | The organisation the account belongs to |
+| `status` | Where provisioning has got to. Money movement opens only once the account is active |
+| `money_movement_enabled` | Whether funding, transfers, and payouts are permitted right now |
+| `legal_entity` | The verified company or individual the account belongs to |
+
+An account can be active while a particular rail is still closed. Account status answers "can this space move money at all"; rail standing answers "over which route" — see [Money movement](/payments).
 
 ## Wallets
 
-Each account holds two kinds of wallets:
+An account holds wallets of two kinds.
 
-| Kind | Rails | Purpose |
+| Kind | Receives over | Holds |
 | --- | --- | --- |
-| `fiat` | ACH, wire | Hold fiat balances, receive deposits, fund payouts |
-| `stablecoin` | Crypto deposit address | Hold stablecoin balances, receive crypto top-ups |
+| `fiat` | Payment rails, using per-rail deposit instructions | A balance in a supported currency |
+| `stablecoin` | A deposit address, on a named chain | Third-party stablecoins |
 
-A default fiat and a default stablecoin wallet are created automatically when the account activates. You can provision additional wallets per account.
+A first fiat wallet and a first stablecoin wallet are created when the account activates. You can add more wallets to the same account as you need them.
+
+<Warning>
+  Buburuza does not issue a stablecoin. A stablecoin wallet holds assets issued by other parties, USDC by default. The issuer of the asset, not Buburuza, stands behind its value and its redemption.
+</Warning>
 
 ## Balances
 
-Balances are returned as **decimal strings** to avoid floating-point errors, with three components:
+Every balance is reported as a **decimal string**, not a floating-point number, so no value is lost on the way to your code. Each wallet reports three components:
 
-- `available` — what you can spend right now,
-- `pending` — funds in flight (deposits not yet settled, holds),
-- `hold` — amounts reserved by in-flight operations.
+| Component | Meaning |
+| --- | --- |
+| `available` | What you can spend right now |
+| `pending` | Money in flight — deposits that have not settled yet |
+| `hold` | Amounts reserved against operations already under way |
 
-## Statements & documents
+`available` is the only figure a payment is priced and authorised against. A balance you can see in `pending` cannot be spent until it settles.
 
-- **Bank letter** — a document confirming your account details, available per account.
-- **Statements** — per-period account statements.
+## Statements and letters
 
-Both are available in the dashboard and through the API.
+Two documents are produced per account:
 
-## Limits & tiers
+- an **account statement** for a period you choose,
+- a **bank letter** confirming the account's details, for counterparties who ask for one before paying you.
 
-Your KYB tier determines what your account can do (light vs full verification). Until KYB passes and the account is active, money movement endpoints return `403`.
+## What gates an account
 
-## API
+Two things stand between a space and money movement, and they fail differently:
 
-- [Accounts & Wallets API](/api/accounts-wallets) — endpoints and examples.
-- [Money Movement](/payments) — funding, transfers, and payouts on top of your wallets.
+1. **Verification.** Until it passes, the account does not exist and no money can move.
+2. **Tier.** A company verified at a lighter tier may be able to receive funds while outbound movement stays closed. The dashboard shows which applies to you.
+
+## Related
+
+<Card title="Money movement" icon="arrow-right-arrow-left" href="/payments">
+  What you can do once a wallet holds a balance.
+</Card>

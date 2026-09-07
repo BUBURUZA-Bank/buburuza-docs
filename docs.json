@@ -21,56 +21,25 @@
             "group": "Overview",
             "pages": [
               "index",
-              "introduction"
-            ]
-          },
-          {
-            "group": "Getting Started",
-            "pages": [
-              "onboarding-and-security",
+              "introduction",
               "quickstart"
             ]
           },
           {
             "group": "Platform",
             "pages": [
+              "onboarding-and-security",
               "accounts-wallets",
               "payments",
-              "compliance-security"
+              "team",
+              "support"
             ]
           },
           {
-            "group": "Legal",
+            "group": "Compliance and legal",
             "pages": [
+              "compliance-security",
               "legal"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Developer",
-        "groups": [
-          {
-            "group": "Get Started",
-            "pages": [
-              "api/overview",
-              "api/getting-started"
-            ]
-          },
-          {
-            "group": "API Reference",
-            "pages": [
-              "api/authentication",
-              "api/onboarding",
-              "api/accounts-wallets",
-              "api/money-movement",
-              "api/recipients-beneficiaries"
-            ]
-          },
-          {
-            "group": "SDKs",
-            "pages": [
-              "api/sdks-and-libraries"
             ]
           }
         ]

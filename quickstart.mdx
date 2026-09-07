@@ -1,52 +1,86 @@
 ---
 title: "Quickstart"
-description: "Sign up, pass KYB, fund your account, and send your first transfer."
+description: "From signup to a first payment: create an account, verify, fund a wallet, and send."
 ---
 
-# Quickstart
-
-From zero to a working payment account in four steps.
-
-## 1. Sign up
-
-Go to the signup page and create an account with your email:
-
-1. Enter your email and confirm the one-time code.
-2. Enroll a passkey (or TOTP if passkeys are unavailable).
-3. Save your recovery codes.
-
-## 2. Onboard your organisation
-
-Open the dashboard and complete the onboarding steps:
-
-1. Enter the legal name and company name.
-2. Review the KYB document checklist for your jurisdiction.
-3. Complete the hosted KYB verification.
-4. Wait for the **payment account** to be provisioned (automatic after KYB passes).
+This is the shortest path through the platform.
 
 <Note>
-KYB must pass before money movement is enabled. The dashboard shows the live status.
+  Before you start: onboarding serves companies registered in the **US or Canada** and individuals resident in those countries. If neither applies, verification cannot be completed.
 </Note>
 
-## 3. Fund your account
+## 1. Create your account
 
-Once your payment account is **active**:
+<Steps>
+  <Step title="Enter your email">
+    Sign up with an email address and confirm the one-time code sent to it.
+  </Step>
+  <Step title="Enroll a credential">
+    Register a **passkey**. If your device cannot use passkeys, enroll a **TOTP authenticator** instead. There is no password at any point.
+  </Step>
+  <Step title="Save your recovery codes">
+    You are shown single-use recovery codes once. They are the only way back in if you lose every credential — store them somewhere you can reach without your device.
+  </Step>
+</Steps>
 
-1. Open **Accounts → your account → Funding**.
-2. Pick a funding method:
-   - **Fiat** — ACH or wire. You get account and routing details for the selected rail.
-   - **Crypto** — a deposit address for your stablecoin wallet.
-3. Send funds. Inbound money appears in your transaction list automatically — there is no separate deposit step.
+## 2. Open a space and verify
 
-## 4. Send your first transfer
+Choose which kind of space you need. You can create the other one later.
 
-1. Go to **Transfers → New transfer**.
-2. Pick the source wallet, destination, and amount.
-3. Review the **fee preview** — the fee is shown before you confirm and is charged on top of the amount (the recipient receives exactly the amount you entered).
-4. Confirm. Track the transfer in **Transactions**.
+<Tabs>
+  <Tab title="Company space (KYB)">
+    1. Enter the legal representative's name and the company name.
+    2. Review the document checklist shown for your country of registration.
+    3. Complete the hosted verification flow for the company and its associated persons.
+    4. Wait for the payment account to be provisioned — it is automatic once verification passes.
+  </Tab>
+  <Tab title="Personal space (KYC)">
+    1. Open your personal space from the space switcher.
+    2. State your country of residence — this selects the verification profile.
+    3. Complete the hosted verification flow for yourself.
+    4. Wait for the payment account to be provisioned.
+  </Tab>
+</Tabs>
 
-## Next steps
+<Tip>
+  You can pause and resume at any point; progress is saved per step. The dashboard shows the live verification status, and a reviewer's decision arrives asynchronously — there is no instant approval.
+</Tip>
 
-- Explore the [Platform](/accounts-wallets) documentation.
-- Automate everything with the [API](/api/overview): the same operations are available as REST endpoints.
-- Generate a typed client from our [OpenAPI specification](/api/sdks-and-libraries).
+## 3. Fund the account
+
+Once the payment account is active:
+
+1. Open the account and choose a **funding method** for the wallet you want to fund.
+2. Fetch the **deposit instructions** for that method. For a fiat rail you get the account details to pay into; for crypto you get a deposit address, with its chain and asset.
+3. Send the funds from your bank or wallet.
+
+Inbound money appears in your transaction list on its own once it clears. There is no deposit step to perform on the platform side.
+
+## 4. Send your first payment
+
+<Steps>
+  <Step title="Price it first">
+    Request a **fee preview** for the transfer or payout. You get a quote carrying a `fee_quote_id`, the net amount, the fee, and the total that will be debited.
+  </Step>
+  <Step title="Confirm against the quote">
+    Submit the payment with that `fee_quote_id`. The quote is single-use and expires ten minutes after it is issued; if it lapses, request a new one.
+  </Step>
+  <Step title="Track it">
+    Follow the payment in your transaction list. Every money event — funding, transfer, payout, fee — appears there with its own kind and status.
+  </Step>
+</Steps>
+
+<Note>
+  The fee is charged **on top** of the amount you enter. The recipient receives exactly the amount you typed, and your wallet is debited that amount plus the fee.
+</Note>
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Money movement" icon="arrow-right-arrow-left" href="/payments">
+    Rails, endorsements, fee quotes, and payout mechanics in full.
+  </Card>
+  <Card title="Teams and spaces" icon="users" href="/team">
+    Invite colleagues, assign roles, and switch spaces.
+  </Card>
+</CardGroup>

@@ -1,46 +1,78 @@
 ---
-title: "Compliance & Security"
-description: "How Buburuza verifies organisations, monitors transactions, and meets regulatory obligations."
+title: "Compliance and Security"
+description: "How verification works, what is monitored, which obligations apply where, and what the platform will not tell you."
 ---
 
-# Compliance & Security
+## Verification
 
-## Verification (KYB/KYC)
+No space can hold or move money before it is verified. Verification is performed by **Sumsub**, a licensed identity provider, in a hosted flow — evidence goes to the provider, not through Buburuza's own screens.
 
-Every organisation must pass **Know Your Business (KYB)** verification before money movement is enabled:
+| Space | What is checked |
+| --- | --- |
+| Company | The company itself, plus its associated persons — directors, controllers, and beneficial owners |
+| Personal | The individual who owns the space |
 
-- Verification is performed by a **licensed identity provider** (Sumsub) in a hosted flow.
-- The required document set depends on the jurisdiction (currently **Canada and the US**).
-- Organisations verify at a tier: **light** or **full** verification. The tier gates the products and limits available to the account.
+The document set asked for depends on the country: company registration for a company space, stated country of residence for a personal one. Both are served for the **United States** and **Canada** only.
 
-Associated persons (directors, controllers, UBOs) are verified as part of the company verification.
+Companies verify at a **tier**. A lighter tier can be enough to receive funds while outbound movement remains closed; a full tier opens the rest. The tier is set by the verification outcome, not chosen.
 
-## Transaction monitoring
+<Note>
+  A verification decision arrives asynchronously from the reviewer. There is no automatic approval path, and no way to shortcut one from inside the product.
+</Note>
 
-All money movement is monitored continuously:
+## Monitoring
 
-- **KYT** — counterparty and transaction screening against sanction and watch lists.
-- **Travel Rule** — information sharing on transfers above applicable thresholds, as required by regulation.
-- **Reporting** — transaction reporting to regulators (e.g. FINTRAC obligations for Canadian activity).
+Money movement is screened continuously, without anything being required from you:
 
-Monitoring is automatic; nothing is required from you beyond completing verification and keeping your organisation's information current.
+| Control | What it does |
+| --- | --- |
+| **Transaction monitoring** | Screens payments and counterparties against sanctions and watch lists |
+| **Risk scoring** | Maintains a risk tier for each verified customer, which the payment path prices against |
+| **Travel Rule** | Shares originator and beneficiary information on transfers above the applicable threshold, where regulation requires it |
+
+## Reporting obligations
+
+Who reports, and to whom, depends on the corridor — and it is not always Buburuza.
+
+| Jurisdiction | Who reports | Buburuza's part |
+| --- | --- | --- |
+| **Canada** | Buburuza, once its FINTRAC registration is issued | Monitoring, risk scoring, and the reports themselves |
+| **United States** | The licensed partner, as money transmitter of record, filing in its own name | Monitoring and risk scoring only |
+
+<Warning>
+  Buburuza's FINTRAC Money Services Business registration has been applied for and has not been issued. Until it is, Buburuza files nothing in Canada. See [Legal and regulatory](/legal).
+</Warning>
+
+Reporting decisions are made by qualified compliance staff. Automated systems detect patterns and assemble evidence; they do not determine suspicion and do not file. Buburuza does not disclose whether a report has been made about any particular customer or payment, and no agent can tell you.
 
 ## Account security
 
-| Control | Details |
+| Control | How it works |
 | --- | --- |
-| Passkeys | WebAuthn credentials as the primary login factor — resistant to phishing and credential stuffing |
-| MFA | Optional TOTP step-up for logins |
-| Recovery codes | Single-use codes issued at signup for credential loss |
-| Session control | List and revoke sessions, log out everywhere |
-| Verification limits | Money movement disabled until KYB passes; tier-based product gating |
+| Passkeys | WebAuthn credentials, bound to the site and resistant to phishing and replay |
+| TOTP | Enrolled as a fallback credential, or switched on as an extra step |
+| Recovery codes | Single-use, issued once at signup |
+| Sessions | Listed and revocable individually or all at once; access tokens are short-lived |
+| Step-up | Sensitive actions re-confirm your identity even within a live session |
+| Verification gate | Money movement stays closed until verification passes |
 
-## Data & privacy
+## What the platform will not expose
 
-- We do not expose raw provider payloads or verification internals through any API.
-- Account data is scoped to your organisation; requests are authorised per session.
-- See [Onboarding & Security](/onboarding-and-security) for the user-facing flow.
+Some things are deliberately absent from every response, and their absence is a feature:
 
-## API notes
+- Raw provider payloads and verification internals
+- Provider identifiers and internal screening records
+- Any indication of whether a regulatory report exists
 
-Compliance state surfaces through the API as statuses (KYB status, payment-account status) and standard error codes (`403` when a tier or status blocks an operation). The API never returns provider identifiers, raw evidence, or internal screening records.
+Data is scoped to the space you are acting in, and every request is authorised against it.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Legal and regulatory" icon="scale-balanced" href="/legal">
+    Permissions, what is not offered, and personal data.
+  </Card>
+  <Card title="Onboarding and security" icon="user-check" href="/onboarding-and-security">
+    The same ground from the account holder's side.
+  </Card>
+</CardGroup>
