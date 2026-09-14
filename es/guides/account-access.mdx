@@ -1,0 +1,312 @@
+---
+title: "Inicia sesión y protege tu cuenta"
+description: "Elige un método de inicio de sesión disponible, mantén una ruta de recuperación usable y revisa las sesiones cuando cambies de dispositivo. El código de acceso de desbloqueo móvil es separado de la recuperación de cuenta."
+sidebarTitle: "Inicio de sesión y seguridad"
+---
+
+## En esta guía
+
+- [Iniciar sesión en Buburuza en la web](#sign-in)
+- [Configurar y usar una clave de acceso](#passkey)
+- [Configurar un autenticador para autenticación de dos factores](#authenticator)
+- [Recuperar acceso con un código de recuperación](#recover-access)
+- [Revisar y cerrar sesión en otras sesiones](#sessions)
+- [Eliminar una clave de acceso guardada](#remove-passkey)
+- [Revisar y finalizar sesiones de cuenta móvil](#mobile-session-control)
+- [Cambiar tu contraseña de inicio de sesión móvil](#change-master-password)
+- [Cambiar tu código de acceso de aplicación móvil de seis dígitos](#change-app-pin)
+- [Iniciar sesión con correo electrónico o teléfono y una contraseña de inicio de sesión](#mobile-password-signin)
+- [Restablecer una contraseña de inicio de sesión móvil olvidada](#reset-mobile-login-password)
+- [Configurar un autenticador durante la configuración móvil](#mobile-authenticator-setup)
+- [Habilitar acceso biométrico en la aplicación móvil](#enable-mobile-biometrics)
+
+## Mantén tus métodos de inicio de sesión y desbloqueo distintos
+
+| Elemento | Para qué lo usas | Dónde gestionarlo |
+| --- | --- | --- |
+| Clave de acceso | Completar un desafío de dispositivo o gestor de contraseñas para iniciar sesión. | Configuración → Claves de acceso. |
+| Código de autenticador | Introducir el código actual generado por el autenticador vinculado durante la configuración. | Usa la entrada del autenticador creada desde el código QR o clave de configuración de Buburuza. |
+| Código de recuperación | Recuperar acceso a través del flujo de recuperación. Cada código guardado funciona una vez. | Guarda los códigos durante la configuración; usa Recuperar cuando sea necesario. |
+| Código de acceso de aplicación | Desbloquear la aplicación móvil. | La configuración móvil y las pantallas de desbloqueo. |
+| Sesión activa | Un dispositivo/navegador actualmente con sesión iniciada. | Configuración → Sesiones activas. |
+
+Cerrar sesión en una sesión no elimina su clave de acceso guardada. Para eliminar una clave de acceso, usa la acción separada de clave de acceso. La opción web de cerrar sesión en todas las demás sesiones deja la sesión actual activa.
+
+Si usas un código de recuperación, la confirmación lo marca como usado y ofrece configurar una clave de acceso para el dispositivo. Si no tienes códigos de recuperación, usa el enlace de contactar soporte en esa pantalla. Nunca envíes ninguno de estos códigos o claves de configuración en una conversación de soporte.
+
+## Código de acceso de aplicación, PIN de tarjeta y recuperación de billetera
+
+El **código de acceso de aplicación** de seis dígitos desbloquea acciones de la aplicación como ver un PIN de tarjeta. El **PIN de tarjeta** de cuatro dígitos pertenece a una tarjeta seleccionada. Crear un nuevo PIN de tarjeta no reemplaza el código de acceso de aplicación.
+
+Una **frase secreta** es la clave de recuperación para una billetera basada en frase. Una copia de seguridad manual registra esas palabras en orden. Una **contraseña de copia de seguridad de iCloud** cifra la frase de esa billetera en su copia de seguridad de iCloud. Es separada del código de acceso de aplicación. El flujo de copia de seguridad de Buburuza advierte que esta contraseña de cifrado no puede ser restablecida por nosotros.
+
+Una **clave de acceso de billetera Swift** es una clave para esa billetera. Sus pantallas de seguridad advierten que eliminarla puede perder el acceso a la billetera y los fondos. Esto es diferente de usar una clave de acceso simplemente para iniciar sesión en una cuenta de Buburuza. Usa las instrucciones para el tipo exacto de credencial o billetera que estás gestionando.
+
+Nunca proporciones a soporte tu código de acceso, PIN de tarjeta, frase secreta, clave privada o contraseña de cifrado de copia de seguridad.
+
+<a id="sign-in" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Iniciar sesión en Buburuza en la web
+
+_Aplica a: Web_
+
+Usa la ruta de inicio de sesión para una cuenta existente. El flujo de inicio de sesión web ofrece rutas de clave de acceso y recuperación junto con la confirmación por correo electrónico.
+
+1. Abre la aplicación web oficial de Buburuza a través de tu punto de entrada de confianza habitual.
+2. Introduce el correo electrónico asociado con tu cuenta existente.
+3. Completa el desafío de clave de acceso, código por correo electrónico, u otro desafío de seguridad mostrado para tu cuenta.
+4. Si se te pide usar un método de recuperación, sigue el flujo de recuperación dedicado.
+5. Después de que se abra el Panel de control, verifica la cuenta o empresa seleccionada antes de continuar.
+
+**Solución de problemas y distinciones importantes**
+
+- Si ves que una cuenta ya existe, usa iniciar sesión en lugar de registrarse.
+- Si un método de seguridad no está disponible, usa la alternativa mostrada en la pantalla. Abrir otra cuenta no recuperará el acceso a tus fondos existentes.
+
+<a id="passkey" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Configurar y usar una clave de acceso
+
+_Aplica a: Móvil y web_
+
+Una clave de acceso es una de las opciones de seguridad disponibles en Buburuza. La configuración e inicio de sesión usan un mensaje de tu dispositivo o gestor de contraseñas.
+
+1. Durante la configuración de la cuenta, elige Configurar clave de acceso y sigue el mensaje de tu dispositivo.
+2. Para añadir una más tarde en móvil, abre Configuración, luego Claves de acceso, y elige Crear nueva clave de acceso. En la web, abre Configuración, luego Claves de acceso, y elige Añadir clave de acceso.
+3. Completa el mensaje del dispositivo o gestor de contraseñas. Verifica la lista de claves de acceso para la entrada añadida; la lista web incluye información de añadida y último uso.
+4. Al iniciar sesión, usa la clave de acceso guardada para la cuenta y completa el desafío del dispositivo.
+
+**Solución de problemas y distinciones importantes**
+
+- Si no puedes encontrar tu clave de acceso, verifica que estás usando el dispositivo o gestor de contraseñas donde la guardaste.
+- Usa otra opción de inicio de sesión o recuperación ofrecida por Buburuza si la clave de acceso no está disponible. Contacta soporte si no puedes completar la recuperación.
+
+<a id="authenticator" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Configurar un autenticador para autenticación de dos factores
+
+_Aplica a: Móvil y web_
+
+La autenticación de dos factores añade un código de tu aplicación de autenticador al proceso de seguridad de la cuenta. Completa la configuración antes de salir de la pantalla de confirmación.
+
+1. En la configuración de seguridad, elige Configurar 2FA en su lugar en móvil o Configurar un código en su lugar en la web.
+2. En móvil, copia la clave de configuración en una nueva entrada de tu aplicación de autenticador, luego elige Ya añadí la clave en Buburuza.
+3. En la web, escanea el código QR mostrado con tu aplicación de autenticador. Usa la opción de clave manual si no puedes escanearlo.
+4. Regresa a Buburuza e introduce el código de seis dígitos actualmente mostrado para esa entrada. En la web, elige Verificar.
+5. Guarda los códigos de recuperación usando Copiar o Descargar y confirma que los has almacenado de forma privada.
+
+**Solución de problemas y distinciones importantes**
+
+- Si el código es rechazado, verifica que la entrada del autenticador es para Buburuza e introduce el código actual.
+- Configurar clave de acceso en su lugar o Usar una clave de acceso en su lugar regresa a la configuración de seguridad alternativa mostrada en el flujo.
+- No compartas la clave de configuración, código QR, código de autenticador o códigos de recuperación.
+
+<a id="recover-access" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Recuperar acceso con un código de recuperación
+
+_Aplica a: Móvil y web_
+
+Usa la ruta de recuperación cuando no puedas usar tu método de inicio de sesión habitual. Cada código de recuperación funciona una vez. La pantalla de recuperación y el enlace de ayuda del autenticador son opciones separadas.
+
+1. Al iniciar sesión, elige Recuperar. El enlace web aparece junto a ¿Perdiste acceso a la clave de acceso?; en móvil muestra ¿Tienes problemas? Recuperar.
+2. Introduce el correo electrónico de tu cuenta existente y completa la verificación por correo electrónico en el flujo de recuperación.
+3. En Introduce un código de recuperación, introduce un código no usado guardado durante la configuración.
+4. Lee la confirmación de que el código ha sido usado y verifica el contador de códigos restantes mostrado.
+5. Elige Configurar clave de acceso para añadir una clave de acceso funcional en este dispositivo. En la web, Saltar por ahora continúa y te recuerda añadir una más tarde en Configuración.
+
+**Solución de problemas y distinciones importantes**
+
+- Si has perdido los códigos de recuperación, usa Contactar soporte en esa pantalla.
+- Si estás en el desafío de autenticador web y has perdido la aplicación de autenticador, su alternativa mostrada es Contactar soporte. No asumas que hay un atajo de recuperación no visible presente.
+- Nunca incluyas un código de recuperación o secreto de autenticador en un mensaje de soporte.
+
+<a id="sessions" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Revisar y cerrar sesión en otras sesiones
+
+_Aplica a: Móvil y web_
+
+Revisa tus sesiones activas o dispositivos de confianza cuando ya no uses un dispositivo o no reconozcas un inicio de sesión.
+
+1. Abre Configuración, luego Sesiones activas.
+2. Inspecciona la información de dispositivo/navegador, ubicación y última actividad. Identifica Sesión actual o Este dispositivo antes de actuar.
+3. En móvil, elige Terminar para la sesión no deseada, verifica la confirmación y elige Sí, terminar.
+4. En la web, elige la acción de cerrar sesión de la sesión individual y confirma Cerrar sesión en sesión.
+5. Para eliminar otras sesiones activas web juntas, elige Cerrar sesión en todas las demás sesiones, lee el conteo y confirma. El diálogo dice que la sesión actual permanece con sesión iniciada.
+6. Verifica la lista o aviso de finalización. Si también quieres eliminar un método de inicio de sesión guardado, usa Claves de acceso separadamente.
+
+**Solución de problemas y distinciones importantes**
+
+- Cerrar sesión en una sesión no elimina su clave de acceso. Un dispositivo con una clave de acceso permitida puede poder iniciar sesión de nuevo.
+- Si no reconoces una sesión, revisa las claves de acceso guardadas y usa la ruta oficial de soporte para un problema de seguridad de cuenta.
+
+<a id="remove-passkey" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Eliminar una clave de acceso guardada
+
+_Aplica a: Web_
+
+Eliminar una clave de acceso cambia un método de inicio de sesión guardado. Es separado de cerrar sesión en una sesión activa.
+
+1. Abre Configuración, luego Claves de acceso.
+2. Identifica la clave de acceso por su gestor de contraseñas o dispositivo y su información de añadida o último uso.
+3. Elige su acción de eliminación.
+4. Lee ¿Eliminar esta clave de acceso? y confirma qué método de inicio de sesión dejará de funcionar.
+5. Elige Eliminar clave de acceso para continuar, o Mantener para cancelar.
+6. Completa cualquier verificación de clave de acceso mostrada y verifica el resultado Clave de acceso eliminada. Revisa Sesiones activas separadamente si también quieres que una sesión actual sea cerrada.
+
+**Solución de problemas y distinciones importantes**
+
+- Asegúrate de mantener una forma funcional de acceder a la cuenta antes de eliminar un método de inicio de sesión.
+- Cerrar sesión en una sesión no elimina su clave de acceso, y eliminar una clave de acceso no debe asumirse como terminación de sesiones existentes.
+
+<a id="mobile-session-control" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Revisar y finalizar sesiones de cuenta móvil
+
+_Aplica a: Móvil_
+
+Revisa los dispositivos con sesión iniciada en tu cuenta y finaliza una sesión individual o las demás sesiones mientras preservas la tuya actual.
+
+1. Abre Perfil, luego Privacidad y seguridad y Dispositivos de confianza. Si tu aplicación muestra Seguridad en su lugar, abre Actividad de inicio de sesión.
+2. Revisa Sesión actual separadamente de Sesión activa. Compara el dispositivo, aplicación/navegador, ubicación y fecha.
+3. Selecciona una sesión activa para inspeccionar su Aplicación, Ubicación, Dirección IP y última actividad.
+4. Elige Terminar esta sesión. Verifica el dispositivo seleccionado en la confirmación, luego elige Sí, terminar; usa No, mantener para cancelar.
+5. Introduce tu código de acceso de aplicación cuando se solicite. Verifica Sesión terminada y confirma que el dispositivo deseado fue eliminado de la lista.
+6. Para finalizar las demás sesiones juntas, elige Terminar todas las demás sesiones. Su explicación dice que el dispositivo actual permanece con sesión iniciada.
+7. Usa Si inactivo durante para revisar la expiración por inactividad. Si el selector ofrece 1 semana, 1 mes, 3 meses o 6 meses, elige el período que pretendes usar; elige Cancelar para dejarlo sin cambios.
+
+**Solución de problemas y distinciones importantes**
+
+- Identifica Sesión actual antes de finalizar las demás sesiones.
+- El cierre de sesión y la eliminación de una clave de acceso guardada son acciones separadas.
+- El paso de código de acceso de aplicación es autenticación para la acción de terminación; no crea un nuevo código de acceso.
+
+<a id="change-master-password" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Cambiar tu contraseña de inicio de sesión móvil
+
+_Aplica a: Móvil_
+
+La cuenta móvil basada en contraseña tiene un flujo de cambio de contraseña de inicio de sesión. Verificas el acceso antes de introducir y repetir una nueva contraseña.
+
+1. Abre Perfil, luego Privacidad y seguridad y Contraseña de inicio de sesión.
+2. Introduce tu código de acceso de aplicación cuando se solicite.
+3. Introduce tu contraseña de inicio de sesión anterior.
+4. En Crear nueva contraseña de inicio de sesión, introduce la nueva contraseña, luego repítela en la siguiente pantalla.
+5. Verifica Contraseña de inicio de sesión cambiada en Privacidad y seguridad. Si tu configuración de Privacidad nombra esto Contraseña maestra, usa Continuar entre los pasos de contraseña actual, nueva y repetición.
+
+**Solución de problemas y distinciones importantes**
+
+- Esta es la contraseña de inicio de sesión de la cuenta, no el código de acceso de aplicación, PIN de tarjeta o contraseña de copia de seguridad de billetera.
+- Nunca compartas tu contraseña actual o nueva con soporte.
+- Si no conoces la contraseña anterior, usa el flujo separado de contraseña de inicio de sesión olvidada donde se ofrezca.
+
+<a id="change-app-pin" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Cambiar tu código de acceso de aplicación móvil de seis dígitos
+
+_Aplica a: Móvil_
+
+Tu código de acceso de aplicación protege el acceso a la aplicación móvil y configuraciones sensibles. Es separado de tu contraseña de inicio de sesión y PIN de tarjeta.
+
+1. Abre Perfil, luego Privacidad y seguridad y Código de acceso de aplicación.
+2. Introduce tu código de acceso de aplicación anterior de seis dígitos.
+3. En Crear nuevo código de acceso, introduce el nuevo código de seis dígitos.
+4. En Repetir nuevo código de acceso, introdúcelo de nuevo.
+5. Verifica ¡Código de acceso de aplicación configurado! en Privacidad y seguridad. Si tu configuración de Privacidad nombra esto PIN de aplicación, verifica Tu PIN ha sido cambiado.
+
+**Solución de problemas y distinciones importantes**
+
+- Cambiar el código de acceso de aplicación no cambia tu PIN de tarjeta, contraseña de inicio de sesión o contraseña de copia de seguridad de billetera.
+- Nunca compartas tu código de acceso con soporte.
+- Si el código anterior es desconocido, la pantalla de cambio no es un procedimiento de recuperación.
+
+<a id="mobile-password-signin" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Iniciar sesión con correo electrónico o teléfono y una contraseña de inicio de sesión
+
+_Aplica a: Móvil_
+
+La pantalla de inicio de sesión por contraseña móvil acepta tu dirección de correo electrónico o número de móvil con la contraseña de inicio de sesión.
+
+1. Elige Iniciar sesión desde la bienvenida o la página de registro.
+2. Usa el formulario de correo electrónico, o cambia a móvil y selecciona el código de país de llamada.
+3. Introduce el correo electrónico o número de teléfono de la cuenta y la contraseña de inicio de sesión. Usa el control de ojo solo cuando puedas ver la pantalla en privado.
+4. Elige Iniciar sesión.
+5. Si has olvidado la contraseña de inicio de sesión, elige ¿Olvidaste tu contraseña? para iniciar la ruta de recuperación por correo electrónico o móvil.
+6. Usa Google o Apple solo cuando esa opción de proveedor sea ofrecida para la cuenta y tengas la intención de iniciar sesión a través de ella.
+
+**Solución de problemas y distinciones importantes**
+
+- La contraseña de inicio de sesión no es el código de acceso de aplicación de seis dígitos usado para desbloquear la aplicación.
+- El inicio de sesión con Google es separado de la autenticación de dos factores de Google Authenticator.
+- Usa el método de inicio de sesión mostrado para tu cuenta; un flujo de clave de acceso sin contraseña tiene pasos diferentes.
+
+<a id="reset-mobile-login-password" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Restablecer una contraseña de inicio de sesión móvil olvidada
+
+_Aplica a: Móvil_
+
+¿Olvidaste tu contraseña? ofrece rutas por correo electrónico y móvil. Esto restablece la contraseña de inicio de sesión, no una frase de recuperación de billetera o PIN de tarjeta.
+
+1. Desde la pantalla de inicio de sesión por contraseña, elige ¿Olvidaste tu contraseña?
+2. Para recuperación por correo electrónico, introduce el correo electrónico de la cuenta y elige Continuar. Verifica que tu correo dice que se enviaron instrucciones a la dirección enmascarada; usa esas instrucciones para llegar al paso de restablecimiento de contraseña.
+3. Para recuperación por móvil, elige Usar móvil, selecciona el código de país e introduce el número. Continúa e introduce el código de verificación de seis dígitos enviado a ese número.
+4. En Crea tu nueva contraseña de inicio de sesión, introduce y repite la nueva contraseña. El requisito mostrado es al menos ocho caracteres. Elige Continuar.
+5. Regresa al formulario de Iniciar sesión correspondiente por correo electrónico o móvil y usa la nueva contraseña de inicio de sesión.
+
+**Solución de problemas y distinciones importantes**
+
+- Verifica el destino enmascarado y el temporizador de reenvío si un mensaje no ha llegado.
+- No confundas un restablecimiento de contraseña con cambiar un código de acceso de aplicación o desbloquear una copia de seguridad de billetera.
+- Después de restablecer la contraseña de inicio de sesión, revisa Actividad de inicio de sesión y finaliza cualquier sesión que ya no desees.
+
+<a id="mobile-authenticator-setup" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Configurar un autenticador durante la configuración móvil
+
+_Aplica a: Móvil_
+
+La introducción de 2FA durante la configuración ofrece Habilitar 2FA o Saltar por ahora. La configuración vincula un autenticador usando su clave y verifica un código basado en tiempo.
+
+1. Elige Habilitar 2FA durante la configuración personal, o abre Perfil → Privacidad y seguridad → 2FA. En configuración, introduce tu código de acceso de aplicación cuando se solicite.
+2. Elige el autenticador ofrecido: Google Authenticator o Authy.
+3. Copia la clave de configuración en una nueva entrada en el autenticador nombrado. Mantén la clave privada.
+4. Elige Siguiente, luego introduce el código actual de seis dígitos basado en tiempo para esa entrada de Buburuza.
+5. Elige Siguiente y verifica 2FA configurado en la ruta de configuración.
+
+**Solución de problemas y distinciones importantes**
+
+- Usa el código actual de la entrada de autenticador correspondiente; un código SMS de teléfono es una credencial diferente.
+- Nunca envíes la clave de configuración o código actual a soporte.
+- Si no puedes usar el autenticador configurado, sigue el flujo de recuperación separado realmente ofrecido por tu cuenta.
+
+<a id="enable-mobile-biometrics" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Habilitar acceso biométrico en la aplicación móvil
+
+_Aplica a: Móvil_
+
+Biometría aparece como una configuración de seguridad con una verificación de código de acceso de aplicación y un resultado de autenticación del dispositivo.
+
+1. Abre Perfil, luego Privacidad y seguridad.
+2. Elige Biometría e introduce tu código de acceso de aplicación cuando se solicite.
+3. Completa el mensaje biométrico mostrado por tu dispositivo.
+4. Verifica la confirmación Biometría habilitada y el interruptor habilitado en Privacidad y seguridad.
+
+**Solución de problemas y distinciones importantes**
+
+- Sigue el mensaje biométrico de tu dispositivo. Si el dispositivo no puede autenticarte, usa la alternativa ofrecida en la pantalla de autenticación de la aplicación.
+- La biometría no reemplaza la necesidad de mantener tu código de acceso de aplicación privado.
+
+## ¿Necesitas ayuda?
+
+Si necesitas ayuda con tu cuenta o una tarea, [contacta soporte](/support) o visita el [Centro de Ayuda de Buburuza](https://help.buburuza.com/hc/en-us).
+
+Artículos de soporte relacionados:
+
+- [Configurar autenticación de dos factores (2FA)](https://help.buburuza.com/hc/en-us/articles/51472991172115)
+- [Recuperar acceso si pierdes tu aplicación de autenticador](https://help.buburuza.com/hc/en-us/articles/51472991252371)

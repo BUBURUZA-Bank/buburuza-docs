@@ -1,0 +1,309 @@
+---
+title: "Envía un pago bancario"
+description: "Elige un destinatario y un método de pago, completa los campos requeridos e inspecciona la revisión antes de autorizar la transferencia. Los datos bancarios apropiados, la presentación de comisiones y los campos de moneda dependen del método de pago."
+sidebarTitle: "Pagos bancarios"
+---
+
+## En esta guía
+
+- [Enviar un pago ACH](#send-ach)
+- [Enviar una transferencia bancaria doméstica](#send-wire)
+- [Enviar una transferencia internacional](#international-wire)
+- [Revisar comisiones antes de confirmar un pago](#payment-fees)
+- [Verificar el estado de un pago](#track-payment)
+- [Leer un enlace de seguimiento de pago](#public-payment-tracking)
+- [Enviar un pago ACH desde el formulario móvil de datos bancarios](#mobile-ach-bank-details)
+- [Enviar una transferencia desde el formulario móvil de datos bancarios](#mobile-wire-bank-details)
+- [Completar el formulario móvil de transferencia internacional](#mobile-international-wire-details)
+- [Agregar notas, documentos y destinatarios de recibo a una transferencia internacional](#mobile-wire-memo-and-documents)
+- [Comparar opciones de cobro de transferencia internacional](#international-wire-charge-options)
+- [Revisar financiación y cargos en la web](#desktop-expanded-payment-review)
+
+## Conoce qué campos de pago sirven para qué propósito
+
+| Campo | Qué verificar |
+| --- | --- |
+| El destinatario recibe | La cantidad y moneda pretendidas para el destinatario. |
+| Tú pagas / Total debitado | La cantidad del lado origen, incluyendo el desglose de comisión o conversión mostrado. |
+| Nombre a mostrar / Memo / Mensaje al beneficiario | La descripción asociada con el pago saliente. |
+| Enviar recibo a | La dirección seleccionada para el recibo de pago. |
+| Incluir adjuntos | Si incluir material de soporte con el recibo cuando esa opción aparece. |
+| Número de factura, fecha de factura, fecha de vencimiento | Información de referencia asociada con la factura. |
+| Nota interna | El formulario web describe esto como visible para personas con acceso a la cuenta de Buburuza. |
+| Adjuntos | Archivos de soporte asociados con el pago. |
+
+Revisa el destino del recibo y la elección de adjunto separadamente de tu nota interna. Estos controles se dirigen a diferentes audiencias. Después de autorizar, usa el registro de pago y su referencia para rastrear el resultado.
+
+<a id="send-ach" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Enviar un pago ACH
+
+_Aplica a: Móvil y web_
+
+Elige ACH cuando se ofrezca para el pago bancario que quieres hacer. Revisa el destinatario, la cuenta de financiación, la cantidad y la comisión mostrada antes de confirmar.
+
+1. Abre Enviar dinero, elige el destinatario y selecciona ACH de los métodos de pago guardados o disponibles.
+2. Revisa los datos bancarios del destinatario. Si editas datos prellenados en la web, decide si guardar los cambios en el destinatario o usarlos solo para este pago.
+3. Elige Enviando desde en móvil o Enviar desde en la web, luego ingresa El destinatario recibe.
+4. Completa Nombre a mostrar en el pago y la información opcional de memo y correo de recibo. El flujo web también incluye número de factura, fecha de factura, fecha de vencimiento, una nota interna y adjuntos.
+5. Lee Revisar pago en móvil o Revisar en la web. Verifica el destinatario, la información de cuenta y ruta, la cuenta de financiación, la comisión y el débito total.
+6. En móvil, usa Deslizar para enviar. En la web, elige Enviar pago y completa el desafío de clave de acceso mostrado.
+7. Lee el resultado del pago. En la web, el resultado incluye ID de pago y Recibo enviado a. Abre Transacciones para inspeccionar el estado en curso.
+
+**Solución de problemas y distinciones importantes**
+
+- Si el saldo es insuficiente, verifica el saldo disponible y el débito total en lugar de solo la cantidad que escribiste.
+- Si la confirmación se interrumpe, verifica Transacciones antes de iniciar el pago nuevamente para evitar un duplicado.
+
+<a id="send-wire" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Enviar una transferencia bancaria doméstica
+
+_Aplica a: Móvil y web_
+
+Usa la opción de transferencia mostrada para tu destinatario y cuenta. Los datos de transferencia doméstica pueden diferir de los datos ACH, así que confirma el método de pago antes de enviar.
+
+1. Abre Enviar dinero, selecciona el destinatario y elige Transferencia.
+2. Revisa o agrega el número de ruta de transferencia, banco, número de cuenta, nombre del beneficiario y dirección del beneficiario. Verifica las instrucciones de transferencia en lugar de asumir que los datos ACH son intercambiables.
+3. Elige la cuenta de financiación e ingresa la cantidad que el destinatario debería recibir.
+4. Completa el memo o Mensaje al beneficiario y cualquier campo de recibo, factura, nota interna o adjunto necesario para tus registros.
+5. En Revisar, compara El destinatario recibe, Comisión de transferencia, Total debitado, datos del destinatario y la estimación de llegada mostrada.
+6. En móvil, usa Deslizar para enviar. En la web, elige Enviar pago y completa el desafío de clave de acceso mostrado.
+7. Lee el resultado y abre el registro de transacción. Conserva su ID de pago o referencia bancaria cuando necesites ayuda.
+
+**Solución de problemas y distinciones importantes**
+
+- Si las instrucciones del destinatario no coinciden con los datos en tu pantalla, detente y verifícalos antes de confirmar.
+- Si una transferencia permanece pendiente o muestra un fallo, usa la referencia de transacción al contactar a soporte. No asumas que puedes cancelarla o recuperarla desde la lista de destinatarios.
+
+<a id="international-wire" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Enviar una transferencia internacional
+
+_Aplica a: Móvil y web_
+
+Una revisión de transferencia internacional puede mostrar tanto lo que pagas como lo que recibe el destinatario. Verifica las monedas, datos bancarios, información de conversión y tratamiento de comisiones en conjunto.
+
+1. Selecciona el destinatario y Transferencia internacional.
+2. Revisa el código SWIFT, IBAN, nombre del banco, nombre del beneficiario y dirección del beneficiario. Si los datos fueron escaneados de una factura, compara cada campo con el documento fuente.
+3. Si la aplicación muestra una discrepancia SWIFT/IBAN, verifica los datos bancarios con el destinatario. Usa el control de código sugerido solo después de verificar que el banco sugerido es correcto.
+4. Elige la cuenta de financiación y las monedas. Ingresa Tú pagas o El destinatario recibe e inspecciona la cantidad correspondiente.
+5. Revisa el tipo de cambio, comisión de conversión, comisión de transferencia y débito total. Inspecciona Cubrir las comisiones o Cubrir todas las comisiones de transferencia y la explicación mostrada antes de decidir si habilitarlo.
+6. Completa ¿Para quién o qué es este pago? y el nombre del pago o memo. En el panel de revisión adicional, describe el trabajo o bienes; el sitio web del destinatario o LinkedIn y documentos de soporte son campos opcionales.
+7. En la web, revisa el correo de recibo, datos de factura, nota interna, adjuntos y cualquier control de fecha de envío o repetición mostrado.
+8. Si editaste los datos de transferencia del destinatario, elige si guardarlos para pagos futuros o usarlos solo para este pago.
+9. Revisa el pago completo y autoriza usando el control móvil o web mostrado. Conserva el ID de pago y el enlace de seguimiento mostrado en el resultado.
+
+**Solución de problemas y distinciones importantes**
+
+- Si Buburuza señala una discrepancia entre identificadores bancarios, verifica los datos con el destinatario antes de aceptar una corrección sugerida.
+- Si la cantidad final difiere de tu expectativa, regresa a la cotización y los detalles de comisión antes de enviar.
+
+<a id="payment-fees" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Revisar comisiones antes de confirmar un pago
+
+_Aplica a: Móvil y web_
+
+Revisa el desglose de comisiones en la pantalla de pago antes de autorizar la transacción. La pantalla puede mostrar una comisión de transferencia, comisión de red o información de conversión dependiendo del método.
+
+1. Elige el método de pago, fuente de financiación y cantidad.
+2. Abre o lee los detalles de comisión y conversión en la pantalla de revisión.
+3. Compara la cantidad enviada, total deducido y cualquier cantidad de destinatario mostrada.
+4. Si cambias la cantidad, moneda o método, revisa el total actualizado nuevamente.
+5. Después del envío, abre el registro de transacción para ver la información retenida para ese pago.
+
+**Solución de problemas y distinciones importantes**
+
+- La página de comparación de tipos de cambio no es un sustituto de la cotización en tu pantalla de revisión de pago.
+- Si necesitas cuestionar una comisión, dale a soporte la referencia de transacción y el concepto que quieres explicado.
+
+<a id="track-payment" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Verificar el estado de un pago
+
+_Aplica a: Móvil y web_
+
+El registro de transacción es el lugar para verificar qué sucedió después de que enviaste un pago. Una pantalla de confirmación, una entrada pendiente y una transacción completada son estados diferentes.
+
+1. Abre Transacciones o actividad reciente para la cuenta o monedero relevante, luego abre el pago.
+2. Lee el estado y la línea de tiempo de Estado. Compara los eventos iniciado, procesando, confirmado, completado, rechazado o devuelto que aparecen para ese pago.
+3. Para una transferencia de cripto, lee el estado de red además del estado de cuenta. Confirmado en cadena, publicándose en tu cuenta y Esperando publicación en cuenta explican por qué una transferencia puede permanecer Pendiente después de la confirmación de red.
+4. Para una transferencia bancaria, inspecciona el método de pago y cualquier razón bancaria o explicación de procesamiento mostrada.
+5. Usa la referencia apropiada al método cuando pidas ayuda: número de rastreo ACH, referencia Fed (IMAD), UETR SWIFT o hash de transacción de cripto, cuando estén disponibles.
+6. Revisa la información de comisión y débito total en el mismo registro. Una página de seguimiento o recibo puede complementar el registro, pero no reemplaza verificar el estado actual de la cuenta.
+
+**Solución de problemas y distinciones importantes**
+
+- Si no encuentras el pago, verifica la cuenta seleccionada y cualquier filtro activo.
+- Si no estás seguro de si un pago fue enviado, verifica la actividad antes de crear otro.
+
+<a id="public-payment-tracking" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Leer un enlace de seguimiento de pago
+
+_Aplica a: Web; página de seguimiento compartida_
+
+Una confirmación de pago internacional puede incluir un enlace de seguimiento. Su página describe el progreso del pago y proporciona una forma para que el destinatario lo siga.
+
+1. Abre el enlace de seguimiento proporcionado con la confirmación del pago.
+2. Verifica los datos del remitente y del pago mostrados antes de confiar en el estado.
+3. Si el estado es Programado, lee la fecha de envío planificada y cualquier explicación en la página.
+4. Si el estado es En tránsito, lee la etapa actual, como un paso de banco intermediario, y la estimación de llegada específica del pago.
+5. Si el estado es Entregado, lee la explicación de entrega y verifica la cuenta del destinatario para el crédito real.
+6. Si el enlace ha expirado, pídele al remitente una confirmación actualizada. Usa la ruta de remitente o soporte de Buburuza mostrada en la página para preguntas.
+
+**Solución de problemas y distinciones importantes**
+
+- Un pago programado no necesariamente se ha enviado aún.
+- Un enlace de seguimiento y un enlace de solicitud de pago sirven para propósitos diferentes: uno reporta un pago saliente, mientras que el otro pide a alguien que pague.
+- Si el enlace de seguimiento ha expirado o ya no abre, pídele al remitente información de seguimiento actual.
+
+<a id="mobile-ach-bank-details" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Enviar un pago ACH desde el formulario móvil de datos bancarios
+
+_Aplica a: Móvil_
+
+El formulario móvil de ACH recopila el banco receptor y la dirección, luego te permite financiar el pago en dólares desde una cuenta fiduciaria ofrecida o un activo de cripto. El destinatario recibe la cantidad en dólares mostrada en la revisión.
+
+1. Abre Pagos y elige ACH. En Enviando desde, selecciona la cuenta fiduciaria o el activo de monedero que pretendes usar. Seleccionar varios abre la selección de múltiples cuentas separada.
+2. Ingresa o pega el número de ruta, inspecciona el banco coincidente, luego selecciónalo. Confirma que coincide con las instrucciones ACH del destinatario.
+3. Abre Tipo de cuenta, selecciona Personal o Empresa, luego Corriente o Ahorros. Ingresa o pega el número de cuenta.
+4. Abre Dirección del destinatario. Ingresa la dirección de calle, ciudad, estado y código ZIP. Si una sugerencia de dirección completa estos campos, verifica cada campo antes de elegir Hecho.
+5. Cuando los campos de banco y dirección estén completos, elige Continuar. Verifica la cuenta o activo de financiación y su saldo disponible.
+6. Ingresa una cantidad o usa un porcentaje ofrecido o el control Máximo. ACH se presenta en USD; cuando financias desde otra moneda o cripto, revisa la cantidad origen, el equivalente y El destinatario recibe. Usa el control de cambio de unidad si quieres ingresar la otra unidad mostrada.
+7. En Revisar, verifica Desde, número de ruta, banco, tipo de cuenta, número de cuenta, dirección del destinatario, cantidad origen y El destinatario recibe.
+8. Verifica Pagar comisión con y la opción de tiempo/comisión ofrecida, luego usa el deslizador de Enviar cuando los datos coincidan con tu pago pretendido.
+9. Verifica el registro de resultado. Usa Verificar datos o Rastrear para la transferencia existente; Recibo y Adjuntar son acciones de registro separadas. Una Nota interna se describe como privada para ti.
+
+**Solución de problemas y distinciones importantes**
+
+- Continuar no está disponible mientras los campos de banco/dirección requeridos o la cantidad estén incompletos.
+- Fondos insuficientes aparece en rojo cuando la cantidad ingresada excede el saldo seleccionado. Reduce la cantidad o revisa las fuentes de financiación disponibles antes de continuar.
+- Una coincidencia de banco identifica el banco; no confirma que el número de cuenta pertenezca al destinatario pretendido.
+- Lee el tiempo y comisión ofrecidos actuales antes de enviar. Una pantalla de resultado no es prueba de que el banco receptor haya publicado el dinero.
+
+<a id="mobile-wire-bank-details" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Enviar una transferencia desde el formulario móvil de datos bancarios
+
+_Aplica a: Móvil_
+
+El flujo móvil de Transferencia separa la fuente de fondos, los datos bancarios de destino y la moneda de envío. Verifica los tres antes de autorizar el pago.
+
+1. Abre Pagos y elige Transferencia. Elige una fuente en Enviando desde, o Seleccionar varios para la ruta de múltiples cuentas.
+2. Ingresa o pega el número de ruta y verifica la coincidencia de banco contra las instrucciones de transferencia del destinatario.
+3. Elige Tipo de cuenta usando Personal o Empresa y Corriente o Ahorros. Ingresa el número de cuenta y la dirección del destinatario, luego continúa cuando los datos requeridos estén completos.
+4. En la pantalla de cantidad, verifica la cuenta o activo origen. Abre el control de moneda para inspeccionar Moneda de envío, luego selecciona la moneda disponible que pretendes enviar.
+5. Ingresa una cantidad o usa Máximo. Si la fuente usa una moneda diferente o es un activo de cripto, compara la cantidad de débito, el equivalente y El destinatario recibe. El control circular cambia la unidad de entrada de cantidad.
+6. En Revisar, verifica Desde, número de ruta, banco, tipo de cuenta, número de cuenta, dirección, cantidad origen y El destinatario recibe.
+7. Lee Pagar comisión con, Comisión y Llega en. Usa el deslizador de Enviar después de verificar el pago completo.
+8. Abre las acciones Verificar datos o Rastrear del resultado para inspeccionar la transferencia. Usa Recibo, Adjuntar o la Nota interna privada para tus registros.
+
+**Solución de problemas y distinciones importantes**
+
+- Si se muestra Fondos insuficientes, reduce la cantidad o cambia la financiación seleccionada antes de revisar el pago nuevamente.
+- La lista de monedas de envío es separada de la moneda de la cuenta origen. Confirma El destinatario recibe después de cambiar cualquiera.
+- Confirma las instrucciones de transferencia con el destinatario si los datos bancarios no coinciden; no infieras que los datos ACH y de transferencia son intercambiables.
+
+<a id="mobile-international-wire-details" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Completar el formulario móvil de transferencia internacional
+
+_Aplica a: Móvil_
+
+La transferencia internacional solicita datos bancarios específicos de destino, la dirección del destinatario y el propósito del pago antes de que revises la moneda, los cargos y la cantidad.
+
+1. Abre Pagos y elige Inter-transferencia o Transferencia internacional. Selecciona la cuenta o monedero de financiación en Enviando desde.
+2. Ingresa o pega el código SWIFT e inspecciona el banco coincidente. Completa los campos de cuenta presentados para ese banco. El formulario puede pedir IBAN, o Número de cuenta y un identificador bancario local como IFSC.
+3. Elige Agregar dirección del destinatario. Completa Dirección legal, País, Ciudad, Estado/Provincia/Región y Código postal/ZIP. Apartamento/Suite/Piso es opcional. Verifica cualquier sugerencia de dirección antes de seleccionar Agregar dirección.
+4. Agrega Número de teléfono del destinatario si es necesario, usando el código de marcado de país correcto. Este campo es opcional en el formulario.
+5. Elige quién recibirá los fondos, luego describe para qué es el pago. La lista incluye Empleado, Contratista, Proveedor, Arrendador, Transferencia a subsidiaria y Otro. Si aplica un Código de propósito, busca su descripción y selecciona el código ofrecido apropiado.
+6. Completa el memo opcional, documentos de soporte, correo de recibo y nota interna según sea necesario, luego Continuar. Revisa el compartir de adjuntos separadamente de almacenar un adjunto.
+7. Elige la moneda de envío e ingresa la cantidad. Verifica la moneda o activo origen, el equivalente, y El destinatario recibe. Usa el control de unidad para cambiar la unidad de entrada cuando se ofrezca.
+8. Revisa el banco y dirección de destino, relación/propósito del pago, memo, archivos, destinatarios de correo, nota interna y fuente de financiación.
+9. Compara Enviar como SHA y Enviar como OUR usando la explicación mostrada. Revisa Pagar comisión con, la comisión, el débito del remitente y la cantidad del destinatario antes de usar el deslizador de Enviar.
+10. Verifica el resultado y abre Verificar datos o Rastrear para la transferencia existente. Conserva la referencia de pago cuando solicites ayuda.
+
+**Solución de problemas y distinciones importantes**
+
+- Los campos bancarios pueden cambiar después de seleccionar el banco SWIFT. Completa los campos mostrados para ese destino en lugar de forzar un IBAN en un campo de número de cuenta.
+- Un código de propósito opcional puede dejarse vacío cuando la relación y descripción requeridas estén completas. Si ingresas un código, verifica que describa con precisión este pago.
+- Revisa las monedas y cantidades después de cambiar la fuente, la moneda de envío o la unidad de entrada.
+- Si un identificador bancario, cantidad o explicación de cargo no está claro, resuélvelo antes de autorizar el pago.
+
+<a id="mobile-wire-memo-and-documents" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Agregar notas, documentos y destinatarios de recibo a una transferencia internacional
+
+_Aplica a: Móvil_
+
+Un memo de pago, un documento de soporte, un recibo por correo electrónico y una nota interna tienen diferentes audiencias. Verifica cada campo antes de enviar la transferencia internacional.
+
+1. En el paso de información opcional, ingresa Memo solo para texto que pretendes que el destinatario vea con el pago.
+2. Elige Cargar bajo Adjuntos. Selecciona un método ofrecido: Escanear con cámara, Cargar desde biblioteca de fotos, Elegir de archivos, Reenviar por correo electrónico o Ingresar manualmente.
+3. Verifica la fila del archivo adjunto. Su menú desbordante ofrece Ver y Eliminar; inspecciona el archivo antes de continuar.
+4. Bajo Enviar recibo a, elige Agregar destinatario, ingresa la dirección de correo electrónico y elige Agregar destinatario en la hoja. Usa X para eliminar una dirección no pretendida.
+5. Selecciona Enviar los archivos adjuntos al destinatario por correo electrónico solo cuando esos archivos deban incluirse. Almacenar un archivo en el pago y compartirlo por correo electrónico son elecciones separadas.
+6. Usa Nota interna para información que la aplicación describe como interna. Continúa a Revisar y verifica memo, adjuntos, destinatarios de recibo y la selección de compartir en conjunto.
+7. Después del envío, inspecciona el registro de pago existente. La nota interna se conserva en el resultado mostrado.
+
+**Solución de problemas y distinciones importantes**
+
+- Agregar un correo de recibo no por sí solo confirma que el recibo o documentos fueron entregados.
+- Una fila de adjunto no prueba que su contenido fue leído, validado o compartido.
+- Sigue los requisitos de tipo de archivo y tamaño mostrados por el paso de carga. Verifica el nombre del archivo adjunto antes de continuar.
+
+<a id="international-wire-charge-options" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Comparar opciones de cobro de transferencia internacional
+
+_Aplica a: Móvil_
+
+La revisión de transferencia internacional ofrece diferentes formas de manejar los cargos de transferencia. Compara la explicación, comisión y cantidad mostradas antes de seleccionar una opción.
+
+1. Abre la Revisar de transferencia internacional y localiza Enviar como SHA y Enviar como OUR, o el control de cobertura de comisiones mostrado en tu flujo.
+2. Lee SHA — Cargos compartidos. Explica que pagas la comisión de la aplicación mientras que bancos intermediarios o del destinatario pueden deducir sus comisiones de la cantidad transferida.
+3. Lee OUR — El remitente paga todo. Describe cubrir los cargos de transferencia para que se preserve la cantidad pretendida del destinatario. Verifica los términos y cualquier condición específica de ruta presentada para tu transferencia actual.
+4. Compara Pagar comisión con, Comisión, Tú envías o El destinatario recibe, y la cantidad final en el control de envío después de cambiar la selección.
+5. Autoriza solo cuando la opción de cobro seleccionada y el débito mostrado coincidan con tu intención, luego conserva la referencia de transacción.
+
+**Solución de problemas y distinciones importantes**
+
+- Cambiar una opción de cobro puede cambiar la comisión y el total. Revísalos nuevamente antes de enviar.
+- No uses una comisión o tipo de cambio de ejemplo de otro pago para calcular el débito actual.
+- Si la explicación de comisión o cantidad del destinatario no coincide con las cifras mostradas, resuelve la discrepancia antes de autorizar.
+
+<a id="desktop-expanded-payment-review" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Revisar financiación y cargos en la web
+
+_Aplica a: Web_
+
+Los formularios de pago web descritos aquí pueden financiar transferencias bancarias o de cripto desde saldos fiduciarios o de cripto seleccionados. Mantén distintas la fuente de financiación, la cantidad saliente y la fuente de comisión.
+
+1. Elige la vía de pago, luego usa Enviando desde para elegir la cuenta o monedero que la financia. Donde se ofrece Seleccionar varios, selecciona fuentes y revisa su orden antes de Continuar con múltiples cuentas.
+2. Para ACH, completa número de ruta, banco detectado, tipo de cuenta, número de cuenta y dirección del destinatario. La pantalla de cantidad describe enviar USD y convertir un saldo de financiación no-USD cuando sea necesario.
+3. Para Transferencia internacional, completa SWIFT y los campos de cuenta específicos del banco, dirección del destinatario y teléfono opcional. Revisa relación, descripción del pago y cualquier código de propósito aplicable.
+4. Mantén separado el Memo visible para el destinatario de la Nota interna. Si envías un recibo por correo, revisa sus destinatarios y la casilla separada Enviar los archivos adjuntos al destinatario por correo electrónico.
+5. Ingresa la cantidad, usando Máximo o el cambio de unidad si es necesario. Compara el débito origen con la moneda de destino o cantidad de token.
+6. En la revisión bancaria, inspecciona Pagar comisión con, tiempo, datos completos del destinatario y total. Para Transferencia internacional, revisa Enviar como SHA o Enviar como OUR y la asignación de cargos mostrada.
+7. Elige Confirmar y enviar solo después de que la revisión del pago bancario sea correcta. Para cripto, verifica el token/red saliente, dirección y opción de comisión/velocidad antes de elegir Enviar en la revisión.
+8. Verifica el resultado del pago existente y usa Recibo, Rastrear, Verificar datos, Adjuntar o Copiar enlace para el registro.
+
+**Solución de problemas y distinciones importantes**
+
+- Si aparece Fondos insuficientes y Continuar está deshabilitado, ajusta la financiación o cantidad antes de continuar.
+- Lee los términos SHA/OUR, comisiones y tiempos cotizados para esta transferencia antes de enviar.
+- Las notas visibles para el equipo en una vista empresarial difieren del texto de nota solo personal en otros diseños. Lee el ayudante de visibilidad donde ingresas la nota.
+- Revisa el resumen completo del pago incluso cuando los datos hayan sido prellenados o reutilizados de un paso anterior.
+
+## ¿Necesitas ayuda?
+
+Si necesitas ayuda con tu cuenta o una tarea, [contacta a soporte](/support) o navega por el [Centro de ayuda de Buburuza](https://help.buburuza.com/hc/en-us).
+
+Artículos de soporte relacionados:
+
+- [Cómo enviar dinero o retirar fondos](https://help.buburuza.com/hc/en-us/articles/51472974818835)
+- [¿Qué pasa si mi retiro falla o permanece pendiente?](https://help.buburuza.com/hc/en-us/articles/51473015552275)

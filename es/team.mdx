@@ -1,0 +1,56 @@
+---
+title: "Equipos y Espacios"
+description: "Cómo funcionan los espacios de empresa y personales, cómo invitar a personas y qué puede hacer cada rol."
+---
+
+## Espacios
+
+Un **espacio** posee una cuenta de pago, sus billeteras, sus destinatarios y las personas autorizadas para actuar sobre ella. Una persona puede pertenecer a varios espacios de empresa y poseer un espacio personal, y moverse entre ellos sin cerrar sesión.
+
+|  | Espacio de empresa | Espacio personal |
+| --- | --- | --- |
+| Pertenece a | Una empresa registrada | Un individuo |
+| Verificado por | KYB — empresa y personas asociadas | KYC — el individuo |
+| Puede tener miembros | Sí | No — es solo tuyo |
+
+Cambiar de espacio cambia a qué se refiere cada pantalla. Siempre actúas en el espacio en el que te encuentras.
+
+Abrir un espacio personal es una acción única, y es idempotente: si ya posees uno, se te da el que tienes en lugar de un segundo. Abrirlo no te mueve a él — cambias cuando eliges hacerlo.
+
+## Miembros y roles
+
+Un espacio de empresa tiene miembros, cada uno con un rol.
+
+| Rol | Qué puede hacer |
+| --- | --- |
+| `OWNER` | Todo, incluyendo gestionar miembros y el perfil de la empresa |
+| `ADMIN` | Operación diaria del espacio, incluyendo movimiento de dinero |
+| `VIEWER` | Solo lectura — puede ver la cuenta, saldos e historial, y no mover nada |
+
+Un miembro está ya sea `ACTIVE` o `REMOVED`. Eliminar a alguien termina su acceso al espacio; no afecta su cuenta de Buburuza ni los otros espacios a los que pertenece.
+
+## Invitaciones
+
+Traer a alguien es un flujo de dos lados, por lo que nadie se añade a un espacio sin actuar por sí mismo.
+
+<Steps>
+  <Step title="Invitar">
+    Un propietario invita a una persona por correo electrónico y elige el rol que tendrá.
+  </Step>
+  <Step title="Aceptar">
+    La persona invitada inicia sesión — o se registra, si es nueva — y acepta. Luego aparece como miembro.
+  </Step>
+  <Step title="Revocar, si es necesario">
+    Una invitación no aceptada puede revocarse en cualquier momento. Un miembro que ya se unió se elimina en su lugar.
+  </Step>
+</Steps>
+
+Alguien que ya no quiere acceso también puede abandonar un espacio por sí mismo.
+
+## Código de referido
+
+Cada espacio tiene un código de referido que puedes compartir. Está disponible desde tu perfil.
+
+## Gestión de todo esto
+
+Los espacios, invitaciones y miembros se gestionan desde el panel de control.

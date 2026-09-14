@@ -1,0 +1,79 @@
+---
+title: "Cumplimiento y Seguridad"
+description: "Cómo funciona la verificación, qué se monitorea, qué obligaciones aplican dónde y qué no te dirá la plataforma."
+---
+
+## Verificación
+
+Ningún espacio puede mantener ni mover dinero antes de ser verificado. La verificación es realizada por **Sumsub**, un proveedor de identidad licenciado, en un flujo alojado — la evidencia va al proveedor, no a través de las pantallas propias de Buburuza.
+
+| Espacio | Qué se verifica |
+| --- | --- |
+| Empresa | La empresa misma, más sus personas asociadas — directores, controladores y beneficiarios finales |
+| Personal | El individuo que posee el espacio |
+
+El conjunto de documentos solicitados depende del país: registro de empresa para un espacio de empresa, país de residencia declarado para uno personal. Ambos se atienden solo para **Estados Unidos** y **Canadá**.
+
+Las empresas se verifican en un **nivel**. Un nivel más ligero puede ser suficiente para recibir fondos mientras el movimiento saliente permanece cerrado; un nivel completo abre el resto. El nivel lo establece el resultado de la verificación, no se elige.
+
+<Note>
+  Una decisión de verificación llega de forma asíncrona del revisor. No hay una ruta de aprobación automática, ni forma de acortar una desde dentro del producto.
+</Note>
+
+## Monitoreo
+
+El movimiento de dinero se examina continuamente, sin que se requiera nada de ti:
+
+| Control | Qué hace |
+| --- | --- |
+| **Monitoreo de transacciones** | Examina pagos y contrapartes contra listas de sanciones y vigilancia |
+| **Puntuación de riesgo** | Mantiene un nivel de riesgo para cada cliente verificado, contra el cual el camino de pago cotiza |
+| **Regla de Viaje** | Comparte información del originador y beneficiario en transferencias por encima del umbral aplicable, donde la regulación lo requiere |
+
+## Obligaciones de reporte
+
+Quién reporta, y a quién, depende del corredor — y no siempre es Buburuza.
+
+| Jurisdicción | Quién reporta | Parte de Buburuza |
+| --- | --- | --- |
+| **Canadá** | Buburuza, una vez emitido su registro de FINTRAC | Monitoreo, puntuación de riesgo y los reportes mismos |
+| **Estados Unidos** | El socio licenciado, como transmisor de dinero oficial, presentando a su propio nombre | Solo monitoreo y puntuación de riesgo |
+
+<Warning>
+  El registro de Buburuza como Negocio de Servicios Monetarios de FINTRAC ha sido solicitado y no ha sido emitido. Hasta que lo sea, Buburuza no presenta nada en Canadá. Consulta [Legal y regulatorio](/legal).
+</Warning>
+
+Las decisiones de reporte son tomadas por personal de cumplimiento calificado. Los sistemas automatizados detectan patrones y ensamblan evidencia; no determinan sospecha ni presentan reportes. Buburuza no revela si se ha presentado un reporte sobre ningún cliente o pago en particular, y ningún agente puede decírtelo.
+
+## Seguridad de la cuenta
+
+| Control | Cómo funciona |
+| --- | --- |
+| Passkeys | Credenciales WebAuthn, vinculadas al sitio y resistentes a phishing y reproducción |
+| TOTP | Inscrito como credencial de respaldo, o activado como paso adicional |
+| Códigos de recuperación | De un solo uso, emitidos una vez al registrarse |
+| Sesiones | Listadas y revocables individualmente o todas a la vez; los tokens de acceso son de corta duración |
+| Confirmación adicional | Las acciones sensibles reconfirman tu identidad incluso dentro de una sesión activa |
+| Control de verificación | El movimiento de dinero permanece cerrado hasta que la verificación se aprueba |
+
+## Qué no expone la plataforma
+
+Algunas cosas están deliberadamente ausentes de cada respuesta, y su ausencia es una característica:
+
+- Cargas útiles crudas del proveedor e internos de verificación
+- Identificadores del proveedor y registros internos de examen
+- Cualquier indicación de si existe un reporte regulatorio
+
+Los datos están limitados al espacio en el que estás actuando, y cada solicitud está autorizada contra él.
+
+## Relacionado
+
+<CardGroup cols={2}>
+  <Card title="Legal y regulatorio" icon="scale-balanced" href="/legal">
+    Permisos, qué no se ofrece y datos personales.
+  </Card>
+
+  <Card title="Incorporación y seguridad" icon="user-check" href="/onboarding-and-security">
+    El mismo tema desde la perspectiva del titular de la cuenta.
+  </Card>
+</CardGroup>
