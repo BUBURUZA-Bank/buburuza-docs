@@ -1,0 +1,548 @@
+---
+title: "Review cards, limits, and approvals"
+description: "Card controls, account limits and trusted-person approvals have different scopes. Check which control is affecting the payment and review the resulting state after any change."
+sidebarTitle: "Cards, limits and approvals"
+---
+
+Card controls, account limits and trusted-person approvals have different scopes. Check which control is affecting the payment and review the resulting state after any change.
+
+## In this guide
+
+- [View a card and its linked account](#card-details)
+- [Freeze or unfreeze a card](#freeze-card)
+- [Set or change a card’s monthly spending limit](#card-limit)
+- [Review account spending limits](#account-limits)
+- [Send a payment that needs a trusted person’s approval](#trusted-approval)
+- [Set permissions when sharing a mobile account](#shared-account)
+- [Give a card a recognizable name](#rename-card)
+- [Create a virtual card](#create-virtual-card)
+- [Choose how to fund a mobile card](#card-funding-mode)
+- [Review mobile card payment controls](#mobile-card-permissions)
+- [Set up and manage trusted-person approval](#set-up-multisig)
+- [Choose a mobile card design and names](#mobile-card-design)
+- [Share a mobile card and set each person’s permissions](#share-card-access)
+- [View or change your card PIN](#card-pin)
+- [Set daily, weekly and monthly card limits](#mobile-card-spending-limits)
+- [Choose the currency for a directly funded card](#mobile-card-currency)
+- [Set an amount trigger and trusted person for Multi-sig](#configure-mobile-multisig)
+- [Manage personal Multi-signature and co-signing settings](#manage-mobile-multisig-roles)
+- [Approve or decline a Multi-signature request](#review-trusted-person-request)
+- [Choose a physical card design and cardholder name](#physical-card-design-and-name)
+- [Use card details, PIN and payment controls on desktop](#desktop-card-details-and-controls)
+- [Set desktop card funding and shared access](#desktop-card-funding-and-access)
+- [Stop a signature approval in the earlier signing layout](#cancel-pending-signing)
+
+## Distinguish the controls that affect spending
+
+| Control | What to inspect |
+| --- | --- |
+| Card status | Whether the selected card is frozen and whether an Unfreeze action is available. |
+| Card spending limit | The card’s monthly cap, amount already spent, amount left, and reset information. The web card screen describes declines once this limit is reached. |
+| Account spending limit | The account-wide cap. The web settings describe holding outgoing payments that exceed the monthly limit. |
+| Available funds | The balance of the actual account or wallet funding the payment. Removing a limit does not add funds. |
+
+On mobile, account-limit setup includes daily, weekly, and monthly periods. The web account limit uses a monthly period and explains that raising it requires passkey confirmation. Always inspect the saved limit and the affected payment separately after making a change.
+
+Card limits and account limits are different controls, so use the label and card/account identity shown in the relevant settings.
+
+## Card funding, permissions and limits answer different questions
+
+A card has several separate controls. **Deposit type** determines whether it holds funds directly or uses connected accounts. For connected accounts, the order indicates the preferred funding sequence. **Currency** on a directly funded card sets the single currency shown for that card.
+
+Payment controls cover online transactions, international payments, contactless payments and cash withdrawal. **Spending limits** set amounts for selected periods. Daily, weekly and monthly limits can appear together, so check all displayed limits and their reset labels when reviewing available spending capacity.
+
+**Shared access** determines what another person can view or change. A person may have a different level of access to PIN, card details, transaction history, limits or card settings. **Multi-sig** is a separate trusted-person approval configuration. Sharing a card does not automatically give the other person every permission, and changing a shared user does not necessarily change the trusted person.
+
+For a card issue, inspect the selected card, its current state, funding mode, connected balances, payment-channel controls and period limits before changing settings. Read the transaction’s own result when investigating a payment.
+
+<a id="card-details" />
+
+## View a card and its linked account
+
+_Applies to: Mobile and web_
+
+Open the card you intend to use before viewing details or changing controls. Mobile and web card pages organize some actions differently.
+
+1. On mobile, open All cards and choose Personal or Shared. Find the card in Virtual cards or Physical cards using its name, masked ending and balance. On the web, select it from the Cards list using its name, cardholder and masked ending.
+2. Check the card name, masked number, balance or linked account, and current state.
+3. On mobile, choose Details to reveal the number, expiry, security code, and billing-address fields. On the web, choose Show details.
+4. Use copy controls only when you need to enter the information into a trusted payment form. Close the mobile panel or use Hide details on the web when finished.
+5. On mobile, the card summary includes Transaction history, Spending limits, Shared access, Multi-sig, and Settings. It also offers Add to Apple Wallet, Top up, Withdraw, and View PIN.
+6. In mobile Settings, inspect Deposit type, Currency, Online transactions, International payments, Contactless card payments, and Cash withdrawal. Open the specific control you intend to use.
+7. On the web, inspect the cardholder, linked account, billing details, spending limit, and Freeze or Unfreeze control.
+
+**Troubleshooting and important distinctions**
+
+- Do not send full card details, security codes, PINs, or screenshots of revealed details to support.
+- A mobile Terminate card action is separate from the web Freeze card control; do not use the terms interchangeably.
+- Use the guide for the card action you intend to take, and read its confirmation before making a change.
+
+<a id="freeze-card" />
+
+## Freeze or unfreeze a card
+
+_Applies to: Mobile and web_
+
+Check the selected card and its freeze state before changing it. A frozen card offers Unfreeze.
+
+1. Open Cards and select the intended card by its masked ending and name.
+2. On the web, choose Freeze card and follow the displayed confirmation. Check the Frozen state.
+3. On mobile, a frozen card has an icy appearance and offers Unfreeze. If using a shared card, your assigned permissions determine whether the freeze control is available.
+4. To restore use when appropriate, open the same card and choose Unfreeze or Unfreeze card.
+5. Check the resulting card state and inspect any affected transaction separately.
+
+**Troubleshooting and important distinctions**
+
+- A freeze control is separate from online, international, contactless, or cash-withdrawal settings.
+- A frozen card is not a terminated card. Neither a freeze nor an unfreeze should be treated as cancelling a previously authorized payment.
+- If card details may be compromised or a payment is unauthorized, use the official support route as well as the available card control.
+
+<a id="card-limit" />
+
+## Set or change a card’s monthly spending limit
+
+_Applies to: Web_
+
+A card limit is separate from the account balance and any account-level limit. The web card page shows spending so far and the monthly limit when one is set.
+
+1. Open Cards, select the card, and inspect Spending limit and the amount already spent this month.
+2. Choose Set limit or Edit to open Edit monthly limit.
+3. Enter the monthly amount and review the already-spent figure before choosing Save.
+4. Check the updated limit and remaining amount on the card. The web screen explains that reaching the card limit causes card declines and the limit resets on the first of the month.
+5. To remove the card limit, choose Remove in the limit dialog and check the Spending limit removed result.
+6. Read No spending limit carefully: the displayed explanation says spending remains bounded by the linked account balance.
+
+**Troubleshooting and important distinctions**
+
+- If a card payment is declined, check the card status, remaining card limit, and linked-account available balance.
+- Removing a card limit does not create additional funds in the linked account.
+
+<a id="account-limits" />
+
+## Review account spending limits
+
+_Applies to: Mobile and web_
+
+Check account-level spending limits when a payment cannot proceed even though the balance appears sufficient. These controls are separate from a limit set on an individual card.
+
+1. Open Settings and the account Spending limit or Spending limits area.
+2. On mobile, choose Add a spending limit, select Daily, Weekly, or Monthly, then choose a preset amount or Custom and enter an amount.
+3. Choose Update on mobile and check the saved period, Spent, and Available figures. Use Edit to change an existing limit.
+4. On the web, read the monthly cap, amount used, amount left, and reset date, then choose Edit.
+5. Enter the new monthly amount and choose Save. The web explanation says raising the limit requires a passkey confirmation and lowering it applies immediately.
+6. Check the saved limit and any held-payment notice. Inspect an affected payment separately after changing the limit.
+
+**Troubleshooting and important distinctions**
+
+- If a payment is held by a limit, do not assume changing the limit automatically releases it.
+- If the limit cannot be changed or the result is unclear, contact support with the message shown.
+
+<a id="trusted-approval" />
+
+## Send a payment that needs a trusted person’s approval
+
+_Applies to: Mobile_
+
+When your payment triggers Multi-signature, request your trusted person’s decision before submitting the payment. Pending, approved and completed are separate states.
+
+1. Prepare the transfer: check the recipient, selected funding accounts and amount. Continue when the amount is valid.
+2. On Review, inspect From, To, Amount, Pay fee with and Arrives in. If the Multi-signature notice appears, check the named trusted person.
+3. Choose Send request. The trusted-person row changes to Sent while you wait.
+4. Use Continue without waiting if you want to leave the waiting review. The payment remains Transaction pending; read the approval deadline shown for that transaction.
+5. Use Send in chat from Pending if you need to contact the trusted person. Inspect the existing request for the decision.
+6. After approval, check Transaction is verified by your trusted person on Review. Review the full payment again, then use the Send slider.
+7. Check the final payment result. Use Receipt, Track or Copy link for its record. If Transaction declined appears, read the reason and contact the trusted person when appropriate.
+
+**Troubleshooting and important distinctions**
+
+- Continue without waiting does not bypass approval or prove that money was sent.
+- Approval allows the sender to process the transfer; the sender still has a final Send action in this flow.
+- If the transaction remains pending, follow its displayed deadline. Do not assume a fixed deadline from another payment.
+- Send more starts another payment; it is not a retry or approval action for the pending one.
+
+<a id="shared-account" />
+
+## Set permissions when sharing a mobile account
+
+_Applies to: Mobile_
+
+Account sharing gives another person selected permissions. Review the person and each permission before creating or sending an invitation.
+
+1. Open the intended account and choose Shared access. Read Share access to this account and choose Share to continue.
+2. In Select a person, search by name or phone and choose the intended person. Share via link provides a separate invitation-link route.
+3. On Set the limits, inspect the selected person and Fast access controls such as Grant access and View only.
+4. Review Custom settings individually: Account edit, PIN, Transaction history, Spending limits, Shared access, Multi-sig and Settings. Check the value shown for each permission.
+5. Check Can see account details and Can terminate account separately because they grant different powers.
+6. Choose Set up to apply the intended permission configuration, or Cancel to leave it.
+7. For the link route, use Copy link from Share this account and share it only with the intended person. Check the account’s resulting access state when the invite is accepted.
+
+**Troubleshooting and important distinctions**
+
+- An invitation link is not the same as receiving-bank details.
+- View only and permission to send/manage are different. Do not assume all listed controls share the same access level.
+- Creating an invitation does not prove that the other person accepted it or completed verification.
+
+<a id="rename-card" />
+
+## Give a card a recognizable name
+
+_Applies to: Web_
+
+A card name helps distinguish cards in the list and on transactions.
+
+1. Open Cards and select the card using its masked ending and cardholder.
+2. Open the Name this card control.
+3. Enter the desired name within the displayed character limit.
+4. Save the change.
+5. Check Card name saved and confirm the new name in the card list.
+
+**Troubleshooting and important distinctions**
+
+- Renaming a card does not change its cardholder, linked account, number, or spending limit.
+- If several cards look similar, use the masked ending to identify the intended card before editing.
+
+<a id="create-virtual-card" />
+
+## Create a virtual card
+
+_Applies to: Mobile_
+
+The mobile new-card journey separates card creation from funding. A newly created card can still have no available balance.
+
+1. Open the New card journey and, at Choose card type, choose Virtual.
+2. Review the virtual-card introduction and continue using its card-creation action.
+3. If the Buburuza Pro introduction appears, review Get a Pro account or choose Skip to continue without taking that optional branch.
+4. Wait while the card-creation processing screen is shown.
+5. At Deposit type, choose Keep direct deposit or Connect to account according to how you want to fund the card.
+6. Read Your card has been created! Choose Top up balance to continue to funding, or Skip to return without topping up.
+7. On the card summary, check the balance, deposit type, and available card controls before using the card.
+
+**Troubleshooting and important distinctions**
+
+- A created card is not automatically funded. The zero-balance summary has an empty transaction history.
+- The selector also shows Physical marked Pro and Link it here for an existing card. Those are separate routes, not extra virtual-card steps.
+- Read the current card terms for fees and any cashback offer before creating the card.
+
+<a id="card-funding-mode" />
+
+## Choose how to fund a mobile card
+
+_Applies to: Mobile_
+
+Deposit type distinguishes keeping funds directly on a card from connecting the card to an account. Check the selected funding mode before topping up or spending.
+
+1. Open Deposit type during card creation, or open the existing card’s Settings and Deposit type.
+2. Choose Keep direct deposit for direct funding, or Connect to account to choose linked accounts.
+3. Use Search and the Fiat list or expandable Crypto wallet groups to find the funding account. For one source, select it and review the Connected accounts sheet, then choose Continue.
+4. To link several sources, choose Select many and check the intended accounts. Their numbered positions show the selected order. Choose Done when the selection is complete.
+5. Use the drag handles to reorder selected accounts. Swipe a selected row aside and use X to remove it from the selection.
+6. Choose Continue with multiple accounts. Check the ordered list in Connected accounts, then choose Continue.
+7. For a card already connected to accounts, open Connected accounts and choose Edit. Use Connect other accounts to add sources, reorder using the handles, and choose Set up.
+8. Check the changed-deposit or connected-accounts confirmation and the card’s resulting Connected accounts section.
+9. To return to direct funding, choose Switch to direct deposit and check the confirmation. Top up and Withdraw start separate funding journeys.
+
+**Troubleshooting and important distinctions**
+
+- Continue with multiple accounts is disabled when no account is selected.
+- The card can display a zero card balance while showing a separate connected-account balance. Check both the funding mode and linked balances.
+- Check the connected-account order and available balances. Review applicable conversion and fee information before relying on a later account to fund spending.
+- A single connected account provides one funding balance. Add another account if you want another funding option, then review the saved order.
+
+<a id="mobile-card-permissions" />
+
+## Review mobile card payment controls
+
+_Applies to: Mobile_
+
+The mobile card Settings area separates payment-channel controls from funding, limits, shared access, and multi-signature approval.
+
+1. Open Cards, use All cards to select the intended card, and check its masked ending.
+2. Scroll to Settings.
+3. Review Online transactions, International payments, Contactless card payments, and Cash withdrawal as separate controls.
+4. Change only the intended payment-channel control and complete any confirmation displayed.
+5. Return to the same card and check the displayed control state. If a payment is affected, inspect its own transaction result.
+
+**Troubleshooting and important distinctions**
+
+- A payment-channel setting is not the same as terminating a card or freezing it.
+- Check the funding balance, spending limit, shared access, and multi-signature settings separately when investigating a payment.
+- The Behave as credit card information modal describes a card-behavior setting; it does not establish a credit line or borrowing facility.
+
+<a id="set-up-multisig" />
+
+## Set up and manage trusted-person approval
+
+_Applies to: Mobile_
+
+Multi-signature settings let you configure an amount and a trusted person who can approve or deny transactions. The setup screen describes the control across fiat accounts, crypto accounts, and cards.
+
+1. Open Multi-sig from the relevant mobile card or account controls.
+2. In Multi-signature settings, choose Set up amount, enter the amount on the keypad, and choose Next.
+3. Choose Add trusted person. On Select a person, search by name or phone, choose the intended person, then choose Next.
+4. Review the amount, currency, and trusted person. Use Change if the person is wrong, then choose Set up.
+5. Check the card-home confirmation that multi-signature is enabled.
+6. In the configured settings, inspect the enabled toggle, Amount and currency, and Trusted person.
+7. Use Change for the trusted person or Edit for the setup when you need to amend it. Review the resulting values.
+8. Use the enabled toggle to change whether the configuration is active, or Delete multi-signature to begin removing it. Read any subsequent confirmation before completing the change.
+
+**Troubleshooting and important distinctions**
+
+- Setting a trusted person does not mean a particular pending payment has been approved; inspect that payment separately.
+- A configured, enabled, disabled, edited, or deleted setup is a different state from an individual approval request.
+- Choose the approval amount deliberately and read any deadline shown for a particular signature request.
+
+<a id="mobile-card-design" />
+
+## Choose a mobile card design and names
+
+_Applies to: Mobile_
+
+The mobile card editor separates the card’s visual design, the name on the card, and the short name used inside the app.
+
+1. Open the card and choose the edit pencil to open Edit card.
+2. Choose Design to open the design carousel. Browse the available styles and choose Choose for the one you want. Use Skip for now if you want to leave this step when that option is offered.
+3. If a design is locked to Buburuza Pro, review the Get Pro Account option or choose Skip for now.
+4. Choose Name on card and enter the name as it appears on your ID. Use Set in the editing flow; the creation flow uses Next.
+5. Choose Short name and enter the label you want to see inside Buburuza, then choose Set.
+6. Return to the card summary and check the visual design and the appropriate name.
+
+**Troubleshooting and important distinctions**
+
+- The name on the card and the short name inside the app are different fields.
+- A blank short name leaves Set disabled in the shown editing state.
+- Choosing a visual design does not establish extra product features. Do not infer benefits from a card’s color or artwork.
+
+<a id="share-card-access" />
+
+## Share a mobile card and set each person’s permissions
+
+_Applies to: Mobile_
+
+Shared access lets you choose people and configure their rights to the card. A shared card does not imply that every person receives unrestricted control or joint ownership.
+
+1. Open the card’s sharing entry. Share this card offers an invitation link with Copy link or Choose a contact. In an existing Shared access list, use Add new user.
+2. In Select a person, search by name or phone, select the intended people, and choose Share access.
+3. Open the person’s settings and review Card edit, PIN, Transaction history, Spending limits, Shared access, Multi-sig, and Settings separately.
+4. Choose the permission level for each item. Options can include View only, Full access and All users; read the choices available for that permission.
+5. Review the separate toggles for seeing card details, using the credit-card behavior setting, freezing, reissuing, and terminating the card.
+6. Choose Grant access and check the Access is shared banner and the user list on the card.
+7. To change a person later, open their menu and choose Edit. To remove their access, use Delete or Detach user when that is the action shown, and review any confirmation before completing the change.
+8. Use Switch off shared access when you intend to disable card sharing as a whole, and review the displayed result.
+
+**Troubleshooting and important distinctions**
+
+- Check every permission; permission to view a transaction history is not permission to reveal card details or terminate a card.
+- Changing a shared-access user is separate from changing the trusted person for multi-signature.
+- After changing access, check the saved permissions. Review transaction status and active sessions separately.
+- Share access is disabled while no contact is selected. Copying an invitation link is separate from the per-person permission configuration and Grant access result.
+
+<a id="card-pin" />
+
+## View or change your card PIN
+
+_Applies to: Mobile_
+
+Your four-digit card PIN is separate from the six-digit app passcode used to unlock the PIN view.
+
+1. Open the intended card and choose View PIN.
+2. When Enter your app passcode appears, enter your six-digit app passcode.
+3. On Your card PIN, read the four-digit PIN or use Copy PIN when you need it in a trusted setting.
+4. To change it, choose Create new PIN.
+5. On Create PIN, enter the new four-digit card PIN. On Repeat new PIN, enter the same PIN again.
+6. Check the New PIN is set confirmation on the card.
+
+**Troubleshooting and important distinctions**
+
+- Do not enter the four-digit card PIN when the screen asks for your six-digit app passcode.
+- Never send your PIN or app passcode to support, another card user, or a merchant.
+- Follow any PIN mismatch or failed-attempt message shown in your app. If you cannot complete the change, contact support; do not assume attempts are unlimited.
+
+<a id="mobile-card-spending-limits" />
+
+## Set daily, weekly and monthly card limits
+
+_Applies to: Mobile_
+
+You can review several period limits on the same mobile card. Each displayed limit shows current spending against its amount and a reset label.
+
+1. Open the card and find Spending limits.
+2. Use the add control to open Set a spending limit.
+3. Choose Monthly, Weekly or Daily, enter the amount, then choose Set.
+4. Check Spending limit is set and the new period limit on the card.
+5. To change an existing limit, open its ellipsis menu, choose Edit, update the period or amount shown, and choose Save changes.
+6. To remove a limit, use Delete from that limit’s ellipsis menu. Review the resulting list before leaving.
+
+**Troubleshooting and important distinctions**
+
+- A daily limit, weekly limit and monthly limit can appear together; inspect all of them when checking spending capacity.
+- Read the reset label displayed for each limit, including any stated timezone.
+- No delete-confirmation dialog is shown in this sequence. Do not invent one or promise that removing a limit changes a prior transaction.
+
+<a id="mobile-card-currency" />
+
+## Choose the currency for a directly funded card
+
+_Applies to: Mobile_
+
+The direct-deposit card currency selector allows one currency per card.
+
+1. Open the directly funded card, then Settings and Currency.
+2. On Select currency for your card, use Search to find the intended currency.
+3. Select one currency and choose Set up.
+4. Return to the card and check the selected currency before starting a top-up or payment.
+
+**Troubleshooting and important distinctions**
+
+- This selector is explicitly labelled for Direct Deposit Type only. A linked-account card has a different funding configuration.
+- Choosing a currency does not by itself establish that an existing balance was converted.
+- Choose a currency offered in the card’s current selector.
+
+<a id="configure-mobile-multisig" />
+
+## Set an amount trigger and trusted person for Multi-sig
+
+_Applies to: Mobile_
+
+Multi-sig pairs an amount trigger with a trusted person who can approve or deny a transaction. It is separate from a spending limit or general shared access.
+
+1. Open Multi-signature settings for the intended account and choose Set up.
+2. In the Amount step, enter the trigger amount and choose Next.
+3. In Trusted person, search by name or phone, select the person and choose Next when enabled.
+4. Review the amount and trusted person together. Use Change if the selected person is incorrect, then choose Set up.
+5. Check the Multi-sig enabled! confirmation on the account.
+6. Return to Multi-signature settings to inspect the enabled state, amount and trusted person. Use Edit for changes; Delete multi-signature is a separate management entry.
+
+**Troubleshooting and important distinctions**
+
+- Next is unavailable before a trusted person is selected.
+- Enabling the setting does not itself approve a payment. A triggered transaction has its own approval state.
+- Check the account and trusted person again before changing a threshold.
+
+<a id="manage-mobile-multisig-roles" />
+
+## Manage personal Multi-signature and co-signing settings
+
+_Applies to: Mobile_
+
+Personal Multi-signature defines your amount trigger and trusted person. Co-signing shows who has selected you as a trusted person.
+
+1. Open Profile, then Privacy & security and Multi-signature. Enter your app passcode when requested.
+2. On Personal, check whether Multi-sig is enabled, the Amount and currency, and the Trusted person.
+3. Use Change beside the trusted person or Edit to begin changing the setup. Review the resulting values before accepting any change.
+4. Open Co-signing to review the listed co-signees and amounts.
+5. Review Accept multi-sig co-sign if you want to control whether other users can select you as a co-signer.
+6. Delete multi-signature is a separate entry. Read its actual confirmation before proceeding.
+
+**Troubleshooting and important distinctions**
+
+- The co-signing list is not an approval request for an individual payment.
+- A disabled personal setup and declining to be selected as someone else’s co-signer are different controls.
+- Do not assume a settings change cancels or approves an existing pending transaction.
+
+<a id="review-trusted-person-request" />
+
+## Approve or decline a Multi-signature request
+
+_Applies to: Mobile_
+
+If another user selected you as their trusted person, review the requested transfer and make a separate approval decision.
+
+1. Open the Transfer request and check the sender, From, To and Amount.
+2. To approve, choose Review and sign. Enter your six-digit app passcode when requested.
+3. On Review, inspect the selected sources, recipient, amount, fee-paying account and arrival information.
+4. Use the Sign slider if you intend to approve. Check Transaction approved, then choose Done.
+5. If you do not approve the request, use Decline on the request. Check Transaction declined and choose Done.
+
+**Troubleshooting and important distinctions**
+
+- Transaction approved means you signed the request; the sender can now process the transfer. It does not itself prove the sender submitted or completed payment.
+- Check the sender and recipient carefully even if the request was expected.
+- If you decline, the result says the sender cannot process that transfer. Do not treat the declined request as pending approval.
+
+<a id="physical-card-design-and-name" />
+
+## Choose a physical card design and cardholder name
+
+_Applies to: Mobile_
+
+If physical-card creation is offered in your app, you can choose its design and enter the cardholder name. Check the current card offer and any requirements before you continue.
+
+1. Open the Physical card offer and review the details displayed for your account. Choose Issue a physical card to begin.
+2. On Physical card design, browse the available card styles and choose the one you want. Select Choose.
+3. On Type your name, enter the cardholder name and check the preview carefully. Create card is inactive while the name field is blank.
+4. Select Create card when the details are correct, then check the result shown in the app.
+5. Follow any delivery and activation instructions supplied with the actual card order. A card-created message does not confirm shipment or delivery.
+
+**Troubleshooting and important distinctions**
+
+- If the physical-card option is not available, use Support to check availability for your account.
+- If Create card remains inactive, check that the required name has been entered.
+- For an incorrect cardholder name, missing delivery instructions or an order problem, contact Support before assuming the card has shipped.
+
+<a id="desktop-card-details-and-controls" />
+
+## Use card details, PIN and payment controls on desktop
+
+_Applies to: Web_
+
+On the web, the card view combines card information, PIN access, freeze, spending limits and payment-channel settings in drawers beside the card.
+
+1. Open All cards. Choose Personal or Shared, then the intended Virtual or Physical card.
+2. Choose Details to inspect the card fields and use the relevant copy control. Check the selected card before copying sensitive information.
+3. Choose View PIN and complete Enter your passcode. Use Copy PIN if needed, or Create new PIN to enter and repeat a replacement PIN; check New PIN is set.
+4. Use Freeze when you intend to freeze the card. The frozen view offers Unfreeze.
+5. Open the edit drawer for Design, Name on card or Short name. Use Choose for a design and Set for the name fields. Short name is described as shown only in Buburuza.
+6. Use Set a spending limit or Edit a spending limit. Choose Monthly, Weekly or Daily, enter the amount and choose Set. Check the success notice and usage counters; each limit has Edit/Delete.
+7. In Settings, review Currency and the individual Online transactions, International payments, Contactless card payments and Cash withdrawal toggles.
+8. For a currency change, search and select the intended currency, then Set up. The drawer describes one currency per card.
+9. Use transaction search and filters to locate card activity. Open a record for its status, card, fees, Attach, note and Excluded from analytics controls.
+
+**Troubleshooting and important distinctions**
+
+- A card PIN and the app passcode used to view it are separate credentials.
+- Freeze, spending limits and payment-channel permissions are separate controls; inspect all relevant settings when investigating a card issue.
+- Behave as credit card is an additional information/control entry. It does not establish a credit facility or guarantee merchant acceptance.
+- Before using Reissue card, Terminate card or Dispute, read the requirements and confirmation shown for that action.
+
+<a id="desktop-card-funding-and-access" />
+
+## Set desktop card funding and shared access
+
+_Applies to: Web_
+
+On the web, card settings separate funding mode, connected-account priority, shared-user permissions and trusted-person approval.
+
+1. Open the intended card’s Settings and Deposit type. Read the warning that switching from direct deposit to connected-account funding freezes the card.
+2. Choose Connect to account. Select one source, or use Select many and check the intended fiat accounts or crypto assets.
+3. For multiple sources, inspect the numbered order. Drag the handles to reorder; use X to remove a source. Choose Continue with multiple accounts.
+4. Review the ordered connected-account list and choose the setup action. Check Deposit type changed and the resulting connected-account rows.
+5. For an existing connection, use Edit, Connect other account or Switch to direct deposit as needed, then review the resulting setup.
+6. To share access, use the card’s sharing controls to select a contact or copy its invitation link. Review the intended people before Share access and check Access is shared.
+7. Open the person’s permissions to review access to card editing, PIN, transaction history, spending limits, shared access, Multi-sig and Settings, plus the individual capability toggles. Choose Grant access after reviewing them.
+8. For trusted-person approval, configure the amount and trusted person in Multi-sig, review the summary and choose Set up. Check Multi-sig is set, then inspect enabled state, Change, Edit and Delete controls separately from shared access.
+
+**Troubleshooting and important distinctions**
+
+- Reordering funding sources is different from selecting or removing them.
+- The funding helper describes fallback to later accounts, but conversion pricing must be checked in the actual product.
+- Sharing a card does not automatically give every capability or approve a pending payment.
+- A shared-user removal, disabled sharing and a change to the Multi-sig trusted person are different actions.
+
+<a id="cancel-pending-signing" />
+
+## Stop a signature approval in the earlier signing layout
+
+_Applies to: Mobile_
+
+The earlier trusted-signer layout includes a confirmation for stopping the signing process before approval is complete.
+
+1. While reviewing a Multi-signature request, inspect the transfer details and decide whether to continue signing.
+2. If the cancellation confirmation appears, read Are you sure you want to cancel? It warns that the owner will not be able to finish the transfer.
+3. Choose Continue the signing to return to signing, or Yes, cancel the signing if you intend to stop this approval.
+4. After cancellation, check The signing is canceled.
+
+**Troubleshooting and important distinctions**
+
+- This cancellation stops the signature approval; it is not a recall of money already sent.
+- Check the canceled state before discussing any new signature request with the sender.
+- If the request offers Decline instead, use that action and read its confirmation before continuing.
