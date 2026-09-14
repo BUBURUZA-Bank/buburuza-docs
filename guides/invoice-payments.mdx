@@ -1,0 +1,114 @@
+---
+title: "Turn an invoice into a reviewed payment"
+description: "Invoice reading helps prepare the payment. It does not replace checking the recipient and amount or authorizing the transaction. Follow the same final review used for a manually entered payment."
+sidebarTitle: "Invoice payments"
+---
+
+Invoice reading helps prepare the payment. It does not replace checking the recipient and amount or authorizing the transaction. Follow the same final review used for a manually entered payment.
+
+## In this guide
+
+- [Create a payment from an invoice](#pay-invoice)
+- [Add a recipient and payment details](#add-recipient)
+- [Review fees before confirming a payment](#payment-fees)
+- [My payment failed or the app closed during confirmation](#failed-payment)
+
+## Understand what the invoice reader has filled in
+
+Invoice reading prepares a payment for your review. It does not authorize the payment.
+
+| Result | Your next action |
+| --- | --- |
+| A recipient matches | Compare the displayed recipient and payment method with the invoice before continuing. |
+| The suggested recipient is wrong | Choose another recipient. |
+| No recipient matches | Choose an existing recipient or create a new one and check every extracted profile field. |
+| Saved recipient details are shown | Compare the address-book details with the invoice; they did not necessarily come from the current upload. |
+| Details were scanned from the invoice | Check every bank field before continuing. |
+| You edit bank details | Decide whether to save the change to the recipient or use it only for this payment. |
+
+Review the amount, currency, account, recipient, and total debit again on the final payment screen. A bank-name autofill or an invoice match does not remove the need to verify the instructions.
+
+<a id="pay-invoice" />
+
+## Create a payment from an invoice
+
+_Applies to: Mobile and web_
+
+Buburuza’s invoice flow can read a document to help prepare a payment. Review the extracted information yourself before authorizing any money movement.
+
+1. Choose Pay Invoice from Move money on mobile or Upload an invoice from Send money on the web.
+2. On mobile, choose Files, Photos, or Camera. On the web, use the upload area, which lists images, PDFs, and spreadsheets.
+3. Wait for reading to finish. The web flow shows upload, extraction, recipient matching, and payment preparation, with a Cancel action.
+4. If a recipient matches, inspect the recipient and payment method. Choose Continue or Continue with matched recipient only when the match is correct; on mobile, Select another changes the recipient.
+5. If no recipient matches on the web, create a new recipient or choose an existing one. When creating one, review every auto-filled legal-name, beneficiary, email, nickname, and address field before choosing Create recipient.
+6. Review the bank details. Saved recipient details come from the address book; Scanned from your invoice identifies invoice-derived details. Compare both with the invoice and verify conflicts before paying.
+7. If you change details, decide whether to update the saved recipient or use the change only for this payment. These are different choices.
+8. Review amount, currency, funding source, payment method, and fee. On the web, check invoice number, invoice date, due date, internal note, receipt email, and whether attachments will be included.
+9. Complete the normal payment review and authorize it. Reading or matching the invoice does not send money.
+
+**Troubleshooting and important distinctions**
+
+- If the match is wrong, select another recipient; if none exists, create a recipient after reviewing the extracted fields.
+- If the scan cannot be read, return to the ordinary send-money flow and enter verified information manually.
+- If saved details conflict with invoice details, verify the payment instructions through a trusted channel before changing them.
+- A bank-name autofill or suggested SWIFT code does not replace checking the recipient’s actual instructions.
+
+<a id="add-recipient" />
+
+## Add a recipient and payment details
+
+_Applies to: Mobile and web_
+
+A recipient stores the person or business you want to pay and the payment details you will use. Review those details carefully before saving or sending.
+
+1. Open Recipients and choose Add recipient.
+2. Choose Person or Business. Enter Legal name for a person or Legal business name for a business, matching the name on the receiving bank account.
+3. Complete Beneficiary name and the address fields requested. Email is for payment receipts; Nickname is a private reference for identifying the recipient.
+4. Choose Add payment method to save bank details or a wallet address now. If the web form offers it, you can create the recipient and add payment details later.
+5. Choose Create recipient, then inspect the saved recipient profile.
+6. Before paying, choose the correct saved payment method and verify its bank details or asset, network, and address.
+
+**Troubleshooting and important distinctions**
+
+- If a field is marked invalid, correct it before continuing. For crypto, verify the selected network as well as the address.
+- If the recipient changes their payment instructions, confirm the change through a trusted channel before updating the saved details.
+
+<a id="payment-fees" />
+
+## Review fees before confirming a payment
+
+_Applies to: Mobile and web_
+
+Review the fee breakdown on the payment screen before authorizing the transaction. The screen may show a transfer fee, network fee, or conversion information depending on the method.
+
+1. Choose the payment method, funding source, and amount.
+2. Open or read the fee and conversion details on the review screen.
+3. Compare the amount sent, total deducted, and any displayed recipient amount.
+4. If you change the amount, currency, or method, review the updated total again.
+5. After submission, open the transaction record to see the information retained for that payment.
+
+**Troubleshooting and important distinctions**
+
+- The FX-rate comparison page is not a substitute for the quote on your payment review screen.
+- If you need to question a fee, give support the transaction reference and the line item you want explained.
+
+<a id="failed-payment" />
+
+## My payment failed or the app closed during confirmation
+
+_Applies to: Mobile and web_
+
+A failed or returned payment needs the explanation from its own transaction record. Check whether it was never broadcast, reverted, rejected or returned. These states have different effects on the payment and balance.
+
+1. Open the transaction and read the failure or return reason before taking another action.
+2. If an outgoing crypto record explicitly says Not broadcast and Not charged, check the stated wallet balance and existing activity before using Send again.
+3. If an incoming crypto record says Reverted or funds not received, check that it was not credited, then ask the sender to review their transfer.
+4. If an outgoing bank payment is rejected or returned, inspect the displayed reason, such as account closed, invalid bank details, or no account found. Verify corrected instructions with the recipient before sending again.
+5. If an incoming transfer is returned for beneficiary-name mismatch, share the exact current receiving instructions. If it shows a sender-bank return, ask the sender to investigate their payment.
+6. Read the amount, debit or credit, and fee lines on that record. Contact support with the displayed reason and reference if the account result is unclear.
+
+**Troubleshooting and important distinctions**
+
+- Do not infer a refund merely from a Failed status. Use the record’s own funds and fee explanation.
+- A Send again button is a new action; first check that you are using the right existing record and corrected payment instructions.
+- Check the fee and refund entries on the affected transaction. A Refunded status on one record does not mean every rejected transfer receives a fee refund.
