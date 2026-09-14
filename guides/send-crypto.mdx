@@ -1,0 +1,97 @@
+---
+title: "Send crypto from a wallet"
+description: "Start with the exact asset and network, then confirm the receiving address and payment total. Use the transaction record to follow the outcome after authorization."
+sidebarTitle: "Send crypto"
+---
+
+Start with the exact asset and network, then confirm the receiving address and payment total. Use the transaction record to follow the outcome after authorization.
+
+## In this guide
+
+- [Send crypto to an external wallet](#send-crypto)
+- [Understand wallets, currencies, and networks](#wallets-currencies)
+- [My payment failed or the app closed during confirmation](#failed-payment)
+
+## Source accounts and the asset being sent
+
+In a crypto transfer, **Sending from** identifies the account or wallet funding the transaction. **In this currency** identifies the asset and network being sent. They can differ: the funding source may be a fiat account or one token while the outgoing asset is another.
+
+When using multiple funding accounts, first choose the accounts, then review their order. **Done** closes selection mode; drag handles change priority, and swiping a row aside reveals a removal control. The next step offers **In order** or **Split evenly** and shows an allocation preview.
+
+On review, check the source accounts, destination, amount, **Pay fee with** and the offered timing/fee choice. The fee asset is another decision; do not assume it matches the outgoing asset. The final **Send** slider is separate from selecting accounts or rearranging their order.
+
+<a id="send-crypto" />
+
+## Send crypto to an external wallet
+
+_Applies to: Mobile and web_
+
+Choose the funding account, outgoing asset and network, and recipient separately. Mobile supports selecting one or several funding accounts; the web flow has its own payment review.
+
+1. On mobile, open Payments and choose Send crypto. On the web, open Send and select the crypto transfer route.
+2. For the mobile Sending from picker, choose one fiat or crypto source, or use Select many for several accounts. Use Search and expand the wallet groups to identify the asset and network.
+3. Check In this currency separately from Sending from. Select the outgoing asset and its network; the same token may appear on more than one network.
+4. Enter the amount and review the displayed equivalent and available balance. In To, enter or paste the recipient address, ENS or Space ID supported by this mobile field.
+5. Check the resolved destination shown. The Empty wallet descriptor does not prove that the intended person controls the address.
+6. For multiple funding accounts, review their priority and the Deduction method: In order or Split evenly. Check the displayed balances and allocation before choosing Continue.
+7. On mobile review, check From, To, Amount, Pay fee with, and the displayed timing/fee choices. Use the Send slider only when all details match.
+8. On the web, review the recipient/address, source account, network, amount and quoted fee shown in its confirmation flow before confirming.
+9. On the mobile result, use Check details or Track to inspect the payment. Attach, Receipt, Internal note and Copy link are separate record actions; the internal note is described as visible only to you.
+
+**Troubleshooting and important distinctions**
+
+- A completed amount with a missing destination leaves Continue disabled in the mobile app.
+- The funding account’s asset and the outgoing asset/network may differ. Check both rather than relying on the source wallet name.
+- A success record and a transaction’s downstream receipt or account-posting state are separate. Use the transaction details when checking completion.
+- Do not retry solely because receipt is unclear. Inspect the existing transaction result and reference first.
+- Never send a secret phrase, private key or full authentication code to support.
+
+<a id="wallets-currencies" />
+
+## Understand wallets, currencies, and networks
+
+_Applies to: Mobile and web_
+
+Bank accounts carry an account currency. Crypto holdings also have an asset and a network. In the combined Accounts view, a token can appear as an aggregate with a separate balance for each network.
+
+1. Open Accounts & wallets on mobile, or the relevant Accounts or Wallets view on the web.
+2. For a bank account, check its account name, currency, and masked account ending.
+3. For a crypto holding, open the token or wallet and inspect the network rows. The combined web view shows a network count before you open those rows.
+4. Read the asset quantity separately from its displayed currency equivalent.
+5. Select the relevant network before using Send or Receive, then inspect the address and next-screen instructions.
+6. Use the account or wallet activity list to inspect payments for the selected holding.
+
+**Troubleshooting and important distinctions**
+
+- A token on one network is not automatically interchangeable with the same token name on another network.
+- If an asset or action is missing, use the options actually offered in your account and contact support if you need clarification.
+
+<a id="failed-payment" />
+
+## My payment failed or the app closed during confirmation
+
+_Applies to: Mobile and web_
+
+A failed or returned payment needs the explanation from its own transaction record. Check whether it was never broadcast, reverted, rejected or returned. These states have different effects on the payment and balance.
+
+1. Open the transaction and read the failure or return reason before taking another action.
+2. If an outgoing crypto record explicitly says Not broadcast and Not charged, check the stated wallet balance and existing activity before using Send again.
+3. If an incoming crypto record says Reverted or funds not received, check that it was not credited, then ask the sender to review their transfer.
+4. If an outgoing bank payment is rejected or returned, inspect the displayed reason, such as account closed, invalid bank details, or no account found. Verify corrected instructions with the recipient before sending again.
+5. If an incoming transfer is returned for beneficiary-name mismatch, share the exact current receiving instructions. If it shows a sender-bank return, ask the sender to investigate their payment.
+6. Read the amount, debit or credit, and fee lines on that record. Contact support with the displayed reason and reference if the account result is unclear.
+
+**Troubleshooting and important distinctions**
+
+- Do not infer a refund merely from a Failed status. Use the record’s own funds and fee explanation.
+- A Send again button is a new action; first check that you are using the right existing record and corrected payment instructions.
+- Check the fee and refund entries on the affected transaction. A Refunded status on one record does not mean every rejected transfer receives a fee refund.
+
+## Need help?
+
+If you need help with your account or a task, [contact support](/support) or browse the [Buburuza Help Center](https://help.buburuza.com/hc/en-us).
+
+Related support articles:
+
+- [How to send money or withdraw funds](https://help.buburuza.com/hc/en-us/articles/51472974818835)
+- [What if my withdrawal fails or stays pending?](https://help.buburuza.com/hc/en-us/articles/51473015552275)
