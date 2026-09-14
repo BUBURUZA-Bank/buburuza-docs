@@ -1,0 +1,163 @@
+---
+title: "Preparar y gestionar un préstamo de cripto"
+sidebarTitle: "Préstamos de cripto"
+description: "Revisa colateral, interés e información de relación préstamo-valor, luego sigue la aprobación, ajuste y reembolso del préstamo como tareas separadas."
+---
+
+## En esta guía
+
+- [Preparar y revisar un préstamo de cripto flexible](#loan-interface)
+- [Elegir o ajustar colateral para un préstamo](#loan-collateral)
+- [Reembolsar un préstamo con el activo de cripto prestado](#repay-loan-crypto)
+- [Reembolsar un préstamo usando colateral](#repay-loan-collateral)
+- [Verificar un préstamo activo, parcialmente reembolsado o liquidado](#loan-status)
+- [Entender y revisar una advertencia de LTV de préstamo](#loan-ltv-warning)
+
+## Monto del préstamo, colateral y reembolso son decisiones separadas
+
+Un préstamo flexible tiene un monto pendiente y un conjunto de activos de colateral comprometidos. La pantalla de préstamo presenta APR, interés diario estimado, y niveles de relación préstamo-valor. Agregar colateral cambia los activos que respaldan el préstamo; un reembolso reduce la deuda.
+
+Un reembolso puede usar el cripto del préstamo o colateral. Verifica **Préstamo después de reembolsar** antes de confirmar. Usar **Máximo** puede gastar el saldo de reembolso disponible dejando un préstamo residual. **Reembolso exitoso** por lo tanto difiere de un préstamo reembolsado en su totalidad y movido a **Préstamos liquidados**.
+
+Las pantallas de advertencia y alto riesgo muestran riesgo antes de la liquidación. Lee el LTV actual, niveles de llamada de margen y liquidación para el préstamo y revisa sus términos de servicio. Los umbrales mostrados, vista previa de reembolso y asignación de colateral pertenecen a esa revisión específica; no son valores universales del producto.
+
+<a id="loan-interface" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Preparar y revisar un préstamo de cripto flexible
+
+_Aplica a: Móvil_
+
+El flujo de Préstamo flexible te pide que elijas un monto y activo de préstamo, proporciones colateral, y revises información de interés y relación préstamo-valor antes de confirmar.
+
+1. Abre Préstamo flexible. Usa Pedir prestado ahora desde la lista de préstamos vacía, o abre el formulario de préstamo disponible en el área de préstamo.
+2. Elige el activo del préstamo. El selector separa Stablecoins y Cripto; usa los activos ofrecidos a ti.
+3. Ingresa Monto del préstamo. Revisa Límite restante, APR más reciente e Interés diario estimado.
+4. Si el monto está por debajo del mínimo mostrado, corrígelo. Una vez que el monto es aceptado, elige Agregar colateral.
+5. Selecciona los activos y montos que pretendes comprometer. Verifica el total de colateral y cualquier déficit antes de elegir Agregar.
+6. De vuelta en el formulario de préstamo, inspecciona Monto de colateral, Saldo compromisible, LTV actual, LTV de llamada de margen y LTV de liquidación. Usa el control de información de LTV cuando sea necesario.
+7. Elige Revisar préstamo. Vuelve a verificar el monto, activo, APR, estimación de interés diario, colateral y todos los niveles de LTV.
+8. Abre Términos de servicio de préstamo de cripto y Reglas de reembolso forzado y léelos. Completa el reconocimiento solo si aceptas los términos, luego usa el control deslizante Confirmar para enviar el préstamo.
+9. En Préstamo aprobado, verifica el monto y destino. Elige Ir a billetera o Volver a Préstamo flexible e inspecciona el registro del préstamo.
+
+**Solución de problemas y distinciones importantes**
+
+- Ingresar un monto de préstamo válido no completa el préstamo. Revisar préstamo permanece deshabilitado hasta que se haya proporcionado colateral suficiente.
+- Verifica el mínimo, límite restante, APR y umbrales mostrados para tu préstamo.
+- El resultado de aprobación y los detalles de transacción actualizados de la billetera pueden aparecer en diferentes momentos. Inspecciona el registro existente antes de iniciar una solicitud duplicada.
+- Pedir más abre otro formulario de préstamo; no es un control de reembolso.
+
+<a id="loan-collateral" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Elegir o ajustar colateral para un préstamo
+
+_Aplica a: Móvil_
+
+La selección de colateral te permite comprometer más de un activo y elegir cuánto de cada activo incluir. El formulario previsualiza si el valor combinado es suficiente.
+
+1. Para un préstamo nuevo, elige Agregar colateral. Para un préstamo existente, abre Detalles del préstamo, elige Colateral, luego Ajustar.
+2. Usa Buscar o navega las entradas de activo/red de la billetera actual. Verifica los activos deseados, o usa Seleccionar todo solo cuando pretendas seleccionar el grupo disponible completo.
+3. Para cambiar el monto de un activo, abre su control de ajuste. Verifica Saldo disponible, ingresa un monto o usa 25%, 50%, 75% o Máximo.
+4. Usa el interruptor de unidad si quieres ingresar el monto en valor fiat en lugar de unidades de cripto. Revisa ambas representaciones, luego elige Establecer.
+5. Verifica el Monto de colateral combinado contra el monto del préstamo y el déficit mostrado. Agrega o aumenta colateral si el total es insuficiente.
+6. Para un préstamo nuevo, elige Agregar cuando esté habilitado y revisa el LTV resultante en el formulario de préstamo.
+7. Para un préstamo existente, elige Guardar cuando tus cambios estén listos. Usa Descartar cambios para salir sin aplicar el ajuste.
+8. Regresa a Colateral y verifica la lista de activos, colateral total y LTV actual actualizado.
+
+**Solución de problemas y distinciones importantes**
+
+- Verificar un activo y elegir un monto son decisiones separadas; un monto parcial seleccionado aún puede dejar un déficit.
+- Agregar o Guardar está deshabilitado en los estados mostrados de colateral insuficiente.
+- El mismo activo en diferentes redes se muestra como una entrada separada; verifica el activo/red deseado.
+- Una vista previa de colateral actualizada no garantiza su valor futuro. Monitorea las métricas actuales del préstamo después de guardar.
+
+<a id="repay-loan-crypto" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Reembolsar un préstamo con el activo de cripto prestado
+
+_Aplica a: Móvil_
+
+Con cripto del préstamo usa el activo del préstamo para el reembolso. Revisa el monto del préstamo restante; usar Máximo puede usar tu saldo disponible sin pagar todo el préstamo.
+
+1. Abre el préstamo activo, verifica su activo y monto pendiente, y elige Reembolsar.
+2. Selecciona Con cripto del préstamo.
+3. Ingresa el monto de reembolso o elige Máximo. Verifica Saldo disponible y el monto de reembolso.
+4. Revisa LTV actual, LTV actualizado y Préstamo actualizado, luego elige Continuar.
+5. En Revisar, verifica Estás reembolsando, Préstamo después de reembolsar, LTV actualizado, LTV de liquidación y Precio de liquidación.
+6. Usa el control deslizante Reembolsar préstamo cuando la revisión coincida con tu intención.
+7. En Reembolso exitoso, elige Ver detalles o Volver a Préstamo flexible. Inspecciona el monto del préstamo restante.
+8. Si queda un saldo, el préstamo permanece activo y aún ofrece Reembolsar. Trátalo como liquidado solo después de que el registro muestre que ha sido reembolsado en su totalidad y cerrado.
+
+**Solución de problemas y distinciones importantes**
+
+- Máximo usa el monto disponible para reembolso. Verifica Préstamo después de reembolsar porque la deuda puede permanecer pendiente.
+- Un mensaje de reembolso exitoso puede describir un reembolso parcial.
+- El valor mostrado de Préstamo actualizado es la vista previa más clara del préstamo residual antes de que confirmes.
+
+<a id="repay-loan-collateral" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Reembolsar un préstamo usando colateral
+
+_Aplica a: Móvil_
+
+Con colateral es una ruta de reembolso separada de usar el activo de cripto prestado. Verifica el colateral seleccionado y el préstamo resultante antes de confirmar.
+
+1. Abre el préstamo activo y elige Reembolsar.
+2. Selecciona Con colateral.
+3. Revisa el valor del colateral y selecciona el activo de colateral mostrado para el reembolso.
+4. Ingresa el monto de reembolso o usa el control de monto disponible. Verifica Préstamo actualizado y LTV actualizado.
+5. Elige Continuar cuando el monto esté completo.
+6. En Revisar, verifica Estás reembolsando, Préstamo después de reembolsar, LTV actualizado, LTV de liquidación y Precio de liquidación.
+7. Usa el control deslizante Reembolsar préstamo cuando el reembolso revisado coincida con tu intención.
+8. Verifica Reembolso exitoso y el registro de préstamo resultante. Si se reembolsó completamente, verifica el estado cerrado o la entrada en Préstamos liquidados etiquetada Reembolsado con colateral.
+
+**Solución de problemas y distinciones importantes**
+
+- Reembolsar con colateral es diferente de simplemente agregar colateral para reducir el LTV.
+- Lee los términos del préstamo para consecuencias de conversión, venta, deslizamiento y comisión antes de confirmar esta ruta.
+- Un monto de reembolso que deja un saldo de Préstamo actualizado es un reembolso parcial incluso si la transacción tiene éxito.
+
+<a id="loan-status" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Verificar un préstamo activo, parcialmente reembolsado o liquidado
+
+_Aplica a: Móvil_
+
+Préstamos activos y Préstamos liquidados distinguen la deuda actual de un préstamo que ha sido reembolsado en su totalidad. Un pago exitoso puede dejar un préstamo activo si queda un saldo.
+
+1. Abre Préstamo flexible y elige Préstamos activos o Préstamos liquidados.
+2. En Préstamos activos, verifica el activo, monto pendiente y estado de LTV actual, luego abre el préstamo.
+3. Usa Detalles del préstamo para revisar el monto del préstamo, APR promedio/más reciente, interés diario estimado, valor del colateral y métricas de LTV.
+4. Cambia a Colateral para inspeccionar los activos comprometidos y su valor total.
+5. Después de un reembolso, verifica el monto del préstamo restante. Un monto residual con una acción Reembolsar significa que el préstamo sigue activo.
+6. Después del reembolso completo, busca el resultado de reembolsado y cerrado y la entrada en Préstamos liquidados. Una entrada de reembolso con colateral identifica Reembolsado con colateral y su marca de tiempo.
+
+**Solución de problemas y distinciones importantes**
+
+- Sin préstamos activos y Sin préstamos liquidados aún son estados vacíos separados.
+- Un monto pendiente puede permanecer después de elegir Máximo cuando el saldo de reembolso disponible es menor que la deuda.
+- Préstamo aprobado, Reembolso exitoso y Préstamo cerrado describen etapas diferentes.
+
+<a id="loan-ltv-warning" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Entender y revisar una advertencia de LTV de préstamo
+
+_Aplica a: Móvil_
+
+Detalles del préstamo muestra LTV actual junto a LTV de llamada de margen y LTV de liquidación. Lee los estados de advertencia y alto riesgo mostrados para entender qué tan cerca está el préstamo de sus umbrales.
+
+1. Abre la fila de préstamo Advertencia o Alto riesgo desde Inicio de Cripto, o abre el préstamo activo directamente.
+2. Lee la pancarta de advertencia y compara LTV actual con los niveles de llamada de margen y liquidación mostrados para ese préstamo.
+3. Abre el control de información de LTV para leer la explicación de préstamo relativo al valor del colateral.
+4. Para inspeccionar cambios de colateral, abre Colateral y elige Ajustar. Revisa activos y montos disponibles, el déficit y el total de colateral resultante.
+5. Cuando pretendas aplicar un ajuste suficiente, elige Guardar e inspecciona el LTV actual actualizado en el préstamo.
+6. Si consideras reembolsar en su lugar, usa el flujo separado Reembolsar y revisa su Préstamo actualizado y LTV actualizado antes de confirmar.
+
+**Solución de problemas y distinciones importantes**
+
+- El estado de advertencia ámbar y alto riesgo rojo son diferentes de una declaración de liquidación completada.
+- Un ajuste insuficiente deja Guardar deshabilitado; seleccionar un activo no es suficiente a menos que el total mostrado califique.
+- Lee los términos del préstamo para llamadas de margen, liquidación y reembolso forzado. Verifica los umbrales de tu préstamo y no asumas que una advertencia garantiza tiempo para actuar.
+
+## ¿Necesitas ayuda?
+
+Si necesitas ayuda con tu cuenta o una tarea, [contacta a soporte](/support) o visita el [Centro de ayuda de Buburuza](https://help.buburuza.com/hc/en-us).
