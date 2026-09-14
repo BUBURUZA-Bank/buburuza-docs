@@ -1,0 +1,177 @@
+---
+title: "Back up and recover a crypto wallet"
+description: "Identify the wallet type and recovery method, create or verify a backup, and keep wallet recovery separate from account sign-in."
+sidebarTitle: "Wallet backup and recovery"
+---
+
+Identify the wallet type and recovery method, create or verify a backup, and keep wallet recovery separate from account sign-in.
+
+## In this guide
+
+- [Create and verify an iCloud wallet backup](#wallet-icloud-backup)
+- [Write down and verify a wallet’s secret phrase](#wallet-manual-backup)
+- [Import an existing wallet with its secret phrase](#import-secret-phrase-wallet)
+- [Understand a Swift wallet passkey](#swift-wallet-passkey)
+- [Delete an iCloud wallet backup](#delete-wallet-icloud-backup)
+- [Create a Swift wallet in the desktop wallet panel](#desktop-create-swift-wallet)
+- [Import a wallet with a secret phrase on desktop](#desktop-import-secret-phrase-wallet)
+
+## Backup state and wallet removal
+
+Each wallet shows **Backup to iCloud** and **Backup manually** independently. One may be Active while the other is Not set. The status belongs to the selected wallet; switching wallets can show a different backup configuration.
+
+For an iCloud backup, check its timestamp and use **Verify** to test the password. For a manual backup, the confirmation asks you to identify words at selected positions. A wrong selection has a **Try again** path.
+
+Removing a wallet from the app and deleting an iCloud backup are different actions. The wallet-removal flow asks you to back up the seed phrase before proceeding. The iCloud-backup deletion warning explains that the deleted backup can no longer be used to restore the wallet. Verify the recovery method you intend to keep before removing either item.
+
+<a id="wallet-icloud-backup" />
+
+## Create and verify an iCloud wallet backup
+
+_Applies to: Mobile_
+
+The iCloud backup protects a wallet’s secret phrase with a separate password. Buburuza cannot reset that backup password.
+
+1. Open the intended wallet’s Settings and choose Backup to iCloud.
+2. Complete the app authentication if requested. Enter a recognizable Backup name, then choose Continue.
+3. On Set password, create the password that will encrypt the secret phrase on iCloud. Use the visibility control only in a private setting, then choose Continue.
+4. On Confirm password, repeat the password and read both acknowledgements about recovery and loss of access. Check them only after you understand them, then choose Continue.
+5. Return to wallet Settings and check that Backup to iCloud is Active.
+6. Open the active backup to inspect its timestamp and choose Verify.
+7. Enter the backup password on Verify backup password and choose Continue. Check Password verified, then choose Done.
+
+**Troubleshooting and important distinctions**
+
+- The backup-encryption password is different from your app passcode and card PIN.
+- Continue is disabled in the shown empty password and incomplete confirmation states.
+- An Active iCloud status and an Active manual backup are independent; checking one does not complete the other.
+- Do not send the phrase, encryption password or a screenshot of either to support.
+
+<a id="wallet-manual-backup" />
+
+## Write down and verify a wallet’s secret phrase
+
+_Applies to: Mobile_
+
+A manual backup records the wallet’s secret phrase. Anyone who obtains that phrase can control the wallet, according to the safety screens.
+
+1. Open the intended wallet’s Settings and choose Backup manually.
+2. Complete app authentication when requested. Read the For your eyes only safety advice.
+3. Read and complete the acknowledgements: Buburuza does not have access to the key, and the phrase should be written on paper and stored securely instead of saved digitally. Choose Continue.
+4. Record the numbered secret words in their original order in a private place. Do not share them or include them in support messages.
+5. Choose Continue to open Confirm secret phrase. For each requested position, choose the matching word from your written backup.
+6. Choose Continue. If Not correct / Your selections don’t match appears, choose Try again and compare the requested positions with the backup.
+7. Return to Settings and check the manual-backup status.
+
+**Troubleshooting and important distinctions**
+
+- The confirmation asks for selected word positions; it does not ask you to send the full phrase to support.
+- If the word check reports an incorrect answer, choose Try again and verify the requested word positions against your backup.
+- Record every word shown for your own wallet in the original order. Confirm the exact positions requested by that wallet’s backup check.
+- An incorrect app passcode has a separate remaining-attempt warning. Do not confuse it with the phrase-confirmation quiz.
+
+<a id="import-secret-phrase-wallet" />
+
+## Import an existing wallet with its secret phrase
+
+_Applies to: Mobile_
+
+Add existing wallet offers several import methods. For a secret-phrase import, select the wallet network, name the wallet and enter its existing phrase.
+
+1. Open My wallets and choose Add existing wallet, then Secret phrase.
+2. Read the safety acknowledgements: only you should know the phrase, it must not have been supplied by a representative, and someone who sees it can steal funds. Choose Continue after acknowledging them.
+3. On Select network, search for the required network or choose the recommended Multi-coin wallet option when it matches your wallet.
+4. Choose an icon and enter Wallet name. Enter or paste the Secret phrase into the app’s field, preserving word order and spaces.
+5. If using the scan option, align the QR code in Scan QR-code. The screen also offers a photo-library icon and Enter code manually.
+6. For manual code entry, complete the field and choose Confirm. Empty Confirm is disabled.
+7. Review the intended wallet/network and choose Continue when the fields are complete.
+
+**Troubleshooting and important distinctions**
+
+- Only enter your own phrase in the official wallet-import flow. Never send it to support or enter a phrase supplied by someone else.
+- The helper describes phrases as usually twelve and sometimes eighteen or twenty-four words; match your original wallet backup.
+
+<a id="swift-wallet-passkey" />
+
+## Understand a Swift wallet passkey
+
+_Applies to: Mobile_
+
+The Swift wallet setup treats a passkey as the key to that wallet. It is separate from a passkey used only to sign in to your Buburuza account.
+
+1. Choose Swift from the wallet creation or existing-wallet choices shown in My wallets.
+2. Read Passkey is the key to your wallet.
+3. Review the three acknowledgements: enable iCloud Passwords and Keychain, use the passkey for recovery on a replacement device, and understand the warning about losing wallet access if the passkey is deleted.
+4. Complete the Quick quiz about deleting a wallet passkey. If Wrong answer appears, choose Try again; if Correct appears, choose Got it.
+5. On Set wallet, choose an icon and Wallet name. The shown name rule is four to twenty-four characters. Choose Continue.
+
+**Troubleshooting and important distinctions**
+
+- Deleting a Swift wallet passkey can cause loss of access to the wallet and funds. Keep wallet recovery separate from account-login passkey management.
+- Keep ordinary account authentication, app unlocking and wallet recovery separate.
+- The quiz checks understanding. Passing it does not establish that a device backup or restoration has been tested.
+
+<a id="delete-wallet-icloud-backup" />
+
+## Delete an iCloud wallet backup
+
+_Applies to: Mobile_
+
+Deleting an iCloud backup removes that recovery copy. It is a different action from removing the wallet from the app.
+
+1. Open the intended wallet’s Settings and its active Backup to iCloud entry.
+2. Check the backup timestamp and choose Delete.
+3. Read Are you sure? The warning says you cannot restore from this backup after it is removed.
+4. Choose Cancel if you need to keep the recovery copy. Choose Delete iCloud backup only when you intend to remove it and understand the warning.
+5. Return to Settings and inspect the backup status.
+
+**Troubleshooting and important distinctions**
+
+- Do not assume a manual backup exists merely because iCloud backup is active. Check each backup independently.
+- The dialog says a new backup can be created; that does not make a lost or deleted copy recoverable.
+- Deleting a backup does not establish that blockchain assets were transferred or destroyed.
+
+<a id="desktop-create-swift-wallet" />
+
+## Create a Swift wallet in the desktop wallet panel
+
+_Applies to: Web_
+
+The desktop wallet panel offers a Swift route with safety acknowledgments, a passkey-loss check and wallet naming before the device passkey step.
+
+1. Open My wallets and choose Create new wallet, then Swift.
+2. Read the safety acknowledgments about iCloud Passwords and Keychain, replacement-device access and the consequences of deleting the wallet passkey.
+3. Answer What happens if passkey is deleted? If Wrong answer appears, choose Try again and reread the warning. On Correct!, choose Got it.
+4. In Set wallet, choose an icon and enter a wallet name. This layout asks for between 4 and 24 characters.
+5. Choose Continue and follow the actual macOS passkey flow supplied by the product.
+6. Check the new zero-balance wallet in My wallets. Hello, new wallet offers Fund my wallet or Skip.
+
+**Troubleshooting and important distinctions**
+
+- This passkey controls wallet access; it is different from a credential used only to sign in to the Buburuza account.
+- Follow the passkey prompts for your operating system and check that your intended recovery access is in place.
+- Fund my wallet is a following entry, not proof that the new wallet already contains funds.
+
+<a id="desktop-import-secret-phrase-wallet" />
+
+## Import a wallet with a secret phrase on desktop
+
+_Applies to: Web_
+
+The web import route requires a safety check, network choice and the existing wallet’s secret phrase.
+
+1. Open My wallets and choose Add existing wallet, then Secret phrase.
+2. Read and confirm the safety statements only if they are accurate: the phrase is yours, it was not supplied by another person or company representative, and you understand the access it grants.
+3. Choose the applicable multi-coin option or asset/network in the network selector.
+4. Choose an icon/name and enter the existing secret phrase in the dedicated field. The helper describes words separated by spaces; use the phrase’s original word order.
+5. Choose Continue and check the imported wallet in My wallets.
+
+**Troubleshooting and important distinctions**
+
+- Never send a secret phrase to support or paste one provided by another person.
+- Use the guide for the import method you select. Private key, iCloud, View-only wallet, Keystore and Swift require their own information; do not substitute a secret phrase into another method’s field.
+- A selected network and a pasted phrase are preparation states; check the wallet-list result before assuming the import completed.
+
+## Need help?
+
+If you need help with your account or a task, [contact support](/support) or browse the [Buburuza Help Center](https://help.buburuza.com/hc/en-us).
