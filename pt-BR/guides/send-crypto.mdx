@@ -1,0 +1,95 @@
+---
+title: "Envie cripto de uma carteira"
+description: "Comece com o ativo e a rede exatos, depois confirme o endereço de recebimento e o total do pagamento. Use o registro da transação para acompanhar o resultado após a autorização."
+sidebarTitle: "Enviar cripto"
+---
+
+## Neste guia
+
+- [Enviar cripto para uma carteira externa](#send-crypto)
+- [Entender carteiras, moedas e redes](#wallets-currencies)
+- [Meu pagamento falhou ou o aplicativo fechou durante a confirmação](#failed-payment)
+
+## Contas de origem e o ativo sendo enviado
+
+Em uma transferência de cripto, **Enviando de** identifica a conta ou carteira financiando a transação. **Nesta moeda** identifica o ativo e a rede sendo enviados. Eles podem diferir: a fonte de financiamento pode ser uma conta fiat ou um token, enquanto o ativo de saída é outro.
+
+Ao usar várias contas de financiamento, primeiro escolha as contas, depois revise a ordem deles. **Concluído** fecha o modo de seleção; alças de arrastar mudam a prioridade, e deslizar uma linha para o lado revela um controle de remoção. A próxima etapa oferece **Em ordem** ou **Dividir igualmente** e mostra uma prévia de alocação.
+
+Na revisão, verifique as contas de origem, destino, valor, **Pagar taxa com** e a escolha de tempo/taxa oferecida. O ativo da taxa é outra decisão; não assuma que corresponde ao ativo de saída. O controle final **Enviar** deslizante é separado de selecionar contas ou reorganizar a ordem delas.
+
+<a id="send-crypto" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Enviar cripto para uma carteira externa
+
+_Aplica-se a: Celular e web_
+
+Escolha a conta de financiamento, o ativo e a rede de saída, e o destinatário separadamente. O celular suporta selecionar uma ou várias contas de financiamento; o fluxo web tem sua própria revisão de pagamento.
+
+1. No celular, abra Pagamentos e escolha Enviar cripto. No web, abra Enviar e selecione a rota de transferência de cripto.
+2. Para o seletor de Enviando de no celular, escolha uma fonte fiat ou cripto, ou use Selecionar várias para várias contas. Use Pesquisar e expanda os grupos de carteiras para identificar o ativo e a rede.
+3. Verifique Nesta moeda separadamente de Enviando de. Selecione o ativo de saída e sua rede; o mesmo token pode aparecer em mais de uma rede.
+4. Insira o valor e revise o equivalente exibido e o saldo disponível. Em Para, insira ou cole o endereço do destinatário, ENS ou Space ID suportado por este campo do celular.
+5. Verifique o destino resolvido exibido. O descritor Carteira vazia não prova que a pessoa pretendida controla o endereço.
+6. Para várias contas de financiamento, revise a prioridade delas e o Método de dedução: Em ordem ou Dividir igualmente. Verifique os saldos exibidos e a alocação antes de escolher Continuar.
+7. Na revisão do celular, verifique De, Para, Valor, Pagar taxa com, e as escolhas de tempo/taxa exibidas. Use o controle deslizante Enviar apenas quando todos os detalhes corresponderem.
+8. No web, revise o destinatário/endereço, conta de origem, rede, valor e taxa cotada exibidos em seu fluxo de confirmação antes de confirmar.
+9. No resultado do celular, use Verificar detalhes ou Acompanhar para inspecionar o pagamento. Anexar, Comprovante, Nota interna e Copiar link são ações de registro separadas; a nota interna é descrita como visível apenas para você.
+
+**Solução de problemas e distinções importantes**
+
+- Um valor completo com um destino ausente deixa Continuar desabilitado no aplicativo do celular.
+- O ativo da conta de financiamento e o ativo/rede de saída podem diferir. Verifique ambos em vez de confiar apenas no nome da carteira de origem.
+- Um registro de sucesso e o recibo downstream ou estado de lançamento em conta de uma transação são separados. Use os detalhes da transação ao verificar a conclusão.
+- Não tente novamente apenas porque o recibo está incerto. Inspecione primeiro o resultado da transação existente e a referência.
+- Nunca envie uma frase secreta, chave privada ou código de autenticação completo para o suporte.
+
+<a id="wallets-currencies" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Entender carteiras, moedas e redes
+
+_Aplica-se a: Celular e web_
+
+Contas bancárias carregam uma moeda da conta. Holdings de cripto também têm um ativo e uma rede. Na visualização combinada de Contas, um token pode aparecer como um agregado com um saldo separado para cada rede.
+
+1. Abra Contas e carteiras no celular, ou a visualização relevante de Contas ou Carteiras no web.
+2. Para uma conta bancária, verifique seu nome de conta, moeda e final mascarado da conta.
+3. Para um holding de cripto, abra o token ou carteira e inspecione as linhas de rede. A visualização combinada do web mostra uma contagem de redes antes de você abrir essas linhas.
+4. Leia a quantidade do ativo separadamente de seu equivalente em moeda exibido.
+5. Selecione a rede relevante antes de usar Enviar ou Receber, depois inspecione o endereço e as instruções da próxima tela.
+6. Use a lista de atividade da conta ou carteira para inspecionar pagamentos para o holding selecionado.
+
+**Solução de problemas e distinções importantes**
+
+- Um token em uma rede não é automaticamente intercambiável com o mesmo nome de token em outra rede.
+- Se um ativo ou ação estiver ausente, use as opções realmente oferecidas em sua conta e entre em contato com o suporte se precisar de esclarecimentos.
+
+<a id="failed-payment" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Meu pagamento falhou ou o aplicativo fechou durante a confirmação
+
+_Aplica-se a: Celular e web_
+
+Um pagamento falho ou devolvido precisa da explicação de seu próprio registro de transação. Verifique se ele nunca foi transmitido, revertido, rejeitado ou devolvido. Esses estados têm efeitos diferentes sobre o pagamento e o saldo.
+
+1. Abra a transação e leia o motivo de falha ou devolução antes de tomar outra ação.
+2. Se um registro de cripto de saída disser explicitamente Não transmitido e Não cobrado, verifique o saldo da carteira informado e a atividade existente antes de usar Enviar novamente.
+3. Se um registro de cripto de entrada disser Revertido ou fundos não recebidos, verifique se não foi creditado, depois peça ao remetente para revisar a transferência dele.
+4. Se um pagamento bancário de saída for rejeitado ou devolvido, inspecione o motivo exibido, como conta encerrada, detalhes bancários inválidos, ou conta não encontrada. Verifique instruções corrigidas com o destinatário antes de enviar novamente.
+5. Se uma transferência de entrada for devolvida por divergência de nome do beneficiário, compartilhe as instruções de recebimento atuais exatas. Se mostrar uma devolução do banco remetente, peça ao remetente para investigar o pagamento dele.
+6. Leia o valor, débito ou crédito, e linhas de taxa naquele registro. Entre em contato com o suporte com o motivo e referência exibidos se o resultado da conta estiver incerto.
+
+**Solução de problemas e distinções importantes**
+
+- Não infira um reembolso meramente de um status Falhou. Use a própria explicação de fundos e taxa do registro.
+- Um botão Enviar novamente é uma nova ação; primeiro verifique se você está usando o registro existente correto e instruções de pagamento corrigidas.
+- Verifique as entradas de taxa e reembolso na transação afetada. Um status Reembolsado em um registro não significa que toda transferência rejeitada recebe um reembolso de taxa.
+
+## Precisa de ajuda?
+
+Se precisar de ajuda com sua conta ou uma tarefa, [entre em contato com o suporte](/support) ou navegue pelo [Centro de Ajuda Buburuza](https://help.buburuza.com/hc/en-us).
+
+Artigos de suporte relacionados:
+
+- [Como enviar dinheiro ou sacar fundos](https://help.buburuza.com/hc/en-us/articles/51472974818835)
+- [E se meu saque falhar ou permanecer pendente?](https://help.buburuza.com/hc/en-us/articles/51473015552275)
