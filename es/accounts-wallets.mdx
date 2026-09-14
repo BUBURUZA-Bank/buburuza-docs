@@ -1,0 +1,63 @@
+---
+title: "Cuentas y billeteras"
+description: "La cuenta de pago que recibe un espacio verificado, las billeteras que contiene y cómo se reportan los saldos."
+---
+
+## La cuenta de pago
+
+Cada espacio verificado, empresa o personal, tiene exactamente una **cuenta de pago**. Se aprovisiona automáticamente cuando la verificación se aprueba; no hay nada que solicitar. La cuenta es el paraguas para todo lo relacionado con el dinero en ese espacio: sus billeteras, sus saldos y los documentos que la describen.
+
+| Propiedad | Qué te indica |
+| --- | --- |
+| `status` | En qué punto se encuentra el aprovisionamiento. El movimiento de dinero solo se habilita una vez que la cuenta está activa |
+| `money_movement_enabled` | Si la financiación, las transferencias y los pagos están permitidos en este momento |
+| `legal_entity` | La empresa o individuo verificado al que pertenece la cuenta |
+
+Una cuenta puede estar activa mientras una red de pago particular aún está cerrada. El estado de la cuenta responde a "¿puede este espacio mover dinero en general?"; la disponibilidad de la red responde a "¿por qué ruta?"; consulta [Movimiento de dinero](/payments).
+
+## Billeteras
+
+Una cuenta contiene billeteras de dos tipos.
+
+| Tipo | Recibe a través de | Mantiene |
+| --- | --- | --- |
+| `fiat` | Redes de pago, usando instrucciones de depósito por red | Un saldo en una moneda admitida |
+| `stablecoin` | Una dirección de depósito, en una red nombrada | Stablecoins de terceros |
+
+Se crean una primera billetera fiduciaria y una primera billetera de stablecoin cuando la cuenta se activa. Puedes agregar más billeteras a la misma cuenta según las necesites.
+
+<Warning>
+  Buburuza no emite una stablecoin. Una billetera de stablecoin mantiene activos emitidos por otras partes; USDC es la opción predeterminada. El emisor del activo, no Buburuza, garantiza su valor y su redención.
+</Warning>
+
+## Saldos
+
+Cada saldo se reporta como una **cadena decimal**, no como un número de punto flotante, para que no se pierda ningún valor en el camino a tu código. Cada billetera reporta tres componentes:
+
+| Componente | Significado |
+| --- | --- |
+| `available` | Lo que puedes gastar ahora mismo |
+| `pending` | Dinero en tránsito: depósitos que aún no se han liquidado |
+| `hold` | Montos reservados para operaciones ya en curso |
+
+`available` es la única cifra contra la que se cotiza y autoriza un pago. Un saldo que puedes ver en `pending` no puede gastarse hasta que se liquide.
+
+## Estados de cuenta y cartas
+
+Se producen dos documentos por cuenta:
+
+- un **estado de cuenta** para un período que elijas,
+- una **carta bancaria** que confirma los datos de la cuenta, para contrapartes que la soliciten antes de pagarte.
+
+## Qué limita una cuenta
+
+Dos cosas se interponen entre un espacio y el movimiento de dinero, y fallan de manera diferente:
+
+1. **Verificación.** Hasta que se apruebe, la cuenta no existe y no puede moverse dinero.
+2. **Nivel.** Una empresa verificada en un nivel más ligero puede poder recibir fondos mientras el movimiento saliente permanece cerrado. El panel muestra cuál de las dos opciones te aplica.
+
+## Relacionado
+
+<Card title="Movimiento de dinero" icon="arrow-right-arrow-left" href="/payments">
+  Qué puedes hacer una vez que una billetera tiene saldo.
+</Card>
