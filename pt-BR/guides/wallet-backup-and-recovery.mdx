@@ -1,0 +1,175 @@
+---
+title: "Faça backup e recupere uma carteira de cripto"
+description: "Identifique o tipo de carteira e método de recuperação, crie ou verifique um backup, e mantenha a recuperação da carteira separada do login da conta."
+sidebarTitle: "Backup e recuperação de carteira"
+---
+
+## Neste guia
+
+- [Criar e verificar um backup de carteira no iCloud](#wallet-icloud-backup)
+- [Anotar e verificar a frase secreta de uma carteira](#wallet-manual-backup)
+- [Importar uma carteira existente com sua frase secreta](#import-secret-phrase-wallet)
+- [Entender uma passkey de carteira Swift](#swift-wallet-passkey)
+- [Excluir um backup de carteira no iCloud](#delete-wallet-icloud-backup)
+- [Criar uma carteira Swift no painel de carteira do desktop](#desktop-create-swift-wallet)
+- [Importar uma carteira com frase secreta no desktop](#desktop-import-secret-phrase-wallet)
+
+## Estado do backup e remoção da carteira
+
+Cada carteira mostra **Backup para iCloud** e **Backup manual** independentemente. Um pode estar Ativo enquanto o outro está Não configurado. O status pertence à carteira selecionada; trocar de carteiras pode mostrar uma configuração de backup diferente.
+
+Para um backup no iCloud, verifique seu carimbo de data/hora e use **Verificar** para testar a senha. Para um backup manual, a confirmação pede para você identificar palavras em posições selecionadas. Uma seleção errada tem um caminho de **Tentar novamente**.
+
+Remover uma carteira do aplicativo e excluir um backup do iCloud são ações diferentes. O fluxo de remoção da carteira pede para você fazer backup da frase semente antes de prosseguir. O aviso de exclusão do backup do iCloud explica que o backup excluído não pode mais ser usado para restaurar a carteira. Verifique o método de recuperação que você pretende manter antes de remover qualquer item.
+
+<a id="wallet-icloud-backup" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Criar e verificar um backup de carteira no iCloud
+
+_Aplica-se a: Celular_
+
+O backup do iCloud protege a frase secreta de uma carteira com uma senha separada. A Buburuza não pode redefinir essa senha de backup.
+
+1. Abra as Configurações da carteira pretendida e escolha Backup para iCloud.
+2. Complete a autenticação do aplicativo se solicitada. Insira um Nome de backup reconhecível, depois escolha Continuar.
+3. Em Definir senha, crie a senha que criptografará a frase secreta no iCloud. Use o controle de visibilidade apenas em um ambiente privado, depois escolha Continuar.
+4. Em Confirmar senha, repita a senha e leia ambos os reconhecimentos sobre recuperação e perda de acesso. Marque-os apenas após entendê-los, depois escolha Continuar.
+5. Retorne às Configurações da carteira e verifique se Backup para iCloud está Ativo.
+6. Abra o backup ativo para inspecionar seu carimbo de data/hora e escolha Verificar.
+7. Insira a senha do backup em Verificar senha do backup e escolha Continuar. Verifique Senha verificada, depois escolha Concluído.
+
+**Solução de problemas e distinções importantes**
+
+- A senha de criptografia do backup é diferente do seu código de acesso do aplicativo e PIN do cartão.
+- Continuar fica desabilitado nos estados exibidos de senha vazia e confirmação incompleta.
+- Um status iCloud Ativo e um backup manual Ativo são independentes; verificar um não completa o outro.
+- Não envie a frase, senha de criptografia ou captura de tela de qualquer um para o suporte.
+
+<a id="wallet-manual-backup" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Anotar e verificar a frase secreta de uma carteira
+
+_Aplica-se a: Celular_
+
+Um backup manual registra a frase secreta da carteira. Qualquer pessoa que obtenha essa frase pode controlar a carteira, de acordo com as telas de segurança.
+
+1. Abra as Configurações da carteira pretendida e escolha Backup manual.
+2. Complete a autenticação do aplicativo quando solicitada. Leia o conselho de segurança Apenas para seus olhos.
+3. Leia e complete os reconhecimentos: a Buburuza não tem acesso à chave, e a frase deve ser escrita no papel e armazenada com segurança em vez de salva digitalmente. Escolha Continuar.
+4. Registre as palavras secretas numeradas em sua ordem original em um lugar privado. Não as compartilhe nem as inclua em mensagens de suporte.
+5. Escolha Continuar para abrir Confirmar frase secreta. Para cada posição solicitada, escolha a palavra correspondente do seu backup escrito.
+6. Escolha Continuar. Se Não correto / Suas seleções não correspondem aparecer, escolha Tentar novamente e compare as posições solicitadas com o backup.
+7. Retorne às Configurações e verifique o status do backup manual.
+
+**Solução de problemas e distinções importantes**
+
+- A confirmação pede posições de palavras selecionadas; ela não pede para você enviar a frase completa para o suporte.
+- Se a verificação de palavras relatar uma resposta incorreta, escolha Tentar novamente e verifique as posições de palavras solicitadas contra seu backup.
+- Registre cada palavra mostrada para sua própria carteira na ordem original. Confirme as posições exatas solicitadas pela verificação de backup daquela carteira.
+- Um código de acesso do aplicativo incorreto tem um aviso separado de tentativas restantes. Não confunda com o quiz de confirmação da frase.
+
+<a id="import-secret-phrase-wallet" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Importar uma carteira existente com sua frase secreta
+
+_Aplica-se a: Celular_
+
+Adicionar carteira existente oferece vários métodos de importação. Para uma importação por frase secreta, selecione a rede da carteira, nomeie a carteira e insira sua frase existente.
+
+1. Abra Minhas carteiras e escolha Adicionar carteira existente, depois Frase secreta.
+2. Leia os reconhecimentos de segurança: apenas você deve conhecer a frase, ela não deve ter sido fornecida por um representante, e alguém que a veja pode roubar fundos. Escolha Continuar após reconhecê-los.
+3. Em Selecionar rede, pesquise a rede necessária ou escolha a opção recomendada Carteira multi-moeda quando corresponder à sua carteira.
+4. Escolha um ícone e insira Nome da carteira. Insira ou cole a Frase secreta no campo do aplicativo, preservando a ordem das palavras e os espaços.
+5. Se estiver usando a opção de escanear, alinhe o QR code em Escanear QR code. A tela também oferece um ícone de biblioteca de fotos e Inserir código manualmente.
+6. Para entrada manual de código, complete o campo e escolha Confirmar. Confirmar vazio fica desabilitado.
+7. Revise a carteira/rede pretendida e escolha Continuar quando os campos estiverem completos.
+
+**Solução de problemas e distinções importantes**
+
+- Insira apenas sua própria frase no fluxo oficial de importação de carteira. Nunca a envie para o suporte ou insira uma frase fornecida por outra pessoa.
+- O auxiliar descreve frases como geralmente doze e às vezes dezoito ou vinte e quatro palavras; corresponda ao backup da sua carteira original.
+
+<a id="swift-wallet-passkey" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Entender uma passkey de carteira Swift
+
+_Aplica-se a: Celular_
+
+A configuração da carteira Swift trata uma passkey como a chave daquela carteira. Ela é separada de uma passkey usada apenas para fazer login na sua conta Buburuza.
+
+1. Escolha Swift entre as opções de criação de carteira ou carteiras existentes mostradas em Minhas carteiras.
+2. Leia Passkey é a chave da sua carteira.
+3. Revise os três reconhecimentos: habilitar Senhas do iCloud e Chaves, usar a passkey para recuperação em um dispositivo substituto, e entender o aviso sobre perder acesso à carteira se a passkey for excluída.
+4. Complete o Quiz rápido sobre excluir uma passkey de carteira. Se Resposta errada aparecer, escolha Tentar novamente; se Correto aparecer, escolha Entendi.
+5. Em Definir carteira, escolha um ícone e Nome da carteira. A regra de nome exibida é de quatro a vinte e quatro caracteres. Escolha Continuar.
+
+**Solução de problemas e distinções importantes**
+
+- Excluir uma passkey de carteira Swift pode causar perda de acesso à carteira e fundos. Mantenha a recuperação da carteira separada da gestão de passkeys de login da conta.
+- Mantenha autenticação ordinária da conta, desbloqueio do aplicativo e recuperação da carteira separados.
+- O quiz verifica o entendimento. Passar nele não estabelece que um backup ou restauração de dispositivo foi testado.
+
+<a id="delete-wallet-icloud-backup" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Excluir um backup de carteira no iCloud
+
+_Aplica-se a: Celular_
+
+Excluir um backup do iCloud remove aquela cópia de recuperação. É uma ação diferente de remover a carteira do aplicativo.
+
+1. Abra as Configurações da carteira pretendida e sua entrada ativa de Backup para iCloud.
+2. Verifique o carimbo de data/hora do backup e escolha Excluir.
+3. Leia Tem certeza? O aviso diz que você não pode restaurar a partir deste backup após ele ser removido.
+4. Escolha Cancelar se precisar manter a cópia de recuperação. Escolha Excluir backup do iCloud apenas quando pretender removê-lo e entender o aviso.
+5. Retorne às Configurações e inspecione o status do backup.
+
+**Solução de problemas e distinções importantes**
+
+- Não assuma que um backup manual existe apenas porque o backup do iCloud está ativo. Verifique cada backup independentemente.
+- O diálogo diz que um novo backup pode ser criado; isso não torna uma cópia perdida ou excluída recuperável.
+- Excluir um backup não estabelece que ativos de blockchain foram transferidos ou destruídos.
+
+<a id="desktop-create-swift-wallet" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Criar uma carteira Swift no painel de carteira do desktop
+
+_Aplica-se a: Web_
+
+O painel de carteira do desktop oferece uma rota Swift com reconhecimentos de segurança, uma verificação de perda de passkey e nomeação da carteira antes da etapa de passkey do dispositivo.
+
+1. Abra Minhas carteiras e escolha Criar nova carteira, depois Swift.
+2. Leia os reconhecimentos de segurança sobre Senhas e Chaves do iCloud, acesso a dispositivo substituto e as consequências de excluir a passkey da carteira.
+3. Responda O que acontece se a passkey for excluída? Se Resposta errada aparecer, escolha Tentar novamente e releia o aviso. Em Correto!, escolha Entendi.
+4. Em Definir carteira, escolha um ícone e insira um nome de carteira. Este layout pede entre 4 e 24 caracteres.
+5. Escolha Continuar e siga o fluxo real de passkey do macOS fornecido pelo produto.
+6. Verifique a nova carteira de saldo zero em Minhas carteiras. Olá, nova carteira oferece Financiar minha carteira ou Pular.
+
+**Solução de problemas e distinções importantes**
+
+- Esta passkey controla o acesso à carteira; é diferente de uma credencial usada apenas para fazer login na conta Buburuza.
+- Siga os prompts de passkey para seu sistema operacional e verifique se seu acesso de recuperação pretendido está em vigor.
+- Financiar minha carteira é uma entrada seguinte, não prova de que a nova carteira já contém fundos.
+
+<a id="desktop-import-secret-phrase-wallet" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Importar uma carteira com frase secreta no desktop
+
+_Aplica-se a: Web_
+
+A rota de importação web requer uma verificação de segurança, escolha de rede e a frase secreta da carteira existente.
+
+1. Abra Minhas carteiras e escolha Adicionar carteira existente, depois Frase secreta.
+2. Leia e confirme as declarações de segurança apenas se forem precisas: a frase é sua, não foi fornecida por outra pessoa ou representante da empresa, e você entende o acesso que ela concede.
+3. Escolha a opção multi-moeda aplicável ou ativo/rede no seletor de rede.
+4. Escolha um ícone/nome e insira a frase secreta existente no campo dedicado. O auxiliar descreve palavras separadas por espaços; use a ordem original das palavras da frase.
+5. Escolha Continuar e verifique a carteira importada em Minhas carteiras.
+
+**Solução de problemas e distinções importantes**
+
+- Nunca envie uma frase secreta para o suporte ou cole uma fornecida por outra pessoa.
+- Use o guia para o método de importação que você selecionar. Chave privada, iCloud, Carteira somente visualização, Keystore e Swift requerem suas próprias informações; não substitua uma frase secreta no campo de outro método.
+- Uma rede selecionada e uma frase colada são estados de preparação; verifique o resultado da lista de carteiras antes de assumir que a importação foi concluída.
+
+## Precisa de ajuda?
+
+Se precisar de ajuda com sua conta ou uma tarefa, [entre em contato com o suporte](/support) ou navegue pelo [Centro de Ajuda Buburuza](https://help.buburuza.com/hc/en-us).

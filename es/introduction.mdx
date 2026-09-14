@@ -1,0 +1,92 @@
+---
+title: "Introducción"
+description: "Qué es Buburuza, a quién sirve, dónde opera y cómo cobra vida una cuenta de pago."
+---
+
+Buburuza es una plataforma de pagos para empresas e individuos. Te verificas una sola vez, y la plataforma te da una cuenta que mantiene saldos, recibe fondos a través de redes de pago y envía dinero a destinatarios que designes.
+
+<Note>
+  Buburuza es una empresa de tecnología financiera, **no un banco**. No acepta depósitos ni ofrece seguro de depósitos. El movimiento de dinero regulado es realizado por socios licenciados que actúan como el transmisor de dinero oficial. Consulta [Legal y regulatorio](/legal).
+</Note>
+
+## Dos tipos de espacio
+
+Todo en Buburuza ocurre dentro de un **espacio**. Un espacio posee la cuenta de pago, las billeteras, los destinatarios y las personas que pueden actuar sobre ella.
+
+| Espacio | Para quién es | Verificación |
+| --- | --- | --- |
+| **Espacio de empresa** | Una empresa registrada y las personas que trabajan en ella | KYB — la empresa y sus personas asociadas |
+| **Espacio personal** | Un individuo, actuando por sí mismo | KYC — el individuo |
+
+Puedes pertenecer a varios espacios de empresa y poseer un espacio personal, y cambiar entre ellos sin cerrar sesión. La superficie de dinero es la misma en ambos: mismas billeteras, mismas redes, mismo modelo de tarifas. Lo que difiere es quién se verifica y qué documentos se solicitan.
+
+## Dónde opera Buburuza
+
+La incorporación atiende a dos países, para ambos tipos de espacio:
+
+|  | Registro de empresa | Residencia de individuo |
+| --- | --- | --- |
+| **Estados Unidos** | Atendido | Atendido |
+| **Canadá** | Atendido | Atendido |
+| Todo lo demás | No incorporado | No incorporado |
+
+Una empresa registrada en otro lugar, o una persona residente en otro lugar, no puede completar la verificación: no existe un perfil de verificación para ejecutar en ese país, por lo que la incorporación se detiene en lugar de iniciar algo que nunca podría terminar.
+
+## Cómo funciona
+
+<Steps>
+  <Step title="Registrarse">
+    Crea una cuenta con una dirección de correo electrónico. No hay contraseña: confirmas un código de un solo uso, luego registras una passkey, con un autenticador TOTP como respaldo. Se te entregan códigos de recuperación al final.
+  </Step>
+  <Step title="Verificar">
+    Abre un espacio de empresa y completa el KYB, o abre tu espacio personal y completa el KYC. La verificación se ejecuta en un flujo alojado operado por Sumsub, un proveedor de identidad licenciado.
+  </Step>
+  <Step title="Obtener una cuenta de pago">
+    Cuando la verificación se aprueba, la cuenta de pago para ese espacio se aprovisiona automáticamente, y se crean sus primeras billeteras fiat y de stablecoin. Dependiendo del proveedor, se te puede pedir que aceptes términos alojados antes de que el movimiento de dinero se active.
+  </Step>
+  <Step title="Mover dinero">
+    Fondea la cuenta a través de una red abierta, luego envía transferencias y pagos. Cada envío se cotiza primero: recibes una cotización, ves la tarifa y confirmas contra esa cotización.
+  </Step>
+</Steps>
+
+## Qué contiene la plataforma
+
+Las billeteras vienen en dos tipos.
+
+- Una **billetera fiat** mantiene un saldo en una moneda soportada y recibe fondos a través de redes de pago.
+- Una **billetera de stablecoin** mantiene stablecoins de terceros y los recibe en una dirección de depósito.
+
+<Warning>
+  Buburuza **no** emite una stablecoin. Las billeteras de stablecoin contienen activos emitidos por otras partes — USDC es la predeterminada. Cualquier ticker que veas en la aplicación es del emisor, no de Buburuza.
+</Warning>
+
+## Qué no ofrece Buburuza
+
+La plataforma es deliberadamente limitada. Ninguno de los siguientes existe hoy, y cada uno conllevaría sus propias condiciones de licencia antes de poder ofrecerse:
+
+- Tarjetas de ningún tipo
+- Intereses o rendimientos sobre saldos
+- Préstamos, líneas de crédito o sobregiros
+- Productos de inversión, asesoría de inversión o gestión de carteras
+- Seguros
+
+## Para quién es
+
+- **Empresas** que necesitan una cuenta verificada para mantener saldos y pagar a proveedores, contratistas y socios a través de fronteras.
+- **Individuos** en EE. UU. o Canadá que quieren la misma cuenta para sus propios pagos.
+
+## Dónde ir a continuación
+
+<CardGroup cols={2}>
+  <Card title="Inicio rápido" icon="bolt" href="/quickstart">
+    El camino más corto desde el registro hasta el primer pago.
+  </Card>
+
+  <Card title="Incorporación y seguridad" icon="user-check" href="/onboarding-and-security">
+    Registro, ambas rutas de verificación y cómo funciona el inicio de sesión.
+  </Card>
+
+  <Card title="Movimiento de dinero" icon="arrow-right-arrow-left" href="/payments">
+    Redes, fondeo, transferencias, pagos y el modelo de tarifas.
+  </Card>
+</CardGroup>

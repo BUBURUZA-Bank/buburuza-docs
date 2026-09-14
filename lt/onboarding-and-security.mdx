@@ -1,0 +1,99 @@
+---
+title: "Registracija, patikra ir saugumas"
+description: "Kaip vyksta registracija, ko prašoma atliekant KYB ir KYC bei kaip valdomas prisijungimas, sesijos ir atkūrimas."
+---
+
+## Registracija
+
+Buburuza **sukurta veikti be slaptažodžių**. Nereikia pasirinkti slaptažodžio, jo pakartotinai naudoti ar rizikuoti jo nutekėjimu.
+
+<Steps>
+  <Step title="El. paštas">
+    Įveskite el. pašto adresą ir patvirtinkite į jį išsiųstą vienkartinį kodą. Patvirtintas adresas tampa jūsų tapatybės identifikatoriumi platformoje.
+  </Step>
+  <Step title="Pagrindinė prisijungimo priemonė">
+    Užregistruokite **prieigos raktą („passkey“)** (WebAuthn). Prieigos raktai susieti su svetaine, todėl jų negalima išvilioti ar pakartotinai panaudoti atakai. Jei įrenginys jų nepalaiko, užregistruokite **TOTP autentifikatorių** kaip atsarginę prisijungimo priemonę.
+  </Step>
+  <Step title="Atkūrimo kodai">
+    Jums išduodami vienkartiniai **atkūrimo kodai**. Jie parodomi vieną kartą. Tai vienintelis būdas atgauti prieigą prie paskyros, jei prarasite visas užregistruotas prisijungimo priemones.
+  </Step>
+</Steps>
+
+## Patikra
+
+Patikra suteikia paskyrai galimybę laikyti ir pervesti lėšas. Kurį procesą atliksite, priklauso nuo erdvės rūšies.
+
+<Tabs>
+  <Tab title="Įmonės erdvė — KYB">
+    Įmonė ir su ja susiję žmonės tikrinami kartu.
+
+    | Žingsnis | Kas vyksta |
+    | --- | --- |
+    | Teisinis atstovas ir įmonės pavadinimas | Nurodote teisinį atstovą ir įmonę |
+    | Dokumentų sąrašas | Platforma parodo, ko reikalaujama jūsų registracijos šalyje |
+    | Patikra teikėjo aplinkoje | Sumsub tikrina įmonę ir su ja susijusius asmenis — vadovus, kontroliuojančius asmenis bei tikruosius naudos gavėjus |
+    | Mokėjimo sąskaita | Sukuriama automatiškai, kai patikra baigiama sėkmingai |
+    | Susitarimas su teikėju | Kai kurie teikėjai reikalauja sutikti su jų aplinkoje pateikiamomis sąlygomis prieš leidžiant pervesti lėšas |
+
+    Įmonės tikrinamos pagal **lygį**. Nuo lygio priklauso, kokie sąskaitos veiksmai leidžiami; žemesnis lygis gali leisti gauti lėšas, nors jų siųsti dar negalima.
+  </Tab>
+  <Tab title="Asmeninė erdvė — KYC">
+    Tikrinamas vienas fizinis asmuo, veikiantis savo vardu.
+
+    | Žingsnis | Kas vyksta |
+    | --- | --- |
+    | Gyvenamoji šalis | Nurodote, kur gyvenate; pagal tai parenkamas patikros profilis |
+    | Patikra teikėjo aplinkoje | Sumsub atlieka tapatybės patikrą |
+    | Mokėjimo sąskaita | Sukuriama automatiškai, kai patikra baigiama sėkmingai |
+
+    Jūsų nurodyta gyvenamoji šalis įrašoma tokia, kokią pateikėte. Ji niekada nenustatoma pagal jūsų tinklo vietą ir nesikeičia jums keliaujant.
+  </Tab>
+</Tabs>
+
+<Warning>
+  Patikra prieinama tik įmonėms, registruotoms **Jungtinėse Amerikos Valstijose arba Kanadoje**, ir šiose šalyse gyvenantiems fiziniams asmenims. Kitoms šalims nėra patikros profilio, todėl registracija sustoja šiame žingsnyje.
+</Warning>
+
+<Tip>
+  Patikra nevyksta akimirksniu. Tikrintojo sprendimas gaunamas asinchroniškai ir valdymo skydelyje parodomas jį gavus. Jei reikia daugiau informacijos, jums nurodoma, ko trūksta, ir prašoma pateikti iš naujo.
+</Tip>
+
+## Prisijungimas
+
+| Būdas | Kada jis naudojamas |
+| --- | --- |
+| **Prieigos raktas („passkey“)** | Kasdieniam prisijungimui. Vienas prisilietimas, nereikia įvesti kodų |
+| **Vienkartinis el. pašto kodas** | Naujame įrenginyje arba kai prieigos rakto nėra |
+| **TOTP** | Kaip užregistruota atsarginė prisijungimo priemonė arba pasirenkamas papildomas žingsnis, kurį galite įjungti |
+| **Atkūrimo kodas** | Paskutinė galimybė, kai prarastos visos kitos prisijungimo priemonės. Kiekvienas kodas veikia vieną kartą |
+
+Bet kada galite peržiūrėti paskyros prisijungimo būdus ir keisdami įrenginius pridėti arba pašalinti prieigos raktus.
+
+## Sesijos ir įrenginiai
+
+- Kiekvienas prisijungimas sukuria **sesiją**, kurią galite matyti ir atšaukti — po vieną arba visas iš karto.
+- Prieigos žetonai yra trumpalaikiai ir naudojant programėlę atnaujinami fone.
+- Atšaukus sesijas visur, visos aktyvios sesijos nutraukiamos iš karto, įskaitant tą, kuria naudojatės.
+
+## Papildomas tapatybės patvirtinimas
+
+Atliekant kai kuriuos veiksmus, pavyzdžiui, keičiant saugumo nustatymus, prašoma dar kartą patvirtinti tapatybę, nors jau esate prisijungę. Tai **papildomo tapatybės patvirtinimo užklausa („step-up“)**: ją įvykdote naudodami jau turimą prisijungimo priemonę, ir ji taikoma tik tam veiksmui.
+
+## Kas neteikiama
+
+Platformoje nėra nė vienos iš toliau nurodytų galimybių ir jos nėra imituojamos. Jei matėte jas aprašytas kitur, toks aprašymas buvo klaidingas:
+
+- SMS kaip tapatumo nustatymo veiksnio
+- Balso arba veido atpažinimo
+- Atkūrimo pasitelkiant patikimus kontaktus
+- Paskyros užšaldymo vienu prisilietimu, kelionės režimo arba skubios pagalbos kontaktų
+
+Paskyros saugumas grindžiamas duomenų viliojimui atspariomis prisijungimo priemonėmis, trumpomis sesijomis, kurias galite atšaukti, ir patikros sąlyga lėšų judėjimui.
+
+## Susijusi informacija
+
+<CardGroup cols={1}>
+  <Card title="Atitiktis ir saugumas" icon="shield-halved" href="/lt/compliance-security">
+    Patikros lygiai, stebėsena ir pranešimų teikimo prievolės.
+  </Card>
+</CardGroup>

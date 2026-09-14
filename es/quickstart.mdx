@@ -1,0 +1,87 @@
+---
+title: "Inicio rápido"
+description: "Desde el registro hasta el primer pago: crea una cuenta, verifícate, financia una billetera y envía."
+---
+
+Este es el camino más corto a través de la plataforma.
+
+<Note>
+  Antes de empezar: la incorporación atiende a empresas registradas en los **EE. UU. o Canadá** y a personas residentes en esos países. Si no aplica ninguno de los dos casos, la verificación no puede completarse.
+</Note>
+
+## 1. Crea tu cuenta
+
+<Steps>
+  <Step title="Ingresa tu correo electrónico">
+    Regístrate con una dirección de correo electrónico y confirma el código de un solo uso que se te envía.
+  </Step>
+  <Step title="Registra una credencial">
+    Registra una **passkey**. Si tu dispositivo no puede usar passkeys, registra un **autenticador TOTP** en su lugar. No hay contraseña en ningún momento.
+  </Step>
+  <Step title="Guarda tus códigos de recuperación">
+    Se te muestran códigos de recuperación de un solo uso una sola vez. Son la única forma de volver a entrar si pierdes todas tus credenciales; guárdalos en un lugar al que puedas acceder sin tu dispositivo.
+  </Step>
+</Steps>
+
+## 2. Abre un espacio y verifícate
+
+Elige qué tipo de espacio necesitas. Puedes crear el otro más adelante.
+
+<Tabs>
+  <Tab title="Espacio de empresa (KYB)">
+    1. Ingresa el nombre del representante legal y el nombre de la empresa.
+    2. Revisa la lista de documentos que se muestra para tu país de registro.
+    3. Completa el flujo de verificación alojado para la empresa y sus personas asociadas.
+    4. Espera a que se aprovisione la cuenta de pago; es automático una vez que la verificación se aprueba.
+  </Tab>
+  <Tab title="Espacio personal (KYC)">
+    1. Abre tu espacio personal desde el selector de espacios.
+    2. Indica tu país de residencia; esto selecciona el perfil de verificación.
+    3. Completa el flujo de verificación alojado para ti mismo.
+    4. Espera a que se aprovisione la cuenta de pago.
+  </Tab>
+</Tabs>
+
+<Tip>
+  Puedes pausar y reanudar en cualquier momento; el progreso se guarda por paso. El panel muestra el estado de verificación en tiempo real, y la decisión del revisor llega de forma asíncrona; no hay aprobación instantánea.
+</Tip>
+
+## 3. Financia la cuenta
+
+Una vez que la cuenta de pago esté activa:
+
+1. Abre la cuenta y elige un **método de financiación** para la billetera que quieres financiar.
+2. Obtén las **instrucciones de depósito** para ese método. Para una red fiduciaria recibes los datos de la cuenta a la que pagar; para cripto recibes una dirección de depósito, con su red y activo.
+3. Envía los fondos desde tu banco o billetera.
+
+El dinero entrante aparece en tu lista de transacciones por sí solo una vez que se liquida. No hay ningún paso de depósito que realizar desde el lado de la plataforma.
+
+## 4. Envía tu primer pago
+
+<Steps>
+  <Step title="Cotízalo primero">
+    Solicita una **vista previa de comisión** para la transferencia o el pago. Recibes una cotización que incluye un `fee_quote_id`, el monto neto, la comisión y el total que se debitará.
+  </Step>
+  <Step title="Confirma contra la cotización">
+    Envía el pago con ese `fee_quote_id`. La cotización es de un solo uso y expira diez minutos después de emitida; si vence, solicita una nueva.
+  </Step>
+  <Step title="Síguelo">
+    Sigue el pago en tu lista de transacciones. Cada evento de dinero (financiación, transferencia, pago, comisión) aparece allí con su propio tipo y estado.
+  </Step>
+</Steps>
+
+<Note>
+  La comisión se cobra **encima** del monto que ingresas. El destinatario recibe exactamente el monto que escribiste, y tu billetera se debita ese monto más la comisión.
+</Note>
+
+## Siguiente
+
+<CardGroup cols={2}>
+  <Card title="Movimiento de dinero" icon="arrow-right-arrow-left" href="/payments">
+    Redes, endosos, cotizaciones de comisión y mecánica de pagos en detalle.
+  </Card>
+
+  <Card title="Equipos y espacios" icon="users" href="/team">
+    Invita colegas, asigna roles y cambia de espacio.
+  </Card>
+</CardGroup>

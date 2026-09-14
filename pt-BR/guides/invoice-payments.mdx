@@ -1,0 +1,116 @@
+---
+title: "Transformar uma fatura em um pagamento revisado"
+description: "A leitura de faturas ajuda a preparar o pagamento. Ela não substitui verificar o destinatário e o valor ou autorizar a transação. Siga a mesma revisão final usada para um pagamento inserido manualmente."
+sidebarTitle: "Pagamentos de fatura"
+---
+
+## Neste guia
+
+- [Criar um pagamento a partir de uma fatura](#pay-invoice)
+- [Adicionar um destinatário e detalhes de pagamento](#add-recipient)
+- [Revisar taxas antes de confirmar um pagamento](#payment-fees)
+- [Meu pagamento falhou ou o app fechou durante a confirmação](#failed-payment)
+
+## Entenda o que o leitor de faturas preencheu
+
+A leitura de faturas prepara um pagamento para sua revisão. Ela não autoriza o pagamento.
+
+| Resultado | Sua próxima ação |
+| --- | --- |
+| Um destinatário corresponde | Compare o destinatário e o método de pagamento exibidos com a fatura antes de continuar. |
+| O destinatário sugerido está errado | Escolha outro destinatário. |
+| Nenhum destinatário corresponde | Escolha um destinatário existente ou crie um novo e verifique cada campo de perfil extraído. |
+| Detalhes de destinatário salvos são exibidos | Compare os detalhes do catálogo de endereços com a fatura; eles não necessariamente vieram do upload atual. |
+| Detalhes foram escaneados da fatura | Verifique cada campo bancário antes de continuar. |
+| Você edita detalhes bancários | Decida se deseja salvar a alteração no destinatário ou usá-la apenas para este pagamento. |
+
+Revise o valor, moeda, conta, destinatário e débito total novamente na tela de pagamento final. Um preenchimento automático de nome de banco ou uma correspondência de fatura não elimina a necessidade de verificar as instruções.
+
+<a id="pay-invoice" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Criar um pagamento a partir de uma fatura
+
+_Aplica-se a: Mobile e web_
+
+O fluxo de faturas da Buburuza pode ler um documento para ajudar a preparar um pagamento. Revise as informações extraídas você mesmo antes de autorizar qualquer movimentação de dinheiro.
+
+1. Escolha Pagar fatura em Mover dinheiro no mobile ou Enviar uma fatura em Enviar dinheiro na web.
+2. No mobile, escolha Arquivos, Fotos ou Câmera. Na web, use a área de upload, que lista imagens, PDFs e planilhas.
+3. Aguarde a leitura terminar. O fluxo na web mostra upload, extração, correspondência de destinatário e preparação do pagamento, com uma ação de Cancelar.
+4. Se um destinatário corresponder, inspecione o destinatário e o método de pagamento. Escolha Continuar ou Continuar com destinatário correspondente apenas quando a correspondência estiver correta; no mobile, Selecionar outro altera o destinatário.
+5. Se nenhum destinatário corresponder na web, crie um novo destinatário ou escolha um existente. Ao criar um, revise cada campo de nome legal, beneficiário, e-mail, apelido e endereço preenchido automaticamente antes de escolher Criar destinatário.
+6. Revise os detalhes bancários. Detalhes de destinatário salvos vêm do catálogo de endereços; Escaneado da sua fatura identifica detalhes derivados da fatura. Compare ambos com a fatura e verifique conflitos antes de pagar.
+7. Se você alterar detalhes, decida se deseja atualizar o destinatário salvo ou usar a alteração apenas para este pagamento. Essas são escolhas diferentes.
+8. Revise o valor, moeda, fonte de financiamento, método de pagamento e taxa. Na web, verifique o número da fatura, data da fatura, data de vencimento, nota interna, e-mail de recibo e se anexos serão incluídos.
+9. Complete a revisão normal do pagamento e autorize-o. Ler ou corresponder a fatura não envia dinheiro.
+
+**Solução de problemas e distinções importantes**
+
+- Se a correspondência estiver errada, selecione outro destinatário; se nenhum existir, crie um destinatário após revisar os campos extraídos.
+- Se a leitura não puder ser processada, retorne ao fluxo normal de enviar dinheiro e insira as informações verificadas manualmente.
+- Se os detalhes salvos conflitarem com os detalhes da fatura, verifique as instruções de pagamento por um canal confiável antes de alterá-las.
+- Um preenchimento automático de nome de banco ou código SWIFT sugerido não substitui verificar as instruções reais do destinatário.
+
+<a id="add-recipient" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Adicionar um destinatário e detalhes de pagamento
+
+_Aplica-se a: Mobile e web_
+
+Um destinatário armazena a pessoa ou empresa que você deseja pagar e os detalhes de pagamento que usará. Revise esses detalhes com cuidado antes de salvar ou enviar.
+
+1. Abra Destinatários e escolha Adicionar destinatário.
+2. Escolha Pessoa ou Empresa. Insira Nome legal para uma pessoa ou Nome legal da empresa para uma empresa, correspondendo ao nome na conta bancária receptora.
+3. Complete Nome do beneficiário e os campos de endereço solicitados. O e-mail é para recibos de pagamento; Apelido é uma referência privada para identificar o destinatário.
+4. Escolha Adicionar método de pagamento para salvar detalhes bancários ou um endereço de carteira agora. Se o formulário na web oferecer, você pode criar o destinatário e adicionar detalhes de pagamento depois.
+5. Escolha Criar destinatário e depois inspecione o perfil do destinatário salvo.
+6. Antes de pagar, escolha o método de pagamento salvo correto e verifique seus detalhes bancários ou ativo, rede e endereço.
+
+**Solução de problemas e distinções importantes**
+
+- Se um campo estiver marcado como inválido, corrija-o antes de continuar. Para cripto, verifique a rede selecionada além do endereço.
+- Se o destinatário alterar suas instruções de pagamento, confirme a alteração por um canal confiável antes de atualizar os detalhes salvos.
+
+<a id="payment-fees" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Revisar taxas antes de confirmar um pagamento
+
+_Aplica-se a: Mobile e web_
+
+Revise o detalhamento das taxas na tela de pagamento antes de autorizar a transação. A tela pode mostrar uma taxa de transferência, taxa de rede ou informações de conversão dependendo do método.
+
+1. Escolha o método de pagamento, a fonte de financiamento e o valor.
+2. Abra ou leia os detalhes de taxa e conversão na tela de revisão.
+3. Compare o valor enviado, o total debitado e qualquer valor de destinatário exibido.
+4. Se você alterar o valor, a moeda ou o método, revise o total atualizado novamente.
+5. Após o envio, abra o registro da transação para ver as informações retidas para aquele pagamento.
+
+**Solução de problemas e distinções importantes**
+
+- A página de comparação de taxas de câmbio não substitui a cotação na tela de revisão do seu pagamento.
+- Se precisar questionar uma taxa, forneça ao suporte a referência da transação e o item de linha que deseja explicado.
+
+<a id="failed-payment" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Meu pagamento falhou ou o app fechou durante a confirmação
+
+_Aplica-se a: Mobile e web_
+
+Um pagamento falho ou devolvido precisa da explicação de seu próprio registro de transação. Verifique se ele nunca foi transmitido, revertido, rejeitado ou devolvido. Esses estados têm efeitos diferentes no pagamento e no saldo.
+
+1. Abra a transação e leia o motivo da falha ou devolução antes de tomar outra ação.
+2. Se um registro de cripto de saída disser explicitamente Não transmitido e Não cobrado, verifique o saldo da carteira indicado e a atividade existente antes de usar Enviar novamente.
+3. Se um registro de cripto de entrada disser Revertido ou fundos não recebidos, verifique se não foi creditado e depois peça ao remetente para revisar sua transferência.
+4. Se um pagamento bancário de saída for rejeitado ou devolvido, inspecione o motivo exibido, como conta encerrada, detalhes bancários inválidos ou conta não encontrada. Verifique as instruções corrigidas com o destinatário antes de enviar novamente.
+5. Se uma transferência de entrada for devolvida por incompatibilidade de nome do beneficiário, compartilhe as instruções de recebimento atuais exatas. Se mostrar uma devolução do banco do remetente, peça ao remetente para investigar seu pagamento.
+6. Leia o valor, débito ou crédito, e as linhas de taxa naquele registro. Entre em contato com o suporte com o motivo exibido e a referência se o resultado da conta não estiver claro.
+
+**Solução de problemas e distinções importantes**
+
+- Não infira um reembolso meramente de um status Falho. Use a própria explicação de fundos e taxa do registro.
+- Um botão Enviar novamente é uma nova ação; primeiro verifique se está usando o registro existente correto e as instruções de pagamento corrigidas.
+- Verifique as entradas de taxa e reembolso na transação afetada. Um status Reembolsado em um registro não significa que toda transferência rejeitada recebe um reembolso de taxa.
+
+## Precisa de ajuda?
+
+Se precisar de ajuda com sua conta ou uma tarefa, [entre em contato com o suporte](/support) ou navegue pelo [Centro de Ajuda da Buburuza](https://help.buburuza.com/hc/en-us).

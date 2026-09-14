@@ -1,0 +1,99 @@
+---
+title: "Incorporación y seguridad"
+description: "Cómo funciona el registro, qué solicitan KYB y KYC, y cómo se manejan el inicio de sesión, las sesiones y la recuperación."
+---
+
+## Registro
+
+Buburuza es **sin contraseña por diseño**. No hay contraseña que elegir, reutilizar ni filtrar.
+
+<Steps>
+  <Step title="Correo electrónico">
+    Ingresa tu dirección de correo electrónico y confirma el código de un solo uso que se te envía. La dirección confirmada se convierte en tu identidad en la plataforma.
+  </Step>
+  <Step title="Credencial principal">
+    Registra una **passkey** (WebAuthn). Las passkeys están vinculadas al sitio y no pueden ser suplantadas ni reutilizadas. Si tu dispositivo no las admite, registra un **autenticador TOTP** como credencial de respaldo.
+  </Step>
+  <Step title="Códigos de recuperación">
+    Se te emiten **códigos de recuperación** de un solo uso. Se muestran una sola vez. Son la única ruta de regreso a la cuenta si pierdes todas las credenciales registradas.
+  </Step>
+</Steps>
+
+## Verificación
+
+La verificación es lo que convierte una cuenta en una que puede tener y mover dinero. El flujo que sigues depende del tipo de espacio.
+
+<Tabs>
+  <Tab title="Espacio de empresa — KYB">
+    La empresa y las personas detrás de ella se verifican juntas.
+
+    | Paso | Qué ocurre |
+    | --- | --- |
+    | Nombre legal y de la empresa | Declaras al representante legal y la empresa |
+    | Lista de documentos | La plataforma muestra lo que requiere tu país de registro |
+    | Verificación alojada | Sumsub ejecuta la verificación para la empresa y sus personas asociadas: directores, controladores y beneficiarios finales |
+    | Cuenta de pago | Se aprovisiona automáticamente una vez que la verificación se aprueba |
+    | Acuerdo con el proveedor | Algunos proveedores requieren que aceptes términos alojados antes de que se habilite el movimiento de dinero |
+
+    Las empresas se verifican en un **nivel**. El nivel limita lo que la cuenta puede hacer, y un nivel más ligero puede recibir fondos mientras el movimiento saliente permanece cerrado.
+  </Tab>
+  <Tab title="Espacio personal — KYC">
+    Se verifica un individuo, para sí mismo.
+
+    | Paso | Qué ocurre |
+    | --- | --- |
+    | País de residencia | Declaras dónde vives; esto selecciona el perfil de verificación |
+    | Verificación alojada | Sumsub ejecuta la verificación de identidad |
+    | Cuenta de pago | Se aprovisiona automáticamente una vez que la verificación se aprueba |
+
+    Tu país de residencia declarado se registra tal como lo proporcionas. Nunca se infiere de tu ubicación de red, y no cambia si viajas.
+  </Tab>
+</Tabs>
+
+<Warning>
+  La verificación solo está disponible para empresas registradas en los **Estados Unidos o Canadá**, y personas residentes en esos países. Fuera de ellos no existe un perfil de verificación que ejecutar, por lo que la incorporación se detiene en ese paso.
+</Warning>
+
+<Tip>
+  Nada de la verificación es instantáneo. La decisión del revisor llega de forma asíncrona y el panel la refleja cuando llega. Si se necesita más información, se te indica qué y se te pide que la vuelvas a enviar.
+</Tip>
+
+## Inicio de sesión
+
+| Método | Cuándo lo usas |
+| --- | --- |
+| **Passkey** | Inicio de sesión diario. Un toque, sin códigos que escribir |
+| **Código de un solo uso por correo** | En un dispositivo nuevo, o cuando una passkey no está disponible |
+| **TOTP** | Como la credencial de respaldo registrada, o como un paso extra opcional que puedes activar |
+| **Código de recuperación** | Último recurso, cuando todas las demás credenciales se han perdido. Cada código funciona una vez |
+
+Puedes revisar los métodos de inicio de sesión de tu cuenta en cualquier momento y agregar o eliminar passkeys según cambies de dispositivo.
+
+## Sesiones y dispositivos
+
+- Cada inicio de sesión crea una **sesión** que puedes ver y revocar, una a la vez o todas a la vez.
+- Los tokens de acceso son de corta duración y se actualizan silenciosamente mientras usas la aplicación.
+- Revocar en todas partes termina todas las sesiones activas inmediatamente, incluida la que estás usando.
+
+## Confirmación adicional
+
+Algunas acciones te piden que reconfirmes tu identidad aunque ya hayas iniciado sesión; por ejemplo, al cambiar la configuración de seguridad. Esto es un **desafío de confirmación adicional**: lo satisfaces con la credencial que ya tienes, y se aplica solo a esa acción.
+
+## Qué no se ofrece
+
+La plataforma no tiene, ni simula, ninguna de las siguientes opciones. Si las has visto descritas en otro lugar, esa descripción era incorrecta:
+
+- SMS como factor de autenticación
+- Reconocimiento de voz o facial
+- Recuperación social a través de contactos de confianza
+- Congelación de cuenta con un toque, modo de viaje o contactos de emergencia
+
+La seguridad de la cuenta se basa en credenciales resistentes al phishing, sesiones cortas que puedes revocar, y la verificación como requisito para el movimiento de dinero.
+
+## Relacionado
+
+<CardGroup cols={1}>
+  <Card title="Cumplimiento y seguridad" icon="shield-halved" href="/compliance-security">
+    Niveles de verificación, monitoreo y obligaciones de reporte.
+  </Card>
+</CardGroup>

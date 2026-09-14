@@ -1,0 +1,105 @@
+---
+title: "Movimentação de Dinheiro"
+description: "Redes e sua situação, alimentação de uma conta, precificação de pagamentos, envio de transferências e saques, e leitura da lista de transações."
+---
+
+A movimentação de dinheiro tem três partes: colocar dinheiro, enviá-lo e saber quanto custou. A precificação vem primeiro em todo fluxo de saída — você nunca envia um pagamento sem uma cotação em mãos.
+
+## Redes e sua situação
+
+Uma **rede** é uma rota pela qual o dinheiro viaja. Duas são oferecidas hoje:
+
+| Rede | Uso típico |
+| --- | --- |
+| `ach` | Transferências bancárias domésticas nos EUA |
+| `wire` | Transferências bancárias de alto valor e internacionais |
+
+Mais redes são habilitadas progressivamente. Quais estão abertas para você são mostradas no aplicativo, e essa lista — não esta página — é a resposta autoritativa para o seu espaço.
+
+Uma rede ser oferecida não significa que está aberta para você. Duas barreiras separadas decidem isso, e a diferença importa:
+
+<AccordionGroup>
+  <Accordion title="O interruptor de implantação" icon="toggle-on">
+    Se a rede está ligada para o ambiente que você está usando. Uma rede desligada está desligada para todos.
+  </Accordion>
+
+  <Accordion title="O endosso do provedor" icon="stamp">
+    Se o provedor de pagamentos endossou seu espaço para aquela família de redes. Endossos são emitidos por família, e um saque por uma rede para a qual você não tem endosso é recusado pelo provedor. Um espaço registrado antes de uma rede ser ligada não tem endosso para ela e precisa solicitar um.
+  </Accordion>
+</AccordionGroup>
+
+Listar suas redes retorna todas as redes que este ambiente oferece, cada uma com sua situação e, onde estiver fechada, o motivo. Um estado merece atenção: quando um endosso ainda não foi lido de volta do provedor, a rede é reportada como disponível, porque um endosso não lido nunca recusa um saque — mas nada deve prometer que a rede funciona até ser confirmada. Onde uma rede precisa de documentos ou aprovação, você pode solicitá-la e anexar o que for pedido.
+
+## Depósito
+
+Colocar dinheiro é um fluxo de duas etapas, depois uma espera.
+
+<Steps>
+  <Step title="Escolha um método de depósito">
+    Escolha a carteira e o método — uma rede fiduciária ou criptomoedas.
+  </Step>
+  <Step title="Obtenha as instruções">
+    Para uma rede fiduciária, você recebe os dados da conta para pagar. Para criptomoedas, você recebe um endereço de depósito junto com sua rede e ativo. Envie apenas o ativo nomeado, na rede nomeada.
+  </Step>
+  <Step title="Envie do seu lado">
+    Inicie o pagamento no seu banco ou carteira. Os fundos recebidos aparecem em sua lista de transações por conta própria assim que forem compensados — não há depósito a confirmar na plataforma.
+  </Step>
+</Steps>
+
+## Precificação: a cotação de taxa
+
+Todo pagamento de saída é precificado antes de existir.
+
+<Steps>
+  <Step title="Solicite uma pré-visualização">
+    Peça uma pré-visualização de taxa para o valor e a rota que pretende. Você recebe uma cotação contendo um `fee_quote_id`, o valor líquido, a taxa e o total que será debitado.
+  </Step>
+  <Step title="Envie com base na cotação">
+    Crie o pagamento informando esse `fee_quote_id`. O preço que você viu é o preço que será cobrado.
+  </Step>
+</Steps>
+
+Três propriedades de uma cotação valem a pena memorizar:
+
+- **Taxa acima.** O destinatário recebe exatamente o valor que você inseriu. Sua carteira é debitada nesse valor **mais** a taxa. Valor líquido e taxa sempre somam o total debitado.
+- **Uso único.** Uma cotação é consumida por um pagamento. Um segundo pagamento precisa de uma segunda cotação.
+- **Dez minutos.** Uma cotação expira dez minutos após ser emitida. Enviar com base em uma cotação expirada é recusado, e a solução é precificar novamente.
+
+<Note>
+  A taxa é definida por pagamento a partir do destino e do risco da rota, então não é uma porcentagem única publicada. A pré-visualização é o preço autoritativo para seu pagamento, e é o número a mostrar aos seus próprios usuários.
+</Note>
+
+## Transferências
+
+Uma transferência move dinheiro entre carteiras. Precifique-a, envie-a com base na cotação e, em seguida, acompanhe seu status na lista de transações.
+
+## Saques
+
+Um saque envia dinheiro para alguém fora da plataforma.
+
+<Steps>
+  <Step title="Crie um destinatário">
+    Registre quem será pago, uma vez. Destinatários são reutilizáveis, e você pode atualizá-los ou excluí-los depois.
+  </Step>
+  <Step title="Precifique o saque">
+    Solicite uma pré-visualização de taxa de saque para o valor e a rede.
+  </Step>
+  <Step title="Envie e acompanhe">
+    Envie com base na cotação e acompanhe o saque em sua lista de transações.
+  </Step>
+</Steps>
+
+### Destinatários e beneficiários
+
+São duas camadas da mesma ideia, e a divisão importa quando algo precisa ser corrigido:
+
+- Um **destinatário** é seu registro de um beneficiário — aquele que você cria, edita e reutiliza.
+- Um **beneficiário** é o vínculo entre esse registro e a referência de conta do próprio provedor. Quando um provedor altera uma referência, o beneficiário pode ser desvinculado e revinculado sem que você reconstrua o destinatário.
+
+## Transações
+
+Todo evento de dinheiro vai para uma única lista: depósitos, transferências, saques e taxas. Cada um carrega um **tipo** e um **status**, e você pode filtrar por conta, carteira, tipo ou status. Um pagamento e sua taxa são entradas separadas, então o livro-razão concilia com seus próprios registros sem inferência.
+
+## Taxas
+
+As taxas de câmbio atuais são mostradas no aplicativo, para que você possa ver o que uma conversão produzirá antes de confirmá-la.

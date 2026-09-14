@@ -1,0 +1,175 @@
+---
+title: "Respaldar y recuperar una billetera de cripto"
+description: "Identifica el tipo de billetera y método de recuperación, crea o verifica un respaldo, y mantén la recuperación de la billetera separada del inicio de sesión de la cuenta."
+sidebarTitle: "Respaldo y recuperación de billetera"
+---
+
+## En esta guía
+
+- [Crear y verificar un respaldo de billetera en iCloud](#wallet-icloud-backup)
+- [Escribir y verificar la frase secreta de una billetera](#wallet-manual-backup)
+- [Importar una billetera existente con su frase secreta](#import-secret-phrase-wallet)
+- [Entender una clave de acceso Swift de billetera](#swift-wallet-passkey)
+- [Eliminar un respaldo de billetera en iCloud](#delete-wallet-icloud-backup)
+- [Crear una billetera Swift en el panel de billetera de escritorio](#desktop-create-swift-wallet)
+- [Importar una billetera con una frase secreta en escritorio](#desktop-import-secret-phrase-wallet)
+
+## Estado del respaldo y eliminación de billetera
+
+Cada billetera muestra **Respaldo en iCloud** y **Respaldo manual** independientemente. Uno puede estar Activo mientras el otro es No configurado. El estado pertenece a la billetera seleccionada; cambiar de billetera puede mostrar una configuración de respaldo diferente.
+
+Para un respaldo en iCloud, verifica su marca de tiempo y usa **Verificar** para probar la contraseña. Para un respaldo manual, la confirmación te pide identificar palabras en posiciones seleccionadas. Una selección incorrecta tiene una ruta de **Intentar de nuevo**.
+
+Eliminar una billetera de la aplicación y eliminar un respaldo en iCloud son acciones diferentes. El flujo de eliminación de billetera te pide que respaldes la frase semilla antes de proceder. La advertencia de eliminación del respaldo en iCloud explica que el respaldo eliminado ya no puede usarse para restaurar la billetera. Verifica el método de recuperación que pretendes mantener antes de eliminar cualquiera de los dos.
+
+<a id="wallet-icloud-backup" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Crear y verificar un respaldo de billetera en iCloud
+
+_Aplica a: Móvil_
+
+El respaldo en iCloud protege la frase secreta de una billetera con una contraseña separada. Buburuza no puede restablecer esa contraseña de respaldo.
+
+1. Abre la Configuración de la billetera deseada y elige Respaldo en iCloud.
+2. Completa la autenticación de la aplicación si se solicita. Ingresa un Nombre de respaldo reconocible, luego elige Continuar.
+3. En Establecer contraseña, crea la contraseña que encriptará la frase secreta en iCloud. Usa el control de visibilidad solo en un entorno privado, luego elige Continuar.
+4. En Confirmar contraseña, repite la contraseña y lee ambos reconocimientos sobre recuperación y pérdida de acceso. Márcalos solo después de entenderlos, luego elige Continuar.
+5. Regresa a la Configuración de la billetera y verifica que Respaldo en iCloud esté Activo.
+6. Abre el respaldo activo para inspeccionar su marca de tiempo y elige Verificar.
+7. Ingresa la contraseña de respaldo en Verificar contraseña de respaldo y elige Continuar. Verifica Contraseña verificada, luego elige Listo.
+
+**Solución de problemas y distinciones importantes**
+
+- La contraseña de encriptación del respaldo es diferente de tu código de acceso de la aplicación y el PIN de la tarjeta.
+- Continuar está deshabilitado en los estados mostrados de contraseña vacía y confirmación incompleta.
+- Un estado Activo de iCloud y un respaldo manual Activo son independientes; verificar uno no completa el otro.
+- No envíes la frase, contraseña de encriptación o una captura de pantalla de cualquiera de los dos a soporte.
+
+<a id="wallet-manual-backup" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Escribir y verificar la frase secreta de una billetera
+
+_Aplica a: Móvil_
+
+Un respaldo manual registra la frase secreta de la billetera. Cualquiera que obtenga esa frase puede controlar la billetera, según las pantallas de seguridad.
+
+1. Abre la Configuración de la billetera deseada y elige Respaldo manual.
+2. Completa la autenticación de la aplicación cuando se solicite. Lee el consejo de seguridad Solo para tus ojos.
+3. Lee y completa los reconocimientos: Buburuza no tiene acceso a la clave, y la frase debe escribirse en papel y almacenarse de forma segura en lugar de guardarse digitalmente. Elige Continuar.
+4. Registra las palabras secretas numeradas en su orden original en un lugar privado. No las compartas ni las incluyas en mensajes de soporte.
+5. Elige Continuar para abrir Confirmar frase secreta. Para cada posición solicitada, elige la palabra coincidente de tu respaldo escrito.
+6. Elige Continuar. Si aparece Incorrecto / Tus selecciones no coinciden, elige Intentar de nuevo y compara las posiciones solicitadas con el respaldo.
+7. Regresa a Configuración y verifica el estado del respaldo manual.
+
+**Solución de problemas y distinciones importantes**
+
+- La confirmación pide posiciones de palabras seleccionadas; no te pide que envíes la frase completa a soporte.
+- Si la verificación de palabras reporta una respuesta incorrecta, elige Intentar de nuevo y verifica las posiciones de palabras solicitadas contra tu respaldo.
+- Registra cada palabra mostrada para tu propia billetera en el orden original. Confirma las posiciones exactas solicitadas por la verificación de respaldo de esa billetera.
+- Un código de acceso de aplicación incorrecto tiene una advertencia separada de intentos restantes. No la confundas con el cuestionario de confirmación de frase.
+
+<a id="import-secret-phrase-wallet" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Importar una billetera existente con su frase secreta
+
+_Aplica a: Móvil_
+
+Agregar billetera existente ofrece varios métodos de importación. Para una importación con frase secreta, selecciona la red de la billetera, nombra la billetera e ingresa su frase existente.
+
+1. Abre Mis billeteras y elige Agregar billetera existente, luego Frase secreta.
+2. Lee los reconocimientos de seguridad: solo tú debes conocer la frase, no debe haber sido proporcionada por un representante, y alguien que la vea puede robar fondos. Elige Continuar después de reconocerlos.
+3. En Seleccionar red, busca la red requerida o elige la opción recomendada Billetera multi-moneda cuando coincida con tu billetera.
+4. Elige un icono e ingresa Nombre de billetera. Ingresa o pega la Frase secreta en el campo de la aplicación, preservando el orden de palabras y espacios.
+5. Si usas la opción de escanear, alinea el código QR en Escanear código QR. La pantalla también ofrece un icono de biblioteca de fotos e Ingresar código manualmente.
+6. Para entrada manual de código, completa el campo y elige Confirmar. Confirmar vacío está deshabilitado.
+7. Revisa la billetera/red deseada y elige Continuar cuando los campos estén completos.
+
+**Solución de problemas y distinciones importantes**
+
+- Solo ingresa tu propia frase en el flujo oficial de importación de billetera. Nunca la envíes a soporte ni ingreses una frase proporcionada por otra persona.
+- El asistente describe las frases como usualmente doce y a veces dieciocho o veinticuatro palabras; coincide con el respaldo de tu billetera original.
+
+<a id="swift-wallet-passkey" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Entender una clave de acceso Swift de billetera
+
+_Aplica a: Móvil_
+
+La configuración de la billetera Swift trata una clave de acceso como la llave de esa billetera. Es separada de una clave de acceso usada solo para iniciar sesión en tu cuenta de Buburuza.
+
+1. Elige Swift entre las opciones de creación de billetera o billetera existente mostradas en Mis billeteras.
+2. Lee La clave de acceso es la llave de tu billetera.
+3. Revisa los tres reconocimientos: habilitar Contraseñas y Llavero de iCloud, usar la clave de acceso para recuperación en un dispositivo de reemplazo, y entender la advertencia sobre perder acceso a la billetera si la clave de acceso se elimina.
+4. Completa el Cuestionario rápido sobre eliminar una clave de acceso de billetera. Si aparece Respuesta incorrecta, elige Intentar de nuevo; si aparece Correcta, elige Entendido.
+5. En Establecer billetera, elige un icono y Nombre de billetera. La regla de nombre mostrada es de cuatro a veinticuatro caracteres. Elige Continuar.
+
+**Solución de problemas y distinciones importantes**
+
+- Eliminar una clave de acceso Swift de billetera puede causar pérdida de acceso a la billetera y fondos. Mantén la recuperación de la billetera separada de la gestión de claves de acceso para inicio de sesión de cuenta.
+- Mantén separados la autenticación ordinaria de cuenta, desbloqueo de aplicación y recuperación de billetera.
+- El cuestionario verifica comprensión. Pasarlo no establece que una copia de seguridad o restauración del dispositivo haya sido probada.
+
+<a id="delete-wallet-icloud-backup" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Eliminar un respaldo de billetera en iCloud
+
+_Aplica a: Móvil_
+
+Eliminar un respaldo en iCloud remueve esa copia de recuperación. Es una acción diferente de eliminar la billetera de la aplicación.
+
+1. Abre la Configuración de la billetera deseada y su entrada activa de Respaldo en iCloud.
+2. Verifica la marca de tiempo del respaldo y elige Eliminar.
+3. Lee ¿Estás seguro? La advertencia dice que no puedes restaurar desde este respaldo después de que sea eliminado.
+4. Elige Cancelar si necesitas mantener la copia de recuperación. Elige Eliminar respaldo de iCloud solo cuando pretendas removerlo y entiendas la advertencia.
+5. Regresa a Configuración e inspecciona el estado del respaldo.
+
+**Solución de problemas y distinciones importantes**
+
+- No asumas que existe un respaldo manual meramente porque el respaldo en iCloud está activo. Verifica cada respaldo independientemente.
+- El diálogo dice que se puede crear un nuevo respaldo; eso no hace que una copia perdida o eliminada sea recuperable.
+- Eliminar un respaldo no establece que los activos blockchain fueran transferidos o destruidos.
+
+<a id="desktop-create-swift-wallet" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Crear una billetera Swift en el panel de billetera de escritorio
+
+_Aplica a: Web_
+
+El panel de billetera de escritorio ofrece una ruta Swift con reconocimientos de seguridad, una verificación de pérdida de clave de acceso y nombramiento de billetera antes del paso de clave de acceso del dispositivo.
+
+1. Abre Mis billeteras y elige Crear nueva billetera, luego Swift.
+2. Lee los reconocimientos de seguridad sobre Contraseñas y Llavero de iCloud, acceso en dispositivo de reemplazo y las consecuencias de eliminar la clave de acceso de la billetera.
+3. Responde ¿Qué pasa si la clave de acceso se elimina? Si aparece Respuesta incorrecta, elige Intentar de nuevo y relee la advertencia. En ¡Correcto!, elige Entendido.
+4. En Establecer billetera, elige un icono e ingresa un nombre de billetera. Este diseño pide entre 4 y 24 caracteres.
+5. Elige Continuar y sigue el flujo real de clave de acceso de macOS proporcionado por el producto.
+6. Verifica la nueva billetera de saldo cero en Mis billeteras. Hola, nueva billetera ofrece Fondear mi billetera o Omitir.
+
+**Solución de problemas y distinciones importantes**
+
+- Esta clave de acceso controla el acceso a la billetera; es diferente de una credencial usada solo para iniciar sesión en la cuenta de Buburuza.
+- Sigue los mensajes de clave de acceso para tu sistema operativo y verifica que tu acceso de recuperación previsto esté en su lugar.
+- Fondear mi billetera es una entrada siguiente, no prueba de que la nueva billetera ya contenga fondos.
+
+<a id="desktop-import-secret-phrase-wallet" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Importar una billetera con una frase secreta en escritorio
+
+_Aplica a: Web_
+
+La ruta de importación web requiere una verificación de seguridad, elección de red y la frase secreta de la billetera existente.
+
+1. Abre Mis billeteras y elige Agregar billetera existente, luego Frase secreta.
+2. Lee y confirma las declaraciones de seguridad solo si son precisas: la frase es tuya, no fue proporcionada por otra persona o representante de la empresa, y entiendes el acceso que otorga.
+3. Elige la opción multi-moneda aplicable o activo/red en el selector de red.
+4. Elige un icono/nombre e ingresa la frase secreta existente en el campo dedicado. El asistente describe palabras separadas por espacios; usa el orden original de palabras de la frase.
+5. Elige Continuar y verifica la billetera importada en Mis billeteras.
+
+**Solución de problemas y distinciones importantes**
+
+- Nunca envíes una frase secreta a soporte ni pegues una proporcionada por otra persona.
+- Usa la guía para el método de importación que seleccionas. Clave privada, iCloud, Billetera de solo lectura, Keystore y Swift requieren su propia información; no sustituyas una frase secreta en el campo de otro método.
+- Una red seleccionada y una frase pegada son estados de preparación; verifica el resultado de la lista de billeteras antes de asumir que la importación se completó.
+
+## ¿Necesitas ayuda?
+
+Si necesitas ayuda con tu cuenta o una tarea, [contacta a soporte](/support) o visita el [Centro de ayuda de Buburuza](https://help.buburuza.com/hc/en-us).

@@ -1,0 +1,56 @@
+---
+title: "Times e Espaços"
+description: "Como funcionam os espaços empresariais e pessoais, como convidar pessoas e o que cada função pode fazer."
+---
+
+## Espaços
+
+Um **espaço** possui uma conta de pagamento, suas carteiras, seus destinatários e as pessoas autorizadas a agir sobre ele. Uma pessoa pode pertencer a vários espaços empresariais e possuir um espaço pessoal, e alternar entre eles sem sair da conta.
+
+|  | Espaço empresarial | Espaço pessoal |
+| --- | --- | --- |
+| Pertence a | Uma empresa registrada | Um indivíduo |
+| Verificado por | KYB — empresa e pessoas associadas | KYC — o indivíduo |
+| Pode ter membros | Sim | Não — é apenas seu |
+
+Alternar de espaço muda a que tela se refere. Você sempre age no espaço em que está no momento.
+
+Abrir um espaço pessoal é uma ação única, e é idempotente: se você já possui um, recebe o que já tem em vez de um segundo. Abri-lo não te move para dentro dele — você alterna quando escolher.
+
+## Membros e funções
+
+Um espaço empresarial tem membros, cada um com uma função.
+
+| Função | O que pode fazer |
+| --- | --- |
+| `OWNER` | Tudo, incluindo gerenciar membros e o perfil da empresa |
+| `ADMIN` | Operação do dia a dia do espaço, incluindo movimentação de dinheiro |
+| `VIEWER` | Somente leitura — pode ver a conta, saldos e histórico, mas não movimentar nada |
+
+Um membro está `ACTIVE` ou `REMOVED`. Remover alguém encerra o acesso dele ao espaço; isso não toca na conta Buburuza dele nem nos outros espaços aos quais ele pertence.
+
+## Convites
+
+Trazer alguém é um fluxo de duas partes, então ninguém é adicionado a um espaço sem agir por si mesmo.
+
+<Steps>
+  <Step title="Convidar">
+    Um proprietário convida uma pessoa por e-mail e escolhe a função que ela terá.
+  </Step>
+  <Step title="Aceitar">
+    A pessoa convidada entra — ou se cadastra, se for nova — e aceita. Ela então aparece como membro.
+  </Step>
+  <Step title="Revogar, se necessário">
+    Um convite não aceito pode ser revogado a qualquer momento. Um membro que já entrou é removido em vez disso.
+  </Step>
+</Steps>
+
+Alguém que não quer mais acesso também pode sair de um espaço por conta própria.
+
+## Código de indicação
+
+Cada espaço tem um código de indicação que você pode compartilhar. Ele está disponível em seu perfil.
+
+## Gerenciando tudo isso
+
+Espaços, convites e membros são gerenciados no painel.

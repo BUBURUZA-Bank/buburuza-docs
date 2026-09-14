@@ -1,0 +1,312 @@
+---
+title: "Prisijunkite ir apsaugokite savo paskyrą"
+description: "Pasirinkite prieinamą prisijungimo būdą, išsaugokite tinkamą prieigos atkūrimo galimybę ir, keisdami įrenginius, peržiūrėkite seansus. Mobiliosios programėlės atrakinimo kodas nėra paskyros atkūrimo priemonė."
+sidebarTitle: "Prisijungimas ir saugumas"
+---
+
+## Šiame vadove
+
+- [Prisijunkite prie „Buburuza“ interneto svetainėje](#sign-in)
+- [Sukurkite ir naudokite prieigos raktą](#passkey)
+- [Nustatykite autentifikavimo programėlę dviejų veiksnių autentifikavimui](#authenticator)
+- [Atkurkite prieigą naudodami atkūrimo kodą](#recover-access)
+- [Peržiūrėkite ir užbaikite kitus seansus](#sessions)
+- [Pašalinkite išsaugotą prieigos raktą](#remove-passkey)
+- [Peržiūrėkite ir užbaikite mobiliosios paskyros seansus](#mobile-session-control)
+- [Pakeiskite mobiliosios paskyros prisijungimo slaptažodį](#change-master-password)
+- [Pakeiskite šešių skaitmenų programėlės prieigos kodą](#change-app-pin)
+- [Prisijunkite el. paštu arba telefonu ir prisijungimo slaptažodžiu](#mobile-password-signin)
+- [Atkurkite pamirštą mobiliosios paskyros prisijungimo slaptažodį](#reset-mobile-login-password)
+- [Nustatykite autentifikavimo programėlę registruodamiesi mobiliajame įrenginyje](#mobile-authenticator-setup)
+- [Įjunkite biometrinę prieigą mobiliojoje programėlėje](#enable-mobile-biometrics)
+
+## Atskirkite prisijungimo ir atrakinimo priemones
+
+| Priemonė | Kam ją naudojate | Kur ją tvarkyti |
+|---|---|---|
+| Prieigos raktas („passkey“) | Prisijungdami patvirtinate užklausą įrenginyje arba slaptažodžių tvarkyklėje. | „Settings“ → „Passkeys“ (nustatymai → prieigos raktai). |
+| Autentifikavimo programėlės kodas | Įvedate dabartinį kodą, sugeneruotą nustatymo metu susietoje autentifikavimo programėlėje. | Naudokite autentifikavimo programėlės įrašą, sukurtą pagal „Buburuza“ QR kodą arba nustatymo raktą. |
+| Atkūrimo kodas | Atgaunate prieigą atlikdami atkūrimo veiksmus. Kiekvienas išsaugotas kodas veikia vieną kartą. | Išsaugokite kodus nustatymo metu; prireikus naudokite „Recover“ (atkurti). |
+| Programėlės prieigos kodas | Atrakinate mobiliąją programėlę. | Mobiliosios programėlės nustatymo ir atrakinimo ekranuose. |
+| Aktyvus seansas | Šiuo metu prisijungęs įrenginys arba naršyklė. | „Settings“ → „Active sessions“ (nustatymai → aktyvūs seansai). |
+
+Užbaigus seansą, jo išsaugotas prieigos raktas nepašalinamas. Norėdami pašalinti prieigos raktą, naudokite atskirą jo šalinimo veiksmą. Internetinėje versijoje pasirinkus atsijungti nuo visų kitų seansų, dabartinis seansas lieka aktyvus.
+
+Panaudojus atkūrimo kodą, patvirtinime jis pažymimas kaip panaudotas ir pasiūloma sukurti įrenginio prieigos raktą. Jei atkūrimo kodų neturite, naudokite tame ekrane esančią nuorodą į pagalbos tarnybą. Niekada nesiųskite jokių šių kodų ar nustatymo raktų susirašinėdami su pagalbos tarnyba.
+
+## Programėlės prieigos kodas, kortelės PIN ir piniginės atkūrimas
+
+Šešių skaitmenų **programėlės prieigos kodas** leidžia atlikti programėlės veiksmus, pavyzdžiui, peržiūrėti kortelės PIN. Keturių skaitmenų **kortelės PIN** priklauso pasirinktai kortelei. Sukūrus naują kortelės PIN, programėlės prieigos kodas nepasikeičia.
+
+**Slaptoji frazė** yra fraze pagrįstos piniginės atkūrimo raktas. Kuriant rankinę atsarginę kopiją, jos žodžiai užrašomi eilės tvarka. **„iCloud“ atsarginės kopijos slaptažodis** užšifruoja tos piniginės frazę jos „iCloud“ atsarginėje kopijoje. Tai nėra programėlės prieigos kodas. „Buburuza“ atsarginės kopijos kūrimo eiga įspėja, kad šio šifravimo slaptažodžio už jus atkurti negalima.
+
+**„Swift“ piniginės prieigos raktas** yra tos piniginės raktas. Jos saugumo ekranuose įspėjama, kad jį ištrynę galite prarasti prieigą prie piniginės ir lėšų. Tai skiriasi nuo prieigos rakto naudojimo vien prisijungimui prie „Buburuza“ paskyros. Vadovaukitės būtent tos prisijungimo priemonės ar piniginės tipo, kurį tvarkote, instrukcijomis.
+
+Niekada neperduokite pagalbos tarnybai programėlės prieigos kodo, kortelės PIN, slaptosios frazės, privataus rakto ar atsarginės kopijos šifravimo slaptažodžio.
+
+<a id="sign-in" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Prisijunkite prie „Buburuza“ interneto svetainėje
+
+*Taikoma: internetinei versijai*
+
+Jei jau turite paskyrą, naudokite prisijungimo kelią. Internetinė prisijungimo eiga siūlo prieigos rakto ir atkūrimo galimybes kartu su patvirtinimu el. paštu.
+
+1. Atidarykite oficialią „Buburuza“ internetinę programą įprastu patikimu būdu.
+2. Įveskite su esama paskyra susietą el. pašto adresą.
+3. Atlikite paskyrai rodomą patikrą naudodami prieigos raktą, el. paštu gautą kodą ar kitą saugumo priemonę.
+4. Jei prašoma naudoti atkūrimo priemonę, atlikite jai skirtus atkūrimo veiksmus.
+5. Atsidarius „Dashboard“ (apžvalgos skydeliui), prieš tęsdami patikrinkite pasirinktą paskyrą arba įmonę.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Jei matote, kad paskyra jau yra, rinkitės prisijungimą, o ne registraciją.
+- Jei saugumo priemonė neprieinama, naudokite ekrane rodomą alternatyvą. Sukūrę kitą paskyrą, neatkursite prieigos prie esamų lėšų.
+
+<a id="passkey" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Sukurkite ir naudokite prieigos raktą
+
+*Taikoma: mobiliajai ir internetinei versijoms*
+
+Prieigos raktas yra viena iš „Buburuza“ siūlomų saugumo priemonių. Jį nustatant ir naudojant prisijungimui, pateikiama įrenginio arba slaptažodžių tvarkyklės užklausa.
+
+1. Nustatydami paskyrą, pasirinkite „Set up passkey“ (sukurti prieigos raktą) ir vykdykite įrenginio nurodymus.
+2. Norėdami vėliau pridėti raktą mobiliajame įrenginyje, atidarykite „Settings“, tada „Passkeys“ ir pasirinkite „Create new passkey“. Internetinėje versijoje atidarykite „Settings“, tada „Passkeys“ ir pasirinkite „Add passkey“.
+3. Patvirtinkite įrenginio arba slaptažodžių tvarkyklės užklausą. Patikrinkite, ar raktų sąraše atsirado naujas įrašas; internetiniame sąraše pateikiama pridėjimo ir paskutinio naudojimo informacija.
+4. Prisijungdami naudokite paskyrai išsaugotą prieigos raktą ir atlikite įrenginio patikrą.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Jei nerandate prieigos rakto, patikrinkite, ar naudojate įrenginį arba slaptažodžių tvarkyklę, kurioje jį išsaugojote.
+- Jei prieigos raktas neprieinamas, naudokite kitą „Buburuza“ siūlomą prisijungimo arba atkūrimo galimybę. Jei atkūrimo užbaigti nepavyksta, kreipkitės į pagalbos tarnybą.
+
+<a id="authenticator" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Nustatykite autentifikavimo programėlę dviejų veiksnių autentifikavimui
+
+*Taikoma: mobiliajai ir internetinei versijoms*
+
+Dviejų veiksnių autentifikavimas paskyros saugumo patikrai prideda autentifikavimo programėlės kodą. Prieš išeidami iš patvirtinimo ekrano užbaikite nustatymą.
+
+1. Saugumo nustatymo metu mobiliajame įrenginyje pasirinkite „Set up 2FA instead“, o internetinėje versijoje — „Set up a code instead“.
+2. Mobiliajame įrenginyje nukopijuokite nustatymo raktą į naują autentifikavimo programėlės įrašą, tada „Buburuza“ pasirinkite „I’ve added the key“ (pridėjau raktą).
+3. Internetinėje versijoje autentifikavimo programėle nuskaitykite rodomą QR kodą. Jei nuskaityti negalite, pasirinkite rankinį rakto įvedimą.
+4. Grįžkite į „Buburuza“ ir įveskite šiuo metu prie to įrašo rodomą šešių skaitmenų kodą. Internetinėje versijoje pasirinkite „Verify“ (patvirtinti).
+5. Išsaugokite atkūrimo kodus pasirinkdami „Copy“ (kopijuoti) arba „Download“ (atsisiųsti) ir patvirtinkite, kad juos saugote privačiai.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Jei kodas atmetamas, patikrinkite, ar autentifikavimo programėlės įrašas skirtas „Buburuza“, ir įveskite dabartinį kodą.
+- „Set up passkey instead“ arba „Use a passkey instead“ grąžina į eigoje rodomą alternatyvų saugumo nustatymą.
+- Nesidalykite nustatymo raktu, QR kodu, autentifikavimo kodu ar atkūrimo kodais.
+
+<a id="recover-access" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Atkurkite prieigą naudodami atkūrimo kodą
+
+*Taikoma: mobiliajai ir internetinei versijoms*
+
+Jei negalite naudoti įprasto prisijungimo būdo, pasirinkite atkūrimo kelią. Kiekvienas atkūrimo kodas veikia vieną kartą. Atkūrimo ekranas ir autentifikavimo programėlės pagalbos nuoroda yra atskiros galimybės.
+
+1. Prisijungimo metu pasirinkite „Recover“ (atkurti). Internetinėje versijoje nuoroda rodoma šalia „Lost access to the passkey?“; mobiliojoje — „Having issues? Recover“.
+2. Įveskite esamos paskyros el. pašto adresą ir atlikite atkūrimo eigoje pateiktą el. pašto patikrą.
+3. Ekrane „Enter a recovery code“ įveskite nustatymo metu išsaugotą dar nepanaudotą kodą.
+4. Perskaitykite patvirtinimą, kad kodas panaudotas, ir patikrinkite rodomą likusių kodų skaičių.
+5. Pasirinkite „Set up passkey“, kad šiame įrenginyje sukurtumėte veikiantį prieigos raktą. Internetinėje versijoje „Skip for now“ leidžia tęsti ir primena vėliau pridėti raktą skiltyje „Settings“.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Jei praradote atkūrimo kodus, tame ekrane pasirinkite „Contact support“ (susisiekti su pagalbos tarnyba).
+- Jei esate internetiniame autentifikavimo programėlės patikros ekrane ir nebeturite programėlės, jame rodoma alternatyva yra „Contact support“. Nemanykite, kad yra kita, nematoma atkūrimo nuoroda.
+- Niekada nerašykite atkūrimo kodo ar autentifikavimo programėlės slapto rakto žinutėje pagalbos tarnybai.
+
+<a id="sessions" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Peržiūrėkite ir užbaikite kitus seansus
+
+*Taikoma: mobiliajai ir internetinei versijoms*
+
+Peržiūrėkite aktyvius seansus arba patikimus įrenginius, kai nebesinaudojate įrenginiu arba neatpažįstate prisijungimo.
+
+1. Atidarykite „Settings“, tada „Active sessions“.
+2. Peržiūrėkite įrenginį arba naršyklę, vietą ir paskutinės veiklos informaciją. Prieš ką nors atlikdami atpažinkite „Current session“ arba „This device“ (dabartinį seansą arba šį įrenginį).
+3. Mobiliajame įrenginyje prie nepageidaujamo seanso pasirinkite „Terminate“, patikrinkite patvirtinimą ir pasirinkite „Yes, terminate“.
+4. Internetinėje versijoje pasirinkite konkretaus seanso atsijungimo veiksmą ir patvirtinkite „Sign out session“.
+5. Norėdami vienu metu užbaigti kitus aktyvius internetinius seansus, pasirinkite „Sign out all other sessions“, perskaitykite jų skaičių ir patvirtinkite. Dialoge nurodoma, kad dabartinis seansas lieka prisijungęs.
+6. Patikrinkite sąrašą arba pranešimą apie užbaigimą. Jei taip pat norite pašalinti išsaugotą prisijungimo priemonę, atskirai naudokite „Passkeys“.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Užbaigus seansą, jo prieigos raktas nepašalinamas. Įrenginys su leidžiamu prieigos raktu gali vėl prisijungti.
+- Jei neatpažįstate seanso, peržiūrėkite išsaugotus prieigos raktus ir dėl paskyros saugumo kreipkitės oficialiu pagalbos kanalu.
+
+<a id="remove-passkey" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Pašalinkite išsaugotą prieigos raktą
+
+*Taikoma: internetinei versijai*
+
+Pašalinus prieigos raktą, pakeičiama išsaugota prisijungimo priemonė. Tai atskiras veiksmas nuo aktyvaus seanso užbaigimo.
+
+1. Atidarykite „Settings“, tada „Passkeys“.
+2. Atpažinkite prieigos raktą pagal slaptažodžių tvarkyklę arba įrenginį ir jo pridėjimo arba paskutinio naudojimo informaciją.
+3. Pasirinkite jo šalinimo veiksmą.
+4. Perskaitykite „Remove this passkey?“ ir įsitikinkite, kuri prisijungimo priemonė nustos veikti.
+5. Norėdami tęsti pasirinkite „Remove passkey“, o norėdami atšaukti — „Keep it“.
+6. Atlikite visas rodomas prieigos rakto patikras ir patikrinkite rezultatą „Passkey removed“. Jei norite užbaigti ir esamą seansą, atskirai peržiūrėkite „Active sessions“.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Prieš pašalindami prisijungimo priemonę įsitikinkite, kad išsaugote veikiantį prieigos prie paskyros būdą.
+- Užbaigus seansą, jo prieigos raktas nepašalinamas, o pašalinus prieigos raktą negalima manyti, kad esami seansai taip pat užbaigiami.
+
+<a id="mobile-session-control" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Peržiūrėkite ir užbaikite mobiliosios paskyros seansus
+
+*Taikoma: mobiliajai versijai*
+
+Peržiūrėkite prie paskyros prisijungusius įrenginius ir užbaikite vieną arba kitus seansus, išsaugodami dabartinį.
+
+1. Atidarykite „Profile“, tada „Privacy & security“ ir „Trusted devices“. Jei programėlėje vietoj to rodoma „Security“, atidarykite „Login activity“.
+2. Atskirai peržiūrėkite „Current session“ ir „Active session“. Palyginkite įrenginį, programėlę arba naršyklę, vietą ir datą.
+3. Pasirinkite aktyvų seansą ir peržiūrėkite jo „Application“, „Location“, „IP address“ bei paskutinę veiklą.
+4. Pasirinkite „Terminate this session“. Patvirtinime patikrinkite pasirinktą įrenginį, tada pasirinkite „Yes, terminate“; norėdami atšaukti, pasirinkite „No, keep“.
+5. Kai prašoma, įveskite programėlės prieigos kodą. Patikrinkite „Session is terminated“ ir įsitikinkite, kad iš sąrašo pašalintas reikiamas įrenginys.
+6. Norėdami kartu užbaigti kitus seansus, pasirinkite „Terminate all other sessions“. Paaiškinime nurodoma, kad dabartinis įrenginys lieka prisijungęs.
+7. Pasirinkę „If inactive for“ peržiūrėkite seanso galiojimo pabaigą dėl neveiklumo. Jei pasirinkiklyje siūloma „1 week“, „1 month“, „3 months“ arba „6 months“, pasirinkite norimą laikotarpį; pasirinkę „Cancel“ paliksite jį nepakeistą.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Prieš užbaigdami kitus seansus, atpažinkite „Current session“.
+- Seanso užbaigimas ir išsaugoto prieigos rakto pašalinimas yra atskiri veiksmai.
+- Programėlės prieigos kodo žingsnis patvirtina seanso užbaigimo veiksmą; juo naujas prieigos kodas nesukuriamas.
+
+<a id="change-master-password" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Pakeiskite mobiliosios paskyros prisijungimo slaptažodį
+
+*Taikoma: mobiliajai versijai*
+
+Slaptažodžiu pagrįstoje mobiliojoje paskyroje yra „Login password“ keitimo eiga. Prieš įvesdami ir pakartodami naują slaptažodį, patvirtinate prieigą.
+
+1. Atidarykite „Profile“, tada „Privacy & security“ ir „Login password“.
+2. Kai prašoma, įveskite programėlės prieigos kodą.
+3. Įveskite seną prisijungimo slaptažodį.
+4. Ekrane „Create new login password“ įveskite naują slaptažodį, tada pakartokite jį kitame ekrane.
+5. Skiltyje „Privacy & security“ patikrinkite „Login password changed“. Jei privatumo nustatymuose tai vadinama „Master password“, tarp dabartinio, naujo ir pakartotinio slaptažodžio žingsnių rinkitės „Continue“.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Tai paskyros prisijungimo slaptažodis, o ne programėlės prieigos kodas, kortelės PIN ar piniginės atsarginės kopijos slaptažodis.
+- Niekada nesidalykite dabartiniu ar nauju slaptažodžiu su pagalbos tarnyba.
+- Jei seno slaptažodžio nežinote, naudokite atskirą pamiršto prisijungimo slaptažodžio atkūrimo eigą, jei ji siūloma.
+
+<a id="change-app-pin" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Pakeiskite šešių skaitmenų programėlės prieigos kodą
+
+*Taikoma: mobiliajai versijai*
+
+Programėlės prieigos kodas saugo prieigą prie mobiliosios programėlės ir jautrių nustatymų. Jis nėra prisijungimo slaptažodis ar kortelės PIN.
+
+1. Atidarykite „Profile“, tada „Privacy & security“ ir „App passcode“.
+2. Įveskite seną šešių skaitmenų programėlės prieigos kodą.
+3. Ekrane „Create new passcode“ įveskite naują šešių skaitmenų kodą.
+4. Ekrane „Repeat new passcode“ įveskite jį dar kartą.
+5. Skiltyje „Privacy & security“ patikrinkite „App passcode is set!“. Jei privatumo nustatymuose tai vadinama „App pin“, ieškokite „Your pin has been changed“.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Pakeitus programėlės prieigos kodą, kortelės PIN, prisijungimo slaptažodis ar piniginės atsarginės kopijos slaptažodis nepasikeičia.
+- Niekada nesidalykite prieigos kodu su pagalbos tarnyba.
+- Jei seno prieigos kodo nežinote, keitimo ekranas nėra atkūrimo procedūra.
+
+<a id="mobile-password-signin" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Prisijunkite el. paštu arba telefonu ir prisijungimo slaptažodžiu
+
+*Taikoma: mobiliajai versijai*
+
+Mobiliosios versijos prisijungimo slaptažodžiu ekrane priimamas el. pašto adresas arba mobiliojo telefono numeris kartu su prisijungimo slaptažodžiu.
+
+1. Pasveikinimo arba registracijos puslapyje pasirinkite „Log in“.
+2. Naudokite el. pašto formą arba perjunkite į mobilųjį telefoną ir pasirinkite šalies telefono kodą.
+3. Įveskite paskyros el. paštą arba telefono numerį ir prisijungimo slaptažodį. Akies simbolio valdiklį naudokite tik tada, kai ekraną galite matyti privačiai.
+4. Pasirinkite „Log in“.
+5. Jei prisijungimo slaptažodį pamiršote, pasirinkite „Forgot password“, kad pradėtumėte atkūrimą el. paštu arba telefonu.
+6. „Google“ arba „Apple“ naudokite tik tada, kai paskyrai siūlomas toks teikėjas ir ketinate per jį prisijungti.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Prisijungimo slaptažodis nėra šešių skaitmenų programėlės atrakinimo kodas.
+- Prisijungimas per „Google“ skiriasi nuo dviejų veiksnių autentifikavimo naudojant „Google Authenticator“.
+- Naudokite paskyrai rodomą prisijungimo būdą; prisijungimo be slaptažodžio, naudojant prieigos raktą, žingsniai skiriasi.
+
+<a id="reset-mobile-login-password" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Atkurkite pamirštą mobiliosios paskyros prisijungimo slaptažodį
+
+*Taikoma: mobiliajai versijai*
+
+„Forgot password“ siūlo atkūrimą el. paštu ir telefonu. Taip atkuriamas prisijungimo slaptažodis, o ne piniginės atkūrimo frazė ar kortelės PIN.
+
+1. Prisijungimo slaptažodžiu ekrane pasirinkite „Forgot password“.
+2. Norėdami atkurti el. paštu, įveskite paskyros el. paštą ir pasirinkite „Continue“. Ekrane „Check your email“ nurodoma, kad instrukcijos išsiųstos iš dalies paslėptu adresu; vadovaukitės jomis, kad pasiektumėte slaptažodžio atkūrimo žingsnį.
+3. Norėdami atkurti telefonu, pasirinkite „Use mobile“, nurodykite šalies kodą ir įveskite numerį. Tęskite ir įveskite tuo numeriu atsiųstą šešių skaitmenų patvirtinimo kodą.
+4. Ekrane „Create your new login password“ įveskite ir pakartokite naują slaptažodį. Rodomas reikalavimas — mažiausiai aštuoni simboliai. Pasirinkite „Continue“.
+5. Grįžkite į atitinkamą el. pašto arba telefono „Log In“ formą ir naudokite naują prisijungimo slaptažodį.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Jei žinutės negavote, patikrinkite iš dalies paslėptą gavėjo adresą ar numerį ir laikmatį iki pakartotinio siuntimo.
+- Nesupainiokite slaptažodžio atkūrimo su programėlės prieigos kodo keitimu ar piniginės atsarginės kopijos atrakinimu.
+- Atkūrę prisijungimo slaptažodį, peržiūrėkite „Login activity“ ir užbaikite nebereikalingus seansus.
+
+<a id="mobile-authenticator-setup" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Nustatykite autentifikavimo programėlę registruodamiesi mobiliajame įrenginyje
+
+*Taikoma: mobiliajai versijai*
+
+Registracijos 2FA pristatyme siūloma „Enable 2FA“ arba „Skip for now“. Nustatymo metu autentifikavimo programėlė susiejama naudojant jos raktą ir patvirtinamas pagal laiką keičiamas kodas.
+
+1. Registruodamiesi asmeninėje paskyroje pasirinkite „Enable 2FA“ arba atidarykite „Profile“ → „Privacy & security“ → „2FA“. Nustatymuose, kai prašoma, įveskite programėlės prieigos kodą.
+2. Pasirinkite siūlomą autentifikavimo programėlę: „Google Authenticator“ arba „Authy“.
+3. Nukopijuokite nustatymo raktą į naują nurodytos autentifikavimo programėlės įrašą. Saugokite raktą privačiai.
+4. Pasirinkite „Next“, tada įveskite dabartinį šešių skaitmenų pagal laiką keičiamą kodą, skirtą tam „Buburuza“ įrašui.
+5. Pasirinkite „Next“ ir, jei einate per nustatymus, patikrinkite „2FA is set“.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Naudokite dabartinį kodą iš atitinkamo autentifikavimo programėlės įrašo; telefonu gautas SMS kodas yra kita patvirtinimo priemonė.
+- Niekada nesiųskite nustatymo rakto ar dabartinio kodo pagalbos tarnybai.
+- Jei negalite naudoti nustatytos autentifikavimo programėlės, vadovaukitės atskira atkūrimo eiga, kurią iš tiesų siūlo jūsų paskyra.
+
+<a id="enable-mobile-biometrics" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Įjunkite biometrinę prieigą mobiliojoje programėlėje
+
+*Taikoma: mobiliajai versijai*
+
+Biometrika pateikiama kaip saugumo nustatymas su programėlės prieigos kodo patikra ir įrenginio autentifikavimo rezultatu.
+
+1. Atidarykite „Profile“, tada „Privacy & security“.
+2. Pasirinkite „Biometrics“ ir, kai prašoma, įveskite programėlės prieigos kodą.
+3. Patvirtinkite įrenginio rodomą biometrinę užklausą.
+4. Patikrinkite „Biometrics enabled“ patvirtinimą ir įjungtą jungiklį skiltyje „Privacy & security“.
+
+**Trikčių šalinimas ir svarbūs skirtumai**
+
+- Vykdykite įrenginio biometrinės užklausos nurodymus. Jei įrenginys negali jūsų autentifikuoti, naudokite programėlės autentifikavimo ekrane siūlomą alternatyvą.
+- Biometrika nepanaikina būtinybės saugoti programėlės prieigos kodą privačiai.
+
+## Reikia pagalbos?
+
+Jei reikia pagalbos dėl paskyros ar veiksmo, [susisiekite su pagalbos tarnyba](/lt/support) arba apsilankykite [„Buburuza“ pagalbos centre](https://help.buburuza.com/hc/en-us).
+
+Susiję pagalbos straipsniai:
+
+- [Dviejų veiksnių autentifikavimo (2FA) nustatymas](https://help.buburuza.com/hc/en-us/articles/51472991172115)
+- [Prieigos atkūrimas praradus autentifikavimo programėlę](https://help.buburuza.com/hc/en-us/articles/51472991252371)
