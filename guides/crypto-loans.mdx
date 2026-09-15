@@ -1,0 +1,163 @@
+---
+title: "Prepare and manage a crypto loan"
+description: "Review collateral, interest and loan-to-value information, then follow loan approval, adjustment and repayment as separate tasks."
+sidebarTitle: "Crypto loans"
+---
+
+## In this guide
+
+- [Prepare and review a flexible crypto loan](#loan-interface)
+- [Choose or adjust collateral for a loan](#loan-collateral)
+- [Repay a loan with the borrowed crypto asset](#repay-loan-crypto)
+- [Repay a loan using collateral](#repay-loan-collateral)
+- [Check an active, partly repaid or settled loan](#loan-status)
+- [Understand and review a loan LTV warning](#loan-ltv-warning)
+
+## Loan amount, collateral and repayment are separate decisions
+
+A flexible loan has an outstanding amount and a set of pledged collateral assets. The loan screen presents APR, estimated daily interest, and loan-to-value levels. Adding collateral changes the assets supporting the loan; a repayment reduces the debt.
+
+A repayment can use the loan crypto or collateral. Check **Loan after repaying** before confirming. Using **Max** can spend the available repayment balance while leaving a residual loan. **Repayment successful** therefore differs from a loan being repaid in full and moved to **Settled loans**.
+
+The warning and high-risk screens show risk before liquidation. Read the current LTV, margin-call and liquidation levels for the loan and review its service terms. The displayed thresholds, repayment preview and collateral allocation belong to that specific review; they are not universal product values.
+
+<a id="loan-interface" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Prepare and review a flexible crypto loan
+
+_Applies to: Mobile_
+
+The Flexible loan flow asks you to choose a loan amount and asset, provide collateral, and review interest and loan-to-value information before confirming.
+
+1. Open Flexible loan. Use Borrow now from the empty loan list, or open the borrowing form available in the loan area.
+2. Choose the loan asset. The selector separates Stablecoins and Crypto; use the assets offered to you.
+3. Enter Loan amount. Review Remaining limit, Latest APR and Estimated daily interest.
+4. If the amount is below the displayed minimum, correct it. Once the amount is accepted, choose Add collateral.
+5. Select the assets and amounts you intend to pledge. Check the collateral total and any shortfall before choosing Add.
+6. Back on the loan form, inspect Collateral amount, Pledgeable balance, Current LTV, Margin call LTV and Liquidation LTV. Use the LTV information control when needed.
+7. Choose Review loan. Recheck the amount, asset, APR, daily-interest estimate, collateral and all LTV levels.
+8. Open Crypto Loan Service Terms and Forced repayment rules and read them. Complete the acknowledgement only if you accept the terms, then use the Confirm slider to submit the loan.
+9. On Loan approved, verify the amount and destination. Choose Go to wallet or Back to Flexible loan and inspect the loan record.
+
+**Troubleshooting and important distinctions**
+
+- Entering a valid loan amount does not complete the loan. Review loan remains disabled until sufficient collateral has been provided.
+- Check the minimum, remaining limit, APR and thresholds shown for your loan.
+- The approval result and the wallet’s updated transaction details can appear at different times. Inspect the existing record before starting a duplicate request.
+- Borrow more opens another borrowing form; it is not a repayment control.
+
+<a id="loan-collateral" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Choose or adjust collateral for a loan
+
+_Applies to: Mobile_
+
+Collateral selection lets you pledge more than one asset and choose how much of each asset to include. The form previews whether the combined value is sufficient.
+
+1. For a new loan, choose Add collateral. For an existing loan, open Loan details, choose Collateral, then Adjust.
+2. Use Search or browse the current wallet’s asset/network entries. Check the intended assets, or use Select all only when you intend to select the full available group.
+3. To change one asset’s amount, open its adjustment control. Check Available balance, enter an amount or use 25%, 50%, 75% or Max.
+4. Use the unit-switch control if you want to enter the amount in fiat value rather than crypto units. Review both representations, then choose Set.
+5. Check the combined Collateral amount against the loan amount and the displayed shortfall. Add or increase collateral if the total is insufficient.
+6. For a new loan, choose Add when enabled and review the resulting LTV on the loan form.
+7. For an existing loan, choose Save when your changes are ready. Use Discard changes to leave without applying the adjustment.
+8. Return to Collateral and verify the asset list, total collateral and updated Current LTV.
+
+**Troubleshooting and important distinctions**
+
+- Checking an asset and choosing an amount are separate decisions; a selected partial amount can still leave a shortfall.
+- Add or Save is disabled in the shown insufficient-collateral states.
+- The same asset on different networks is shown as a separate entry; check the intended asset/network.
+- An updated collateral preview does not guarantee its future value. Monitor the loan’s current metrics after saving.
+
+<a id="repay-loan-crypto" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Repay a loan with the borrowed crypto asset
+
+_Applies to: Mobile_
+
+With loan crypto uses the loan asset for repayment. Review the remaining loan amount; using Max may use your available balance without paying off the whole loan.
+
+1. Open the active loan, check its asset and outstanding amount, and choose Repay.
+2. Select With loan crypto.
+3. Enter the repayment amount or choose Max. Check Available balance and the repayment amount.
+4. Review Current LTV, Updated LTV and Updated loan, then choose Continue.
+5. On Review, check You’re repaying, Loan after repaying, Updated LTV, Liquidation LTV and Liquidation price.
+6. Use the Repay loan slider when the review matches your intention.
+7. On Repayment successful, choose Check details or Back to Flexible loan. Inspect the remaining loan amount.
+8. If a balance remains, the loan stays active and still offers Repay. Treat it as settled only after the record shows it has been repaid in full and closed.
+
+**Troubleshooting and important distinctions**
+
+- Max uses the amount available for repayment. Check Loan after repaying because debt can remain outstanding.
+- A repayment-success message can describe a partial repayment.
+- The displayed Updated loan value is the clearest preview of the residual loan before you confirm.
+
+<a id="repay-loan-collateral" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Repay a loan using collateral
+
+_Applies to: Mobile_
+
+With collateral is a separate repayment route from using the borrowed crypto asset. Check the selected collateral and resulting loan before confirming.
+
+1. Open the active loan and choose Repay.
+2. Select With collateral.
+3. Review the collateral value and select the collateral asset shown for the repayment.
+4. Enter the repayment amount or use the available amount control. Check Updated loan and Updated LTV.
+5. Choose Continue when the amount is complete.
+6. On Review, check You’re repaying, Loan after repaying, Updated LTV, Liquidation LTV and Liquidation price.
+7. Use the Repay loan slider when the reviewed repayment matches your intention.
+8. Check Repayment successful and the resulting loan record. If fully repaid, verify the closed state or Settled loans entry labelled Repaid with collateral.
+
+**Troubleshooting and important distinctions**
+
+- Repaying with collateral is different from simply adding collateral to reduce LTV.
+- Read the loan terms for conversion, sale, slippage and fee consequences before confirming this route.
+- A repayment amount that leaves an Updated loan balance is a partial repayment even if the transaction succeeds.
+
+<a id="loan-status" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Check an active, partly repaid or settled loan
+
+_Applies to: Mobile_
+
+Active loans and Settled loans distinguish current debt from a loan that has been repaid in full. A successful payment can leave a loan active if a balance remains.
+
+1. Open Flexible loan and choose Active loans or Settled loans.
+2. In Active loans, check the asset, outstanding amount and current-LTV state, then open the loan.
+3. Use Loan details to review the loan amount, average/latest APR, estimated daily interest, collateral value and LTV metrics.
+4. Switch to Collateral to inspect pledged assets and their total value.
+5. After a repayment, check the remaining loan amount. A residual amount with a Repay action means the loan is still active.
+6. After full repayment, look for the repaid-and-closed result and the entry in Settled loans. A collateral repayment entry identifies Repaid with collateral and its timestamp.
+
+**Troubleshooting and important distinctions**
+
+- No active loans and No settled loans yet are separate empty states.
+- An outstanding amount can remain after choosing Max when the available repayment balance is smaller than the debt.
+- Loan approved, Repayment successful and Loan closed describe different stages.
+
+<a id="loan-ltv-warning" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Understand and review a loan LTV warning
+
+_Applies to: Mobile_
+
+Loan details shows Current LTV alongside Margin call LTV and Liquidation LTV. Read the displayed warning and high-risk states to understand how close the loan is to its thresholds.
+
+1. Open the Warning or High risk loan row from Crypto Home, or open the active loan directly.
+2. Read the warning banner and compare Current LTV with the margin-call and liquidation levels displayed for that loan.
+3. Open the LTV information control to read the explanation of borrowing relative to collateral value.
+4. To inspect collateral changes, open Collateral and choose Adjust. Review available assets and amounts, the shortfall and the resulting collateral total.
+5. When you intend to apply a sufficient adjustment, choose Save and inspect the updated Current LTV on the loan.
+6. If considering repayment instead, use the separate Repay flow and review its Updated loan and Updated LTV before confirming.
+
+**Troubleshooting and important distinctions**
+
+- The amber warning and red high-risk state are different from a completed liquidation statement.
+- An insufficient adjustment leaves Save disabled; selecting an asset is not enough unless the displayed total qualifies.
+- Read the loan terms for margin calls, liquidation and forced repayment. Check your loan’s thresholds and do not assume a warning guarantees time to act.
+
+## Need help?
+
+If you need help with your account or a task, [contact support](/support) or browse the [Buburuza Help Center](https://help.buburuza.com/hc/en-us).
