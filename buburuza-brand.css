@@ -16,7 +16,8 @@
 
 /* Mint renders the desktop CTA background and label as separate children. */
 #topbar-cta-button > a,
-#navbar nav a[href="/quickstart"] {
+#navbar nav a[href="/quickstart"],
+nav[aria-label="Mobile menu"] a[href="/quickstart"] {
   border-radius: 999px;
   background-color: #0f0f0f;
   color: #ffffff;
@@ -30,12 +31,14 @@
 }
 
 #topbar-cta-button > a :is(div, span, svg),
-#navbar nav a[href="/quickstart"] span {
+#navbar nav a[href="/quickstart"] span,
+nav[aria-label="Mobile menu"] a[href="/quickstart"] span {
   color: inherit;
 }
 
 .dark #topbar-cta-button > a,
-.dark #navbar nav a[href="/quickstart"] {
+.dark #navbar nav a[href="/quickstart"],
+.dark nav[aria-label="Mobile menu"] a[href="/quickstart"] {
   background-color: #ffffff;
   color: #0f0f0f;
 }
