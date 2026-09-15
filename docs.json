@@ -155,13 +155,24 @@
   },
   "fonts": {
     "heading": {
-      "family": "Helvetica Neue"
+      "family": "Geist Variable",
+      "source": "/assets/fonts/geist-latin-wght-normal.woff2",
+      "format": "woff2",
+      "weight": 600
     },
     "body": {
-      "family": "IBM Plex Sans"
+      "family": "Geist Variable",
+      "source": "/assets/fonts/geist-latin-wght-normal.woff2",
+      "format": "woff2",
+      "weight": 400
     }
   },
   "styling": {
     "eyebrows": "section"
+  },
+  "logo": {
+    "light": "/assets/logo/logo-black.svg",
+    "dark": "/assets/logo/logo-white.svg",
+    "href": "/"
   }
 }
