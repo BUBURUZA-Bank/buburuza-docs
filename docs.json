@@ -1,21 +1,34 @@
 {
-  "theme": "luma",
-  "name": "BUBURUZA",
+  "theme": "mint",
+  "name": "Buburuza",
   "colors": {
-    "primary": "#0c0c0c"
+    "primary": "#C40000",
+    "light": "#FF4DC7",
+    "dark": "#C40000"
   },
   "favicon": "https://media.brand.dev/e7260896-3e49-4c2d-94a5-6a9d5a766506.png",
   "navbar": {
     "primary": {
-      "type": "github",
-      "href": "https://github.com/BUBURUZA-Bank"
-    }
+      "type": "button",
+      "href": "/quickstart",
+      "label": "Get started"
+    },
+    "links": [
+      {
+        "href": "/support",
+        "label": "Support"
+      },
+      {
+        "href": "https://github.com/BUBURUZA-Bank",
+        "label": "GitHub"
+      }
+    ]
   },
   "$schema": "https://mintlify.com/docs.json",
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
+        "tab": "Get started",
         "groups": [
           {
             "group": "Overview",
@@ -26,17 +39,100 @@
             ]
           },
           {
-            "group": "Platform",
+            "group": "Account setup",
             "pages": [
-              "onboarding-and-security",
+              "onboarding-and-security"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Product guides",
+        "groups": [
+          {
+            "group": "Start and manage your account",
+            "pages": [
+              "guides/index",
+              "guides/getting-started",
+              "guides/personal-account-setup",
+              "guides/account-access",
+              "guides/accounts-and-balances"
+            ]
+          },
+          {
+            "group": "Move money",
+            "pages": [
+              "guides/receive-money",
+              "guides/recipients",
+              "guides/send-bank-payments",
+              "guides/invoice-payments",
+              "guides/mobile-payment-tools",
+              "guides/transactions"
+            ]
+          },
+          {
+            "group": "Cards and documents",
+            "pages": [
+              "guides/cards-and-controls",
+              "guides/documents"
+            ]
+          },
+          {
+            "group": "Crypto wallets and services",
+            "pages": [
+              "guides/send-crypto",
+              "guides/wallet-backup-and-recovery",
+              "guides/crypto-features",
+              "guides/crypto-loans"
+            ]
+          },
+          {
+            "group": "Everyday services",
+            "pages": [
+              "guides/esim",
+              "guides/airport-services",
+              "guides/chats-and-assistance",
+              "guides/rewards-and-referrals",
+              "guides/asset-previews"
+            ]
+          },
+          {
+            "group": "Help and preferences",
+            "pages": [
+              "guides/settings-and-support"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Platform",
+        "groups": [
+          {
+            "group": "Manage money",
+            "pages": [
               "accounts-wallets",
-              "payments",
-              "team",
+              "payments"
+            ]
+          },
+          {
+            "group": "Work together",
+            "pages": [
+              "team"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Support and legal",
+        "groups": [
+          {
+            "group": "Support",
+            "pages": [
               "support"
             ]
           },
           {
-            "group": "Compliance and legal",
+            "group": "Trust and legal",
             "pages": [
               "compliance-security",
               "legal"
@@ -45,5 +141,27 @@
         ]
       }
     ]
+  },
+  "description": "Guides to getting started, managing your account and using Buburuza.",
+  "appearance": {
+    "default": "light",
+    "strict": false
+  },
+  "background": {
+    "color": {
+      "light": "#FFFFFF",
+      "dark": "#0F0F0F"
+    }
+  },
+  "fonts": {
+    "heading": {
+      "family": "Helvetica Neue"
+    },
+    "body": {
+      "family": "IBM Plex Sans"
+    }
+  },
+  "styling": {
+    "eyebrows": "section"
   }
 }

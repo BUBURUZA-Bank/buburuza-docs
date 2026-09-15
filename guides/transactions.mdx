@@ -1,0 +1,324 @@
+---
+title: "Understand transactions and solve payment problems"
+description: "Find the existing record before retrying a payment. Check its account, method and status, then collect the reference and error details if support needs to investigate."
+sidebarTitle: "Transactions and problems"
+---
+
+## In this guide
+
+- [Find and filter transactions](#find-transactions)
+- [Check a payment’s status](#track-payment)
+- [My payment is pending or under review](#pending-payment)
+- [My payment failed or the app closed during confirmation](#failed-payment)
+- [Why does my payment show insufficient funds?](#insufficient-balance)
+- [View receipts, notes, and attachments for a transaction](#transaction-documents)
+- [Review spending charts and categories](#spending-view)
+- [Discuss a transaction with your team](#comment-on-transaction)
+- [Find transactions for one mobile card](#card-transactions)
+- [Understand the payment progress widget on Home](#home-payment-widget)
+- [Find a mobile transaction with filters](#mobile-transaction-filters)
+- [Read a mobile payment’s status and funding breakdown](#read-mobile-transaction-details)
+- [Add documents or a private note to a completed payment](#payment-record-attachments-and-notes)
+
+## A receipt, a request, and a completed payment are different records
+
+| Record or state | What it tells you |
+| --- | --- |
+| Invoice or payment request | Someone is asking for payment. It is not evidence of an incoming credit. |
+| Payment confirmation / Payment ID | The application has recorded an initiated payment. Inspect its current transaction status. |
+| Receipt | A record of the payment information. The receipt can still show Pending. |
+| Tracking page | Progress of the referenced payment, such as Scheduled, In transit, or Delivered. |
+| On-chain confirmation | A network event. The transaction can still be awaiting account posting. |
+| Account transaction status | The current state shown for the account record, including pending, completed, returned, or failed states. |
+
+For crypto, **Confirmed on-chain, posting to your account** explains why a network-confirmed transfer can remain Pending. For bank payments, read the bank-processing message, return reason, and the appropriate trace/reference.
+
+When a result is unclear, open the existing transaction before initiating another payment. A failure label alone does not establish whether funds were sent, returned, credited, or refunded; the record’s explanation provides that detail.
+
+## Payment progress versus a saved payment record
+
+A payment result page is a place to inspect the sent amount and destination, open **Receipt** or **Track**, add an attachment or internal note, and copy a link. These record actions do not create a second payment.
+
+The Home progress widget distinguishes **Verified**, **Sent** and **Received**. A widget showing Sent has not yet reached its Received stage. Red **Verification**, **Send** or **Receive** labels identify different failure stages. Open the details rather than inferring a cause from the color alone.
+
+A personal mobile transfer’s internal note is visible only to you. Other account views may describe notes as visible to people who have access to the account. Check the visibility wording in the interface where you write the note.
+
+<a id="find-transactions" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Find and filter transactions
+
+_Applies to: Mobile and web_
+
+Use the transaction list to narrow down activity before opening a detailed record. Check the account context and filters when an expected entry does not appear.
+
+1. Open Transactions and search for a merchant or recipient. On the web, you can also search by account number.
+2. On mobile, filter by Date, Status, or Method. Date offers preset periods and Custom; Custom opens From and To dates before Update.
+3. On the web, choose a date period and payment methods, and inspect the active filters.
+4. Use the web Amount filter to choose incoming, outgoing, or any direction. The comparison choices include an exact amount, more than an amount, or less than an amount.
+5. Open the matching transaction and compare its recipient, amount, date, and method.
+6. If the list says there is nothing for the selected amount or period, use Reset or clear the relevant filter, then search again.
+
+**Troubleshooting and important distinctions**
+
+- If a payment is missing, clear the date and status filters and confirm that you are in the correct account.
+- Several entries can have the same amount. Compare the date, recipient, payment method, and reference before selecting one.
+
+<a id="track-payment" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Check a payment’s status
+
+_Applies to: Mobile and web_
+
+The transaction record is the place to check what happened after you submitted a payment. A confirmation screen, a pending entry, and a completed transaction are different states.
+
+1. Open Transactions or recent activity for the relevant account or wallet, then open the payment.
+2. Read the status and Status timeline. Compare the initiated, processing, confirmed, completed, rejected, or returned events that appear for that payment.
+3. For a crypto transfer, read the network status as well as the account status. Confirmed on-chain, posting to your account and Awaiting account posting explain why a transfer can remain Pending after network confirmation.
+4. For a bank transfer, inspect the payment method and any bank reason or processing explanation shown.
+5. Use the reference appropriate to the method when asking for help: ACH trace number, Fed reference (IMAD), SWIFT UETR, or crypto transaction hash, when available.
+6. Review the fee and total-debit information on the same record. A tracking or receipt page can supplement the record, but does not replace checking the current account status.
+
+**Troubleshooting and important distinctions**
+
+- If you cannot find the payment, check the selected account and any active filters.
+- If you are unsure whether a payment was submitted, check activity before creating another one.
+
+<a id="pending-payment" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## My payment is pending or under review
+
+_Applies to: Mobile and web_
+
+Pending can refer to different stages. Read the explanation in the transaction timeline to see whether the transfer is still on a payment network, awaiting confirmation, or posting to your Buburuza account.
+
+1. Open the existing transaction and read its Status timeline.
+2. For crypto, distinguish Awaiting confirmation from Awaiting account posting. The latter is shown after on-chain confirmation while the account posting is still pending.
+3. For a bank transfer, read the clearing or network-processing message and the arrival estimate specific to that record.
+4. Check for an account notice that requests information, verification, acceptance of updated terms, or a limit change.
+5. If the state is unclear, contact support with the transaction reference and current message. Check the existing payment before creating another one.
+
+**Troubleshooting and important distinctions**
+
+- A pending incoming transfer is not the same as available balance.
+- An on-chain confirmation count alone does not establish that the transfer has posted to your account.
+- An arrival estimate on a payment is not a blanket service guarantee for every payment.
+
+<a id="failed-payment" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## My payment failed or the app closed during confirmation
+
+_Applies to: Mobile and web_
+
+A failed or returned payment needs the explanation from its own transaction record. Check whether it was never broadcast, reverted, rejected or returned. These states have different effects on the payment and balance.
+
+1. Open the transaction and read the failure or return reason before taking another action.
+2. If an outgoing crypto record explicitly says Not broadcast and Not charged, check the stated wallet balance and existing activity before using Send again.
+3. If an incoming crypto record says Reverted or funds not received, check that it was not credited, then ask the sender to review their transfer.
+4. If an outgoing bank payment is rejected or returned, inspect the displayed reason, such as account closed, invalid bank details, or no account found. Verify corrected instructions with the recipient before sending again.
+5. If an incoming transfer is returned for beneficiary-name mismatch, share the exact current receiving instructions. If it shows a sender-bank return, ask the sender to investigate their payment.
+6. Read the amount, debit or credit, and fee lines on that record. Contact support with the displayed reason and reference if the account result is unclear.
+
+**Troubleshooting and important distinctions**
+
+- Do not infer a refund merely from a Failed status. Use the record’s own funds and fee explanation.
+- A Send again button is a new action; first check that you are using the right existing record and corrected payment instructions.
+- Check the fee and refund entries on the affected transaction. A Refunded status on one record does not mean every rejected transfer receives a fee refund.
+
+<a id="insufficient-balance" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Why does my payment show insufficient funds?
+
+_Applies to: Mobile and web_
+
+Check the available balance of the selected funding account and the full payment total. Fees or conversion can make the total debit different from the amount entered.
+
+1. Check which account or wallet is selected as the funding source.
+2. Compare its available balance with the total debit shown on the review screen.
+3. Review any transfer, network, or conversion fee included in that total.
+4. Choose another eligible funding source, add funds through an available receiving method, or change the amount before reviewing again.
+
+**Troubleshooting and important distinctions**
+
+- A total-wealth figure may include balances that are not available for this payment.
+- If the balance appears sufficient but the message remains, check verification and limit notices, then contact support with the error text. Do not include full account or card numbers.
+
+<a id="transaction-documents" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## View receipts, notes, and attachments for a transaction
+
+_Applies to: Mobile and web_
+
+A transaction detail page brings together payment information and supporting material. Use it to keep a note or locate a receipt when those actions are available.
+
+1. Open the transaction and inspect its amount, method, status, and details.
+2. Review the supplied description. An incoming bank transaction can show Bank description; an outgoing payment can show Recipient memo.
+3. Use Category and Manage on the web, or Add a category where offered on mobile, to organize the transaction.
+4. Add your own Notes separately from the original payment memo.
+5. In Attachments, choose a file or use the upload area. The web upload area lists images, PDFs, and spreadsheets and shows upload progress.
+6. For a payment initiated through Buburuza, inspect the Buburuza-generated receipt when that section appears.
+7. Use Comments for the transaction discussion on the web. Use the transaction-link control where it appears on mobile to reference the record.
+
+**Troubleshooting and important distinctions**
+
+- Changing a category, note, attachment, or comment does not amend the payment destination or amount.
+- If an attachment is uploading, wait for its completed record before relying on it being attached.
+- Keep a bank-supplied description, the recipient memo, and internal annotations distinct when explaining the transaction.
+
+<a id="spending-view" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Review spending charts and categories
+
+_Applies to: Mobile_
+
+Explore spending by period, category and merchant, then inspect the underlying transactions. Check filters and analytics exclusions before comparing totals.
+
+1. Open Transactions and select the Spent overview to expand Spending.
+2. Choose the available period: 1W, 1M, 6M or 1Y. Check any account, wallet or currency filters as well.
+3. Switch between the donut and bar-chart controls to compare category proportions or activity over time.
+4. Select a bar to inspect its period total and colored category breakdown.
+5. Choose a category to drill into merchant-level amounts and the related transactions.
+6. Open a transaction for its source, amount and status. Review Excluded from analytics if it appears and you want to understand whether the record contributes to the view.
+7. Use X to close the expanded spending view and return to the transaction list.
+
+**Troubleshooting and important distinctions**
+
+- Check the period, filters and exclusion setting when a total differs from your expectation.
+- Category and analytics controls do not change the payment destination, amount or status.
+- Use individual transaction records for details that the chart summary does not show.
+
+<a id="comment-on-transaction" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Discuss a transaction with your team
+
+_Applies to: Web_
+
+The web transaction detail includes a Comments area alongside notes, attachments, and receipt information.
+
+1. Open Transactions and select the record you want to discuss.
+2. Read the transaction details and existing Comments to keep the discussion tied to the correct payment.
+3. Enter your comment in the transaction discussion.
+4. If the mention selector is available, select the intended colleague rather than relying on a similar name.
+5. Submit using the displayed comment control and check that the new entry appears in the discussion.
+
+**Troubleshooting and important distinctions**
+
+- A comment does not change the payment instruction or status.
+- Check who has access to the account before posting a comment. Do not assume tagging a colleague guarantees they have read it.
+
+<a id="card-transactions" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Find transactions for one mobile card
+
+_Applies to: Mobile_
+
+Opening Transaction history from a mobile card gives you a transaction view filtered to that card.
+
+1. Open the card and choose Transaction history.
+2. Check the selected card and month at the top of Transactions.
+3. Use Search to look for the relevant activity.
+4. Use the Currency and Card selectors to adjust the view.
+5. Review Spent and Income for the selected filters, then inspect the dated transaction entries.
+6. Open an individual transaction when you need its status and payment details.
+
+**Troubleshooting and important distinctions**
+
+- Changing a card or currency filter changes the displayed activity; it does not alter the transaction.
+- If an expected entry is missing, check the selected card and month before concluding that the payment is absent.
+
+<a id="home-payment-widget" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Understand the payment progress widget on Home
+
+_Applies to: Mobile_
+
+The Home payment widget separates verification, sending and receipt. It appears on both Bank and Crypto Home.
+
+1. Find the payment widget below the overall balance and check its asset, destination, amount and fiat equivalent.
+2. Read the progress line: Verified means the first displayed stage is complete; Sent means the first two are complete; Received means all three are complete.
+3. If a stage is red, identify whether the label is Verification, Send or Receive.
+4. Open the widget’s details arrow and inspect the transaction’s status and reason before deciding what to do next.
+5. Keep the existing transaction reference when contacting support or checking the payment with its recipient.
+
+**Troubleshooting and important distinctions**
+
+- Sent does not mean the widget has reached Received.
+- A verification failure, send failure and receive failure are separate states; do not diagnose all three as the same error.
+- The widget contains no retry control, explanation or promised completion time. Do not resend solely because a stage is incomplete.
+
+<a id="mobile-transaction-filters" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Find a mobile transaction with filters
+
+_Applies to: Mobile_
+
+Search the activity list, then combine date, account, card, amount or status filters to locate the record you need.
+
+1. Open Transactions from Bank Home. Use Search to find a merchant, person or matching transaction text.
+2. Open the date filter. Use the month arrows and choose the start/end range, then Continue. The applied period appears as a chip.
+3. Open Currency and wallets. Search for the fiat account or expand a crypto wallet and select the intended assets/networks. Choose Continue; the list shows a currency name or selection-count chip.
+4. Open Card to select one or more Personal or Shared cards by their name and masked identifier. Choose Apply.
+5. Open Amount to enter From and To, or use an upper bound alone. Choose Apply when enabled.
+6. Open Status to select the status categories shown, such as Completed, Pending, Issue/Issues or Failed, then apply the selection when available.
+7. Review the active chips and dated results. Use X on a chip to remove that filter.
+8. Open the matching record and compare its amount, counterparty, source and status before taking further action.
+
+**Troubleshooting and important distinctions**
+
+- Nothing here yet is an empty-account state; check the selected account and filters before assuming activity is missing.
+- Enter an amount bound before applying an amount filter. Apply remains disabled while both amount fields are empty.
+- Currency-and-wallet filters only change the records displayed; they do not authorize a payment from those balances.
+- If a displayed status disagrees with the filter or merchant badge, inspect the record’s actual status before acting.
+
+<a id="read-mobile-transaction-details" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Read a mobile payment’s status and funding breakdown
+
+_Applies to: Mobile_
+
+The detail record identifies the payment, its status, the source of funds and any fee or recipient-amount breakdown. Read the actual status before choosing a follow-up action.
+
+1. Open a record from Transactions. Check the date/time, counterparty, category, signed amount and Status.
+2. For a card payment, compare the masked card and Amount or Total sent. For a bank payment, inspect Sent with or Purchased with and the selected currency account.
+3. For ACH, inspect Transfer type, routing number, bank, account type, account number and recipient address. A payment funded from multiple accounts can list separate fiat and crypto debits.
+4. For crypto, check the asset, network and source address, Total sent, Fees, Paid from fee asset/network, Recipient gets and Transaction ID.
+5. If the status is In Process and Track is offered, open Track for the existing payment. If Failed or Declined states Insufficient funds, check the selected source and available balance before considering a new payment.
+6. Use Note for the private annotation described on the record. Review Excluded from analytics separately from payment status.
+7. Use Statement, or Receipt and Check details in the earlier result layout, for the provided record action. Use Copy link where shown when you need a reference to the record.
+
+**Troubleshooting and important distinctions**
+
+- A green merchant or counterparty badge is not a substitute for the transaction’s Status.
+- A failed record with Insufficient funds is not proof that the app will retry automatically.
+- The same source token name can occur on different networks; check the network in the debit and fee rows.
+- If you choose Dispute, follow the process presented for that transaction. Starting a dispute does not guarantee reversal.
+
+<a id="payment-record-attachments-and-notes" style={{ display: "block", scrollMarginTop: "9rem", borderBottom: "none" }} />
+
+## Add documents or a private note to a completed payment
+
+_Applies to: Mobile_
+
+The mobile result screen provides record tools for a completed payment. Use them to inspect the transaction, keep a personal note or add a supporting document.
+
+1. Check the result’s date, amount and recipient, then choose Check details to open the transaction record.
+2. Choose Receipt for the receipt action or Track for the linked tracking view where offered.
+3. To add a supporting document, choose Attach. Select Scan using camera, Upload from photo library, Choose from files, Forward by email or Enter manually according to the method actually available.
+4. After adding a document, inspect the Attachments row and its filename. Open the ellipsis menu to View or begin Delete for that file.
+5. Use Internal note for your personal annotation. This result screen explicitly says it is visible only to you and not shared with the recipient; X clears the note field.
+6. Use Copy link if you need a reference. Copy to clipboard confirms copying; share it separately only with the intended recipient.
+
+**Troubleshooting and important distinctions**
+
+- An attachment and an internal note have different visibility rules. The private-note wording does not establish the attachment’s sharing permissions.
+- Copying a link does not send it to another person.
+- The receipt, tracking page and transaction details are separate destinations; opening them does not submit another payment.
+- Forward by email and Enter manually are entry choices here; use the actual forwarding address or form supplied after selection.
+
+## Need help?
+
+If you need help with your account or a task, [contact support](/support) or browse the [Buburuza Help Center](https://help.buburuza.com/hc/en-us).
+
+Related support articles:
+
+- [Why is my deposit pending or in review?](https://help.buburuza.com/hc/en-us/articles/51472991474451)
+- [What if my withdrawal fails or stays pending?](https://help.buburuza.com/hc/en-us/articles/51473015552275)
