@@ -40,11 +40,15 @@
   color: #0f0f0f;
 }
 
+#content .card[role="link"]:focus-visible,
+#topbar-cta-button > a:focus-visible,
 :is(a, button, [role="link"], input, textarea, select):focus-visible {
   outline: 2px solid #0f0f0f;
   outline-offset: 4px;
 }
 
+.dark #content .card[role="link"]:focus-visible,
+.dark #topbar-cta-button > a:focus-visible,
 .dark :is(a, button, [role="link"], input, textarea, select):focus-visible {
   outline-color: #ffffff;
 }
