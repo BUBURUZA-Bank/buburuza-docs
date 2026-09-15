@@ -1,0 +1,60 @@
+/* Mint theme selectors verified against the September 15, 2026 preview. */
+
+#page-title {
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+#content .card {
+  border-radius: 24px;
+}
+
+#content .card > [data-component-part="card-content-container"] {
+  padding: 24px;
+}
+
+/* Mint renders the desktop CTA background and label as separate children. */
+#topbar-cta-button > a,
+#navbar nav a[href="/quickstart"] {
+  border-radius: 999px;
+  background-color: #0f0f0f;
+  color: #ffffff;
+  padding: 10px 18px;
+  min-height: 44px;
+}
+
+#topbar-cta-button > a > span {
+  border-radius: inherit;
+  background-color: inherit;
+}
+
+#topbar-cta-button > a :is(div, span, svg),
+#navbar nav a[href="/quickstart"] span {
+  color: inherit;
+}
+
+.dark #topbar-cta-button > a,
+.dark #navbar nav a[href="/quickstart"] {
+  background-color: #ffffff;
+  color: #0f0f0f;
+}
+
+:is(a, button, [role="link"], input, textarea, select):focus-visible {
+  outline: 2px solid #0f0f0f;
+  outline-offset: 4px;
+}
+
+.dark :is(a, button, [role="link"], input, textarea, select):focus-visible {
+  outline-color: #ffffff;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  #content .card[role="link"] {
+    transition: transform 160ms ease;
+  }
+
+  #content .card[role="link"]:hover {
+    transform: translateY(-2px);
+  }
+}
