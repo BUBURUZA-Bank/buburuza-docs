@@ -6,4 +6,5 @@
 
 # Draft content
 
-drafts/ \*.draft.mdx
+drafts/
+*.draft.mdx

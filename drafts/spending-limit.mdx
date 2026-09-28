@@ -1,0 +1,112 @@
+---
+title: "Spending limit"
+description: "Review monthly spending, check your remaining allowance, and change the spending limit for your space."
+---
+
+{/*
+Editorial draft based on frontend PR #521 (BBDEV-1669):
+https://github.com/BUBURUZA-Bank/buburuza-frontend-app/pull/521
+
+Keep this page in drafts/ and out of docs.json until the feature is released.
+The PR supplies a preview interface and mock responses; the live backend and
+confirmation support are not implemented by that PR.
+
+Before publication, verify the live service's scope, monthly reset, edit
+permissions, maximum amount, and confirmation flow. Confirm what happens to
+payments that exceed the limit: the PR discussion explicitly leaves this
+unresolved. Do not promise that payments are queued or retried next month.
+
+After release verification, remove the draft notice, move this file to
+spending-limit.mdx, and add "spending-limit" after "payments" in the Platform
+navigation group in docs.json. Preview the page and check its links.
+*/}
+
+<Note>
+  This guide describes the spending limit preview. It does not announce the
+  feature's availability or confirm how limits affect live payments.
+</Note>
+
+Use **Spending limit** to review the monthly limit, the amount already spent,
+and the remaining allowance for your selected space.
+
+## Open your spending limit
+
+Select the space you want to review. Open **Settings**, then choose
+**Spending limit** under **Payments**.
+
+If **Spending limit** is missing, the feature is not enabled. Opening its address
+directly returns you to your profile settings.
+
+The preview keeps a separate limit for each company space and for your personal
+space. Check the selected space before making a change.
+
+## Read the monthly summary
+
+| Item | What it shows |
+| --- | --- |
+| **Monthly limit** | The current limit in the currency shown on the page. |
+| **Spent since** | Spending counted from the displayed start date. |
+| **Remaining** | The limit minus spending so far. This never displays a negative amount. |
+| Progress bar | The proportion used, up to a full bar when the limit is reached or exceeded. |
+| **Resets** | The start of the next monthly period. |
+
+The preview uses calendar months. Follow the dates displayed on the page.
+If spending reaches or exceeds the limit, the remaining allowance is zero and
+the page shows a limit-reached message.
+
+## Who can change the limit
+
+Owners and admins can edit the limit. Viewers can read the summary, but
+**Edit** is locked. If you are a viewer, ask an owner or admin to make the change.
+
+## Change your monthly limit
+
+<Steps>
+  <Step title="Open the editor">
+    Click **Edit** beside **Monthly limit**. The dialog starts with your current
+    limit.
+  </Step>
+  <Step title="Enter a new amount">
+    Enter an amount greater than zero, in the currency shown. Use the supported
+    number of decimal places. If the amount exceeds your permitted maximum,
+    the field displays the maximum you can enter.
+
+    **Save** stays disabled if the amount is invalid or unchanged.
+  </Step>
+  <Step title="Review and save">
+    Click **Save** to submit the new amount. A lower limit applies after the save
+    succeeds, without an additional identity confirmation. A higher limit
+    requires an additional identity confirmation. Follow the confirmation
+    prompt shown by the app, such as a passkey prompt.
+
+    If you enter a limit below the amount already spent, the dialog warns you.
+    Lowering the limit does not erase spending already counted for this month.
+  </Step>
+  <Step title="Check the result">
+    After a successful save, the dialog closes and you see **Spending limit
+    saved**. Review the updated limit and remaining allowance.
+
+    To leave the amount unchanged before submitting, click **Cancel**.
+  </Step>
+</Steps>
+
+## If something goes wrong
+
+| What you see | What to do |
+| --- | --- |
+| An error instead of the monthly summary | Click **Try again** to load the limit. |
+| An amount must be greater than zero | Enter a positive amount in the format accepted by the field. |
+| An amount exceeds the maximum | Enter an amount at or below the maximum shown in the error. |
+| **Edit** is locked | Ask an owner or admin to change the limit. |
+| A higher limit cannot be confirmed yet | The requested increase was not saved. Keep the existing limit until confirmation becomes available. |
+| Another error while saving | Read the message in the dialog and resolve it before trying again. |
+
+If a background refresh fails after the summary has loaded, the page keeps the
+last loaded values. Those values may not reflect a more recent change.
+
+## When the limit is reached
+
+A full progress bar and zero remaining allowance describe the displayed usage.
+They do not confirm that a payment has been sent, queued, or scheduled to retry.
+Check the payment's own status in **Transactions**. Automatic holding or retrying
+of payments is not established by this preview.
