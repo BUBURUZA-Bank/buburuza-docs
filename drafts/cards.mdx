@@ -1,0 +1,174 @@
+---
+title: "Cards"
+description: "Browse cards, show or hide card details, freeze a card, manage its monthly limit, and issue a virtual card in the preview."
+---
+
+{/*
+Editorial draft based on frontend PR #522 (BBDEV-1647):
+https://github.com/BUBURUZA-Bank/buburuza-frontend-app/pull/522
+
+Keep this page in drafts/ and out of docs.json until the feature is released.
+The PR supplies the interface and mock responses, with no card issuer or live
+backend. It does not establish live card issuance, payment acceptance, freeze
+enforcement, or spending-limit enforcement.
+
+Before publication, verify issuer integration, supported currencies, linked
+account selection, cardholder eligibility, monthly resets, and issuance retries.
+Resolve the review's open authorization questions: owners and admins can reveal
+other cardholders' details without an additional identity confirmation; viewers
+cannot freeze their own cards; issuance and reveal are not gated on completed
+company verification. Confirm the intended production permissions and update
+this guide accordingly. Physical cards are displayed but cannot be issued here.
+
+After release verification, update the preview-specific wording, remove the
+draft notice, move this file to cards.mdx, and add "cards" to the Platform
+navigation group in docs.json. Preview the page and check its links.
+*/}
+
+<Note>
+  This guide describes the Cards preview. It uses simulated cards and responses;
+  it does not issue usable payment cards or change live card payments.
+</Note>
+
+## Open Cards
+
+Select your space and choose **Cards** in the main navigation. If the feature
+is not enabled, the navigation entry is hidden and a direct link returns you
+to **Dashboard**.
+
+Cards are grouped by cardholder. Each row shows the card name, **Physical** or
+**Virtual** type, last four digits, and spending this month. A **Frozen** badge
+identifies a frozen card. If a monthly limit is set, it appears beside spending.
+
+When there are no cards, the page shows **No cards yet** and an **Issue card**
+action. A loading error is shown separately, with **Try again**.
+
+## Open a card
+
+Select a card to open its details drawer. The drawer shows spending this month,
+the displayed reset date, and the card's status. Under **Details**, you can review
+its type, linked account, cardholder, billing address, expiry, and creation date.
+
+The list can contain physical and virtual cards. The **Issue card** dialog
+creates virtual cards only; it has no physical-card ordering flow.
+
+## Actions available to your role
+
+In the current preview, owners and admins can issue cards, reveal card numbers,
+freeze or unfreeze cards, rename them, and change their limits. Viewers can read
+the list and ordinary details, but these actions are locked, including freezing
+a card assigned to themselves. The production permissions are still awaiting
+confirmation.
+
+## Show and hide card details
+
+The full card number and CVV are hidden when the drawer opens. The last four
+digits and expiry remain visible; expiry can be copied without revealing the
+other values.
+
+Click **Show details** to reveal the full card number and CVV. Their copy buttons
+become available. A successful copy shows **Copied**; a failed copy shows
+**Could not copy**.
+
+The revealed number and CVV hide automatically after **60 seconds**. Click
+**Hide details** to hide them sooner. Closing the drawer or switching to another
+card also hides them. Reopening the card starts with its details hidden again.
+The expiry remains visible after hiding.
+
+## Freeze or unfreeze a card
+
+Click **Freeze card** in an active card's drawer. After the request succeeds,
+**Card frozen** appears, the list and drawer show **Frozen**, and the action
+changes to **Unfreeze card**.
+
+Click **Unfreeze card** to reverse the preview state. After success, **Card
+unfrozen** appears and the frozen badge is removed. A failed request displays
+an error instead of a success message.
+
+These actions change the simulated card state. Their effect on real payments
+has not been implemented in this delivery.
+
+## Rename a card
+
+Under **Details**, click **Rename**. Enter a non-empty name of up to **24
+characters**, then click **Save**. After success, **Card name saved** appears and
+the new name is shown in both the drawer and list.
+
+Click **Cancel** to leave the current name unchanged.
+
+## Manage the card's monthly spending limit
+
+The **Spending limit** section belongs to the selected card. It shows the amount
+spent against its limit, or **No spending limit** when no card limit is set.
+
+<Steps>
+  <Step title="Open the limit editor">
+    Click **Set limit** if there is no limit, or **Edit** beside an existing one.
+  </Step>
+  <Step title="Enter a monthly amount">
+    Enter an amount in the currency displayed. It must be greater than zero and
+    at least the amount this card has already spent this month. The editor shows
+    the amount already spent and explains invalid values beside the field.
+
+    **Save** stays disabled for an empty or invalid amount.
+  </Step>
+  <Step title="Save the change">
+    Click **Save**. After success, **Spending limit saved** appears and both the
+    drawer and list reflect the updated limit. Click **Cancel** to leave it
+    unchanged.
+  </Step>
+</Steps>
+
+To remove an existing limit, open **Edit** and click **Remove**. After success,
+**Spending limit removed** appears and the drawer shows **No spending limit**.
+Entering zero or clearing the amount does not remove a limit.
+
+The displayed reset date belongs to this card's monthly spending summary.
+Removing a card limit does not establish unlimited spending or remove other
+account restrictions. Live limit enforcement is outside this preview.
+
+## Issue a virtual card
+
+<Steps>
+  <Step title="Start issuance">
+    Click **Issue card** in the page header or empty state.
+  </Step>
+  <Step title="Choose a cardholder">
+    Select an active team member under **Cardholder**. If there is exactly one
+    active member, the preview selects them automatically.
+
+    While team members are loading, issuance is unavailable. If loading fails,
+    use **Try again**. If there are no active members, add one before issuing a
+    card.
+  </Step>
+  <Step title="Set optional details">
+    Optionally enter a **Card name** of up to 24 characters and a **Monthly limit**.
+    The issuance preview uses USD and accepts up to two decimal places. A limit
+    must be greater than zero; leave it blank to create the card without a
+    monthly card limit.
+  </Step>
+  <Step title="Issue and review">
+    Click **Issue card** and wait for the request to finish. The dialog stays
+    open while the request is pending.
+
+    On success, **Virtual card issued** appears, the dialog closes, and the new
+    card's drawer opens. The card appears under its cardholder in the list.
+  </Step>
+</Steps>
+
+An issuance error leaves the dialog open with your entries so you can correct
+them or retry. **Cancel** closes it without another submission when no request
+is pending. This flow creates a simulated card only.
+
+## Resolve an error
+
+| What you see | What to do |
+| --- | --- |
+| **Cards could not be loaded** | Click **Try again** to reload the list. |
+| **Card details could not be loaded** | Use **Try again** when offered, or **Back to cards** to return to the list. A card-not-found response offers no retry. |
+| A card action is locked | Your viewer role cannot perform that action in the preview. Ask an owner or admin. |
+| **That didn't work** | Read the action error in the drawer and retry when appropriate. |
+| A limit must be greater than zero | Enter a positive amount. Use **Remove** to remove an existing limit. |
+| A limit is below this month's spending | Enter at least the amount already spent, as shown in the editor. |
+| A rename or limit update fails | Read the error beside the field, correct the value if needed, and save again. |
+| No cardholders are available | Wait for team loading, retry a failed request, or add an active team member. |
