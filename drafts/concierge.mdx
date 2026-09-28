@@ -1,0 +1,151 @@
+---
+title: "Concierge"
+description: "Create a concierge request, follow its status, and review and confirm a proposal in the preview."
+---
+
+{/*
+Editorial draft based on frontend PR #552 (BBDEV-1745):
+https://github.com/BUBURUZA-Bank/buburuza-frontend-app/pull/552
+
+Keep this page in drafts/ and out of docs.json until the feature is released.
+The PR supplies the interface and mock responses, with no live backend.
+A simulated confirmation and reference do not establish a booking or payment.
+
+Before publication, verify request delivery, service availability, permissions,
+proposal generation, confirmation, and real booking/payment semantics. Resolve
+the review's open questions: there is no conversation thread, Ask a question is
+a stub, proposal expiry and payment semantics are unspecified, and the inbox
+has no pagination controls. Dates are displayed in the viewer's time zone,
+not the venue's. Selecting a day before a time initially chooses midnight.
+Do not promise replies, notifications, booking fulfilment, cancellation support,
+or payment guarantees based on preview copy.
+
+After release verification, update the limitations and preview-specific wording,
+remove the draft notice, move this file to concierge.mdx, and add "concierge"
+to the Platform navigation group in docs.json. Preview the page and check links.
+*/}
+
+<Note>
+  This guide describes the Concierge preview. Requests, proposals, and
+  confirmations use simulated responses. Sending or confirming a request does
+  not contact a live concierge, arrange a booking, or make a payment.
+</Note>
+
+## Open Concierge
+
+Sign in and choose **Concierge** from the main navigation. The landing page
+introduces requests such as travel, dining, and everyday assistance.
+
+Choose **New request** to start, or **View my requests** to open the inbox. If the
+feature is not enabled, the navigation item is hidden and direct links return
+you to **Dashboard**.
+
+## Create a request
+
+<Steps>
+  <Step title="Describe what you need">
+    Click **New request** on the landing page or in **Your requests**.
+
+    In **What do you need?**, enter a short summary, such as an airport transfer
+    or restaurant request. In **Request details**, add the locations,
+    preferences, and other information needed to understand it. Both fields
+    are required.
+  </Step>
+  <Step title="Choose a date and time">
+    Open **When do you need it?** and select a day. Open **Time** to choose the
+    hour and minute. Check the complete date and time shown in the field before
+    sending.
+
+    The time must still be in the future when you submit. Choosing a day before
+    choosing a time initially sets it to **00:00**. For a request later today,
+    select a later time as well.
+  </Step>
+  <Step title="Send the request">
+    Click **Send request**. The fields are unavailable while the request is
+    being submitted.
+
+    After a successful response, the app opens **Request sent** with your
+    request title and an **In progress** badge. Choose **View requests** to
+    return to the inbox.
+  </Step>
+</Steps>
+
+If submission fails, your entries stay in the form so you can correct them or
+retry. They are not a saved draft and are not guaranteed to survive leaving the
+page or reloading it.
+
+## Check the date and time
+
+The picker updates the selected value as you choose a day, hour, or minute;
+there is no separate date confirmation button. Close the picker after checking
+the selected value.
+
+You can use the time wheel with a keyboard: **Tab** moves between its hour and
+minute columns, **Up Arrow** and **Down Arrow** change the selected value, and
+**Home** or **End** selects the first or last value in that column.
+
+Dates and times are formatted in your interface language and your device's
+local time zone. The selected time is submitted with its UTC offset. The inbox
+and proposal also use the viewer's time zone, which may differ from the venue's.
+Check that the displayed time represents the instant you intend.
+
+## Follow your requests
+
+Open **View my requests** from Concierge. Each inbox row shows the request title,
+scheduled date and time, a subtitle when available, its status, and its last
+update date. Select a request to open it.
+
+| Status | What the preview shows | Next action |
+| --- | --- | --- |
+| **In progress** | The request has been created and opens on **Request sent**. | Return to **View requests** to check its current state. |
+| **Proposal ready** | A proposal with a title, description, and total price. | Review it and choose **Confirm proposal**. |
+| **Confirmed** | A confirmation screen with the schedule and a reference when supplied. | Review the confirmation or choose **Back to requests**. |
+
+When there are no requests, the inbox shows **No requests yet** and a
+**New request** action. The current inbox has no **Load more** or next-page
+control, so it displays only the first page of requests returned.
+
+Creating a request does not automatically generate a proposal in the preview.
+The sample requests include a proposal-ready example for trying confirmation.
+
+## Review and confirm a proposal
+
+Open a request marked **Proposal ready**. Review its scheduled date and time,
+proposal title, description, and **Total**, including the displayed currency.
+The current screen presents one proposal; it has no selector for competing
+options.
+
+Click **Confirm proposal** and wait for the response. On success, the detail
+screen changes to **Concierge booking confirmed**, the status becomes
+**Confirmed**, and a **Reference** appears when provided. Choose **Back to
+requests** to return to the updated inbox.
+
+If the proposal is no longer awaiting confirmation, the app tells you and
+refreshes the request. Read the updated state before attempting another action.
+A failed confirmation is not shown as a successful booking.
+
+In this delivery, the confirmation and reference are simulated. The screen does
+not provide a payment method, checkout, or proposal expiry time.
+
+## Questions and changes
+
+**Ask a question** currently displays **This isn't available yet.** It does not
+send a message or open a conversation.
+
+Although some screen text refers to a thread, later replies, or notifications,
+this delivery has no conversation composer or notification flow. It also has no
+controls to edit or cancel a submitted request or change a confirmed booking.
+Include the necessary details in the initial request while exploring the preview.
+
+## Resolve an error
+
+| What you see | What to do |
+| --- | --- |
+| **This field is required.** | Complete the indicated summary, details, or date/time field. |
+| **Choose a time that hasn't passed yet.** | Select a later date and time. A time can pass while the form remains open. |
+| **Check this value and try again.** | Review the highlighted field, correct its value, and send again. |
+| Another submission error | Read the message and retry when appropriate. Your entries remain on the current page. |
+| **Unable to load requests** or **Unable to load this request** | Click **Try again**. |
+| **Request not found** | Choose **Back to requests** and open an available request from the inbox. |
+| A proposal is no longer waiting for confirmation | Let the request refresh and review its current status. |
+| **Ask a question** is unavailable | Messaging is not implemented in this preview. |
