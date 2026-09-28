@@ -1,0 +1,144 @@
+---
+title: "Company tax forms"
+description: "Review your company tax form status, complete or update a W-8BEN-E or W-9, and re-sign a form in the preview."
+---
+
+{/*
+Editorial draft based on frontend PR #531 (BBDEV-1649):
+https://github.com/BUBURUZA-Bank/buburuza-frontend-app/pull/531
+
+Keep this page in drafts/ and out of docs.json until the feature is released.
+The PR supplies the interface and mock responses, but no live backend.
+Download and Read the full certification display unavailable messages.
+
+Before publication, verify live submission, updates, recertification, masking,
+form selection, and the generated signed document. Resolve the review's open
+questions: any member, including a viewer, can currently sign; W-9 accepts EIN
+only; W-8BEN-E does not collect chapter 4 status, GIIN, or a U.S. TIN, and its
+treaty claim is a single checkbox. The full certification and the company data
+being certified must be available for the signer to review. Confirm expiry
+and withholding language with the responsible product and compliance owners.
+Do not promise IRS acceptance, a tax rate, or an exemption based on this preview.
+
+After release verification, update the limitations below, remove the draft
+notice, move this file to tax-forms.mdx, and add "tax-forms" to the Platform
+navigation group in docs.json. Preview the page and check its links.
+*/}
+
+<Note>
+  This guide describes the company tax form preview. Live submission, signed
+  document downloads, and the full certification are not available in this
+  delivery. A successful preview submission is not a live tax filing.
+</Note>
+
+Use **Tax** to check the form recorded for your selected company and follow the
+available action. The form type and status shown on the page come from the
+company record; you do not choose between forms in the dialog.
+
+## Open your tax settings
+
+Select a company space, open **Settings**, and choose **Tax** under **Company**.
+This section is not available in personal spaces.
+
+If the feature is not enabled, **Tax** is hidden and opening its address directly
+returns you to your profile settings.
+
+When the company has **No form on file**, the Dashboard can show a reminder near
+the balance card. Choose **Add**, or tap the reminder icon on a touch screen, to
+open **Tax**. This reminder does not appear for the other form statuses.
+
+## Understand your form status
+
+| Status | What the preview shows | Available action |
+| --- | --- | --- |
+| **No form on file** | A **Required** badge and a request to add a form. | **Add tax form** |
+| **On file** | The form type, signing date, and signer when available. A W-8BEN-E also shows its valid-through date when available. | **Update** |
+| **Expires soon** | An expiry warning, with a date when available. | **Re-sign form**, or **Update** if details have changed. |
+| **Action needed** | A message asking you to correct or update the form. | **Update form** |
+
+Use the dates and message shown for your company. **On file** describes the
+record in the app; it is not confirmation that the IRS has accepted a form.
+
+## Add a form
+
+<Steps>
+  <Step title="Open the form">
+    Click **Add tax form**. The preview opens the W-8BEN-E or W-9 associated with
+    your company record.
+  </Step>
+  <Step title="Complete the required fields">
+    For a **W-8BEN-E**, select **Entity type** and enter the full **Tax ID number**.
+    **Claim a tax treaty benefit** is shown only when the company record allows
+    that option; its presence does not establish entitlement to a benefit.
+
+    For a **W-9**, select **Federal tax classification** and enter the full
+    nine-digit **Employer Identification Number**. The preview accepts the EIN
+    with or without the hyphen after its first two digits. It has no separate
+    SSN entry flow.
+  </Step>
+  <Step title="Complete the confirmation and signature">
+    The certification checkbox and **Signature** field start empty each time
+    you open the dialog. The preview requires you to check the certification
+    and type your full legal name before **Sign and submit** is enabled.
+
+    **Read the full certification** currently displays **Full certification is
+    not available yet.** It does not open a document.
+  </Step>
+  <Step title="Submit and review the result">
+    Click **Sign and submit**. Wait for the request to finish; the dialog cannot
+    be closed while submission is pending.
+
+    On success, the dialog closes and a message confirms that the form was
+    completed and signed. The page refreshes its status and signing details.
+  </Step>
+</Steps>
+
+The preview does not provide a full review of the company data and certification
+being signed. Complete certification review remains a requirement before this
+flow can be published for live use.
+
+## Update a form
+
+Click **Update** beside the form, or **Update form** in an **Action needed** alert.
+The existing classification or entity type is selected when available.
+
+Stored tax IDs are shown only in masked form. The tax ID or EIN input starts
+empty: enter the full number again, not the masked value. The certification
+and signature also start empty.
+
+Make your changes and click **Sign and submit**. A successful update replaces
+the form on file and refreshes its signing details. For changes to the company's
+legal name or tax identifier, the page also provides **Contact support**.
+
+## Re-sign an expiring form
+
+For **Expires soon**, click **Re-sign form**. This dialog is for signing the
+existing form again without editing its details. If details need to change,
+use **Update** instead.
+
+The re-sign dialog asks for a fresh certification and your full legal name in
+**Signature**. Click **Sign and submit**. After a successful response, the dialog
+closes and the page refreshes the signing and validity information. This dialog
+does not ask you to re-enter the tax ID.
+
+## Download a form
+
+**Download** is visible for a form on file, but currently displays **Download is
+not available yet.** No PDF is downloaded. Completing or re-signing the form in
+the preview does not enable this action.
+
+## Resolve an error
+
+| What you see | What to do |
+| --- | --- |
+| An error while loading the form | Click **Try again**. A loading failure does not mean the company has no form. |
+| **Sign and submit** is disabled | Complete the required fields, certification, and signature. Wait if a request is already pending. |
+| A required-field message | Fill in the field identified by the message. |
+| A masked tax ID or EIN is rejected | Enter the full number instead of the value containing asterisks. |
+| An EIN format error | Enter nine digits, with an optional hyphen after the first two. |
+| A field is rejected after submission | Correct the highlighted field and submit again. |
+| A submission or service error | Read the message and retry when appropriate. Your entries remain in the open dialog. |
+
+Before submitting, **Cancel** closes the dialog without saving. Entries retained
+after an error are not a saved draft and should not be expected to survive
+closing the dialog or reloading the page.
