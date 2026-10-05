@@ -50,74 +50,20 @@
         "tab": "Product guides",
         "groups": [
           {
-            "group": "Start and manage your account",
+            "group": "Use your account",
             "pages": [
               "guides/index",
-              "guides/getting-started",
-              "guides/personal-account-setup",
               "guides/account-access",
-              "guides/accounts-and-balances"
-            ]
-          },
-          {
-            "group": "Move money",
-            "pages": [
-              "guides/receive-money",
-              "guides/recipients",
-              "guides/send-bank-payments",
-              "guides/invoice-payments",
-              "guides/mobile-payment-tools",
-              "guides/transactions"
-            ]
-          },
-          {
-            "group": "Cards and documents",
-            "pages": [
-              "guides/cards-and-controls",
-              "guides/documents"
-            ]
-          },
-          {
-            "group": "Crypto wallets and services",
-            "pages": [
-              "guides/send-crypto",
-              "guides/wallet-backup-and-recovery",
-              "guides/crypto-features",
-              "guides/crypto-loans"
-            ]
-          },
-          {
-            "group": "Everyday services",
-            "pages": [
-              "guides/esim",
-              "guides/airport-services",
-              "guides/chats-and-assistance",
-              "guides/rewards-and-referrals",
-              "guides/asset-previews"
-            ]
-          },
-          {
-            "group": "Help and preferences",
-            "pages": [
-              "guides/settings-and-support"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Platform",
-        "groups": [
-          {
-            "group": "Manage money",
-            "pages": [
               "accounts-wallets",
-              "payments"
+              "payments",
+              "team"
             ]
           },
           {
-            "group": "Work together",
+            "group": "Help and settings",
             "pages": [
-              "team"
+              "guides/settings-and-support",
+              "support"
             ]
           }
         ]
@@ -142,7 +88,7 @@
       }
     ]
   },
-  "description": "Guides to getting started, managing your account and using Buburuza.",
+  "description": "Account setup, payments, security and support for Buburuza.",
   "appearance": {
     "default": "light",
     "strict": false
