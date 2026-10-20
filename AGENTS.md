@@ -118,7 +118,7 @@ from the repository root. The claim and corruption patterns are case-sensitive, 
 recovery-code patterns are not; a capitalised variant of a prohibited phrase is still prohibited even if
 the scan misses it.
 
-No status check is required by the branch ruleset; treat every red check as blocking anyway.
+Required checks (repository ruleset "Required status checks", on `main`): `Check for forbidden patterns`. A PR cannot merge until they pass.
 
 ## Branches, commits, pull requests
 
