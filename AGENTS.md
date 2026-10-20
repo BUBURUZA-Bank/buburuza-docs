@@ -134,7 +134,9 @@ No status check is required by the branch ruleset; treat every red check as bloc
 - PR title and body in English; one topic per PR; open finished work ready for review, not as a draft.
   Before asking for review, open the Mintlify preview link from the bot comment and read every changed
   page there.
-- There is no changelog file in this repository.
+- **No changelog of any kind.** `CHANGELOG.md`, `changelog.d/` and any other tracked path whose name
+  contains "changelog" are banned; the step `changelog is banned` in the required `Check for forbidden patterns` job fails the
+  PR. The PR title and description are the record of a change.
 
 ## Gotchas
 
