@@ -17,6 +17,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: changelog is banned
+        run: |
+          found=$(git ls-files -- ':(icase)*changelog*')
+          if [ -n "$found" ]; then
+            echo "::error::Changelogs are banned in this repository. Remove these files:"
+            echo "$found"
+            exit 1
+          fi
+
       - name: Scan for forbidden patterns
         shell: bash
         run: |
