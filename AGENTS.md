@@ -12,10 +12,6 @@ covers only `README.md`, `LICENSE.md`, `CHANGELOG.md` and `CONTRIBUTING.md` (plu
 changes this file must add `AGENTS.md` on its own line to `.mintignore`. Write nothing here, or anywhere
 in the repository, that you would not show a customer or a competitor.
 
-## Markdown files
-
-Only `README.md` and `AGENTS.md` are allowed in this repository. Do not add any other `.md` file.
-
 ## What this repository owns
 
 - The site's pages, navigation, theme and the `docs-safety` gate. The base branch is `main`; there is no
