@@ -1,4 +1,4 @@
-<img src="https://repository-images.githubusercontent.com/1463260555/ad0dc5b0-af17-452e-9d2b-767cec148adc" alt="Buburuza — Building the software behind AI-native finance." width="800">
+<img src="assets/buburuza-header.jpg" alt="Buburuza — Building the software behind AI-native finance." width="800">
 
 # Buburuza Docs
 
