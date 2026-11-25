@@ -1,3 +1,5 @@
+<img src="assets/buburuza-header.jpg" alt="Buburuza — Building the software behind AI-native finance." width="800">
+
 # Buburuza Docs
 
 Source of the public Buburuza documentation site (Mintlify), served at [docs.buburuza.com](https://docs.buburuza.com).
